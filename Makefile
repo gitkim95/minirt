@@ -11,9 +11,10 @@ INCLUDES := -Iinclude -I$(LIBFT_DIR) -I$(MINILIBX_DIR)
 
 SYSLIB_FLG := -lXext -lX11 -lm
 
+SRC_DIRS := error
 OBJ_DIR = obj
 
-SRCS :=	minirt.c
+SRCS :=	minirt.c	rt_error.c
 OBJS := $(addprefix $(OBJ_DIR)/,$(SRCS:%.c=%.o))
 
 MEN_SRCS := 
@@ -21,6 +22,8 @@ MEN_OBJS := $(addprefix $(OBJ_DIR)/,$(MEN_SRCS:%.c=%.o))
 
 BON_SRCS := 
 BON_OBJS := $(addprefix $(OBJ_DIR)/,$(BON_SRCS:%.c=%.o))
+
+vpath %.c $(SRC_DIRS)
 
 ifdef BONUS
 	OBJS += $(BON_OBJS)

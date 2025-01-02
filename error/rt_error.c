@@ -1,18 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minirt.h                                           :+:      :+:    :+:   */
+/*   rt_error.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hwilkim <hwilkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/02 16:19:16 by hwilkim           #+#    #+#             */
-/*   Updated: 2025/01/02 16:50:25 by hwilkim          ###   ########.fr       */
+/*   Created: 2025/01/02 16:53:25 by hwilkim           #+#    #+#             */
+/*   Updated: 2025/01/02 17:00:37 by hwilkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINIRT_H
-# define MINIRT_H
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
 
-# include "rt_struct.h"
+#include "rt_error.h"
 
-#endif
+void	exit_on_error(int rt_errno)
+{
+	printf("%s\n", strerror(rt_errno));
+	exit(rt_errno);
+}

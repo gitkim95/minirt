@@ -7,8 +7,12 @@ libft/
 # mlx
 minilibx/
 
-# miniRT scene
+# miniRT
+miniRT
 scene/
+
+# vscode
+.vscode
 
 # Prerequisites
 *.d

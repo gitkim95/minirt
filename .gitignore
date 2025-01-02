@@ -1,3 +1,15 @@
+# pdf
+4_minirt.pdf
+
+# libft
+libft/
+
+# mlx
+minilibx/
+
+# miniRT scene
+scene/
+
 # Prerequisites
 *.d
 

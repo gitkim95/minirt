@@ -6,14 +6,16 @@
 /*   By: hwilkim <hwilkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/02 16:20:44 by hwilkim           #+#    #+#             */
-/*   Updated: 2025/01/02 16:59:44 by hwilkim          ###   ########.fr       */
+/*   Updated: 2025/01/02 17:10:21 by hwilkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <X11/X.h>
 #include <stddef.h>
 #include <errno.h>
 #include "mlx.h"
 #include "rt_error.h"
+#include "rt_mlx_hook.h"
 
 #include "minirt.h"
 
@@ -33,5 +35,7 @@ int	main(int argc, char **argv)
 	(void)argc;
 	(void)argv;
 	init_mlx_data(&mlx);
+	mlx_hook(mlx.win, DestroyNotify, 0, mlx_close_window, &mlx);
+	mlx_loop(mlx.mlx);
 	return (0);
 }

@@ -11,10 +11,10 @@ INCLUDES := -Iinclude -I$(LIBFT_DIR) -I$(MINILIBX_DIR)
 
 SYSLIB_FLG := -lXext -lX11 -lm
 
-SRC_DIRS := error
+SRC_DIRS := error	mlx_hook
 OBJ_DIR = obj
 
-SRCS :=	minirt.c	rt_error.c
+SRCS :=	minirt.c	rt_error.c	rt_mlx_hook.c
 OBJS := $(addprefix $(OBJ_DIR)/,$(SRCS:%.c=%.o))
 
 MEN_SRCS := 

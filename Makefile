@@ -53,7 +53,7 @@ $(NAME): $(OBJS) $(LIBFT) $(MINILIBX)
 	$(CC) $(CFLAGS) $(OBJS) $(LIBFT) $(MINILIBX) $(SYSLIB_FLG) -o $@
 
 $(OBJ_DIR)/%.o: %.c | check_dir
-	$(CC) $(CFLAGS) $(INCLUDES) $(SYSLIB_FLG) -c $< -o $@
+	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
 clean: 
 	rm -rf $(OBJ_DIR)

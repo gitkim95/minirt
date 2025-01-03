@@ -6,12 +6,12 @@
 /*   By: hwilkim <hwilkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/02 19:21:13 by hwilkim           #+#    #+#             */
-/*   Updated: 2025/01/02 19:54:44 by hwilkim          ###   ########.fr       */
+/*   Updated: 2025/01/02 21:10:36 by hwilkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stddef.h>
-#include "minirt.h"
+#include "rt_utils.h"
 
 #include "rt_figure.h"
 
@@ -32,5 +32,9 @@ t_figure	*parse_cylinder(char **figure_attr)
 
 	figure = (t_figure *)ft_calloc(1, sizeof(t_figure));
 	figure->identifier = RT_CY;
+	figure->center = parse_to_coord(figure_attr + 2);
+	figure->vector = parse_to_coord(figure_attr + 3);
+	figure->diameter = rt_atof(figure_attr + 4);
+	figure->height = rt_atof(figure_attr + 5);
 	return (NULL);
 }

@@ -13,6 +13,7 @@ scene/
 
 # vscode
 .vscode
+test.c
 
 # Prerequisites
 *.d

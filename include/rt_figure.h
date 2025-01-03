@@ -6,7 +6,7 @@
 /*   By: hwilkim <hwilkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/02 16:40:41 by hwilkim           #+#    #+#             */
-/*   Updated: 2025/01/02 19:55:09 by hwilkim          ###   ########.fr       */
+/*   Updated: 2025/01/02 21:08:59 by hwilkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,5 +45,6 @@ t_figure	*parse_sphere(char **figure_attr);
 
 /* rt_figure */
 t_figure	*make_figure(char **figure_attr);
+t_coord		parse_to_coord(char *str);
 
 #endif

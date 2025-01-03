@@ -11,34 +11,30 @@ INCLUDES := -Iinclude -I$(LIBFT_DIR) -I$(MINILIBX_DIR)
 
 SYSLIB_FLG := -lXext -lX11 -lm
 
-SRC_DIRS := error	mlx_hook
+ERROR_SRC := error.c
+
+ERROR_SRC :=	rt_error.c
+
+FIGURE_SRC :=	rt_figure.c		rt_figure_cylinder.c	rt_figure_plane.c	\
+				rt_figure_sphere.c	rt_figure_utils.c
+
+MLX_HOOK_SRC :=	rt_mlx_hook.c
+
+UTILS_SRC :=	rt_utils_mem.c	rt_utils_str.c
+
+SRC_DIRS := error	figure	mlx_hook	utils
+SRCS :=	minirt.c $(ERROR_SRC) $(FIGURE_SRC) $(MLX_HOOK_SRC) $(UTILS_SRC)
+
 OBJ_DIR = obj
-
-SRCS :=	minirt.c	rt_error.c	rt_mlx_hook.c
 OBJS := $(addprefix $(OBJ_DIR)/,$(SRCS:%.c=%.o))
-
-MEN_SRCS := 
-MEN_OBJS := $(addprefix $(OBJ_DIR)/,$(MEN_SRCS:%.c=%.o))
-
-BON_SRCS := 
-BON_OBJS := $(addprefix $(OBJ_DIR)/,$(BON_SRCS:%.c=%.o))
 
 vpath %.c $(SRC_DIRS)
 
-ifdef BONUS
-	OBJS += $(BON_OBJS)
-else
-	OBJS += $(MEN_OBJS)
-endif
-
 NAME := miniRT
 
-.PHONY: clean fclean re all bonus check_dir
+.PHONY: clean fclean re all check_dir
 
 all: $(NAME)
-
-bonus:
-	@$(MAKE) --no-print-directory BONUS=1 $(NAME)
 
 check_dir:
 	@mkdir -p $(OBJ_DIR)

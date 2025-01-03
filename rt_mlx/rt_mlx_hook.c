@@ -6,19 +6,18 @@
 /*   By: hwilkim <hwilkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/02 17:08:21 by hwilkim           #+#    #+#             */
-/*   Updated: 2025/01/02 17:14:37 by hwilkim          ###   ########.fr       */
+/*   Updated: 2025/01/03 17:51:05 by hwilkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
+#include <X11/keysym.h>
 #include "mlx.h"
 
-#include "rt_mlx_hook.h"
+#include "rt_mlx.h"
 
-int	mlx_close_window(t_mlx *mlx)
+int	rt_mlx_key_hook(int keycode, t_mlx *mlx)
 {
-	mlx_destroy_window(mlx->mlx, mlx->win);
-	mlx_destroy_display(mlx->mlx);
-	free(mlx->mlx);
-	exit(0);
+	if (keycode == XK_Escape)
+		mlx_loop_end(mlx->mlx);
+	return (0);
 }

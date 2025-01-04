@@ -23,10 +23,14 @@ RAY_SRC :=		rt_ray.c
 
 RT_MLX_SRC :=	rt_mlx_hook.c	rt_mlx_utils.c
 
-UTILS_SRC :=	rt_utils_mem.c	rt_utils_str.c	rt_utils_vec.c
+UTILS_SRC :=	rt_utils_mem.c	rt_utils_str.c
 
-SRC_DIRS := env error figure ray rt_mlx utils
-SRCS :=	minirt.c $(ENV_SRC) $(ERROR_SRC) $(FIGURE_SRC) $(RAY_SRC) $(RT_MLX_SRC) $(UTILS_SRC)
+VECTOR_SRC :=	rt_vec_op_arithmetic.c	rt_vec_op_product.c	rt_vec_utils.c
+
+SRC_DIRS :=	env		error	figure	ray	\
+			rt_mlx	utils	vector
+SRCS :=	$(ENV_SRC)		$(ERROR_SRC)	$(FIGURE_SRC)	$(RAY_SRC)	\
+		$(RT_MLX_SRC)	$(UTILS_SRC)	$(VECTOR_SRC)	minirt.c 
 
 OBJ_DIR = obj
 OBJS := $(addprefix $(OBJ_DIR)/,$(SRCS:%.c=%.o))

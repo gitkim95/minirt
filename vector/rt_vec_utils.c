@@ -1,25 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   rt_utils.h                                         :+:      :+:    :+:   */
+/*   rt_vec_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hwilkim <hwilkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/02 19:35:02 by hwilkim           #+#    #+#             */
-/*   Updated: 2025/01/04 20:57:06 by hwilkim          ###   ########.fr       */
+/*   Created: 2025/01/04 16:31:28 by hwilkim           #+#    #+#             */
+/*   Updated: 2025/01/04 21:07:57 by hwilkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef RT_UTILS_H
-# define RT_UTILS_H
+#include <math.h>
 
-# include "rt_struct.h"
+#include "rt_vector.h"
 
-/* rt_utils_mem */
-void	rt_free_split(char **split);
+double	v_length(t_vec vec)
+{
+	return (sqrt(v_length_squared(vec)));
+}
 
-/* rt_utils_str */
-int		rt_strcmp(char *s1, char *s2);
-double	rt_atof(char *str);
+double	v_length_squared(t_vec vec)
+{
+	return (v_dot(vec, vec));
+}
 
-#endif
+t_vec	v_unit(t_vec vec)
+{
+	return (v_div(vec, v_length(vec)));
+}

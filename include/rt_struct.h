@@ -6,7 +6,7 @@
 /*   By: hwilkim <hwilkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/02 16:49:45 by hwilkim           #+#    #+#             */
-/*   Updated: 2025/01/04 15:52:48 by hwilkim          ###   ########.fr       */
+/*   Updated: 2025/01/04 21:22:17 by hwilkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,12 @@ typedef struct s_vec
 
 typedef t_vec	t_coord;
 typedef t_vec	t_color;
+
+typedef struct s_ray
+{
+	t_coord	origin;
+	t_vec	direction;
+}	t_ray;
 
 typedef struct s_data
 {

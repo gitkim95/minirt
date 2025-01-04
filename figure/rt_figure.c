@@ -6,7 +6,7 @@
 /*   By: hwilkim <hwilkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/02 19:28:52 by hwilkim           #+#    #+#             */
-/*   Updated: 2025/01/03 15:46:39 by hwilkim          ###   ########.fr       */
+/*   Updated: 2025/01/04 21:50:13 by hwilkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ t_figure	*make_figure(char **figure_attr)
 	return (figure);
 }
 
-void	draw_figure(t_figure *figure)
+void	draw_figure(t_figure *figure, t_ray *ray)
 {
 	if (!figure)
 		return ;
@@ -41,5 +41,5 @@ void	draw_figure(t_figure *figure)
 	else if (figure->diameter == RT_PL)
 		draw_plane(figure);
 	else if (figure->diameter == RT_SP)
-		draw_sphere(figure);
+		hit_sphere(figure, ray);
 }

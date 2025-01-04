@@ -1,31 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   rt_utils.h                                         :+:      :+:    :+:   */
+/*   rt_ray.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hwilkim <hwilkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/02 19:35:02 by hwilkim           #+#    #+#             */
-/*   Updated: 2025/01/04 16:46:36 by hwilkim          ###   ########.fr       */
+/*   Created: 2025/01/04 15:45:13 by hwilkim           #+#    #+#             */
+/*   Updated: 2025/01/04 15:58:17 by hwilkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef RT_UTILS_H
-# define RT_UTILS_H
+#ifndef RT_RAY_H
+# define RT_RAY_H
 
 # include "rt_struct.h"
 
-/* rt_utils_mem */
-void	rt_free_split(char **split);
+typedef struct s_ray
+{
+	t_coord	origin;
+	t_vec	direction;
+}	t_ray;
 
-/* rt_utils_str */
-int		rt_strcmp(char *s1, char *s2);
-double	rt_atof(char *str);
-
-/* rt_utils_vec */
-t_vec	rt_vec_add(t_vec u, t_vec v);
-t_vec	rt_vec_subtract(t_vec u, t_vec v);
-t_vec	rt_vec_multiply(t_vec vec, double t);
-t_vec	rt_vec_divide(t_vec vec, double t);
+t_coord	ray_at(t_ray *ray, double t);
 
 #endif

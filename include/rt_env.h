@@ -1,31 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   rt_utils.h                                         :+:      :+:    :+:   */
+/*   rt_env.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hwilkim <hwilkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/02 19:35:02 by hwilkim           #+#    #+#             */
-/*   Updated: 2025/01/04 16:46:36 by hwilkim          ###   ########.fr       */
+/*   Created: 2025/01/04 16:19:02 by hwilkim           #+#    #+#             */
+/*   Updated: 2025/01/04 16:52:31 by hwilkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef RT_UTILS_H
-# define RT_UTILS_H
+#ifndef RT_ENV_H
+# define RT_ENV_H
 
 # include "rt_struct.h"
 
-/* rt_utils_mem */
-void	rt_free_split(char **split);
+typedef struct s_camera
+{
+	double	focal_length;
+	double	vp_height;
+	double	vp_width;
+	t_coord	center;
+	t_vec	vp_u;
+	t_vec	vp_v;
+	t_vec	pixel_delta_u;
+	t_vec	pixel_delta_v;
+	t_vec	vp_upper_left;
+	t_vec	pixel_zero_loc;
+}	t_camera;
 
-/* rt_utils_str */
-int		rt_strcmp(char *s1, char *s2);
-double	rt_atof(char *str);
-
-/* rt_utils_vec */
-t_vec	rt_vec_add(t_vec u, t_vec v);
-t_vec	rt_vec_subtract(t_vec u, t_vec v);
-t_vec	rt_vec_multiply(t_vec vec, double t);
-t_vec	rt_vec_divide(t_vec vec, double t);
+t_camera	make_camera(int width, int height, t_coord center);
 
 #endif

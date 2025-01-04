@@ -10,6 +10,8 @@ MINILIBX := $(MINILIBX_DIR)/libmlx.a
 INCLUDES := -Iinclude -I$(LIBFT_DIR) -I$(MINILIBX_DIR)
 SYSLIB_FLG := -lXext -lX11 -lm
 
+ENV_SRC := rt_env.c
+
 ERROR_SRC := error.c
 
 ERROR_SRC :=	rt_error.c
@@ -17,12 +19,14 @@ ERROR_SRC :=	rt_error.c
 FIGURE_SRC :=	rt_figure.c		rt_figure_cylinder.c	rt_figure_plane.c	\
 				rt_figure_sphere.c	rt_figure_utils.c
 
+RAY_SRC :=		rt_ray.c
+
 RT_MLX_SRC :=	rt_mlx_hook.c	rt_mlx_utils.c
 
-UTILS_SRC :=	rt_utils_mem.c	rt_utils_str.c
+UTILS_SRC :=	rt_utils_mem.c	rt_utils_str.c	rt_utils_vec.c
 
-SRC_DIRS := error	figure	rt_mlx	utils
-SRCS :=	minirt.c $(ERROR_SRC) $(FIGURE_SRC) $(RT_MLX_SRC) $(UTILS_SRC)
+SRC_DIRS := env error figure ray rt_mlx utils
+SRCS :=	minirt.c $(ENV_SRC) $(ERROR_SRC) $(FIGURE_SRC) $(RAY_SRC) $(RT_MLX_SRC) $(UTILS_SRC)
 
 OBJ_DIR = obj
 OBJS := $(addprefix $(OBJ_DIR)/,$(SRCS:%.c=%.o))

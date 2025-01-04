@@ -6,12 +6,14 @@
 /*   By: hwilkim <hwilkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/02 16:40:41 by hwilkim           #+#    #+#             */
-/*   Updated: 2025/01/03 15:45:54 by hwilkim          ###   ########.fr       */
+/*   Updated: 2025/01/04 15:52:53 by hwilkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef RT_FIGURE_H
 # define RT_FIGURE_H
+
+# include "rt_struct.h"
 
 # define RT_FIGURE	"cy\0pl\0sp"
 
@@ -21,16 +23,6 @@ typedef enum e_fig_type
 	RT_PL = 3,
 	RT_SP = 6,
 }	t_fig_type;
-
-typedef struct s_vec
-{
-	double	x;
-	double	y;
-	double	z;
-}	t_vec;
-
-typedef t_vec	t_coord;
-typedef t_vec	t_color;
 
 typedef struct s_figure
 {

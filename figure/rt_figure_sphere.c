@@ -6,7 +6,7 @@
 /*   By: hwilkim <hwilkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/02 16:43:56 by hwilkim           #+#    #+#             */
-/*   Updated: 2025/01/04 21:34:37 by hwilkim          ###   ########.fr       */
+/*   Updated: 2025/01/05 17:38:04 by hwilkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,16 +38,20 @@ t_figure	*parse_sphere(char **figure_attr)
 	return (NULL);
 }
 
-int	hit_sphere(t_figure *figure, t_ray *ray)
+double	hit_sphere(t_figure *figure, t_ray *ray)
 {
 	t_vec	offset;
 	double	a;
 	double	b;
 	double	c;
+	double	discrim;
 
 	offset = v_sub(figure->center, ray->origin);
 	a = v_length_squared(ray->direction);
-	b = -2.0 * v_dot(ray->direction, offset);
+	b = v_dot(ray->direction, offset);
 	c = v_length_squared(offset) - pow(figure->diameter / 2, 2);
-	return ((pow(b, 2) - 4 * a * c) >= 0);
+	discrim = (pow(b, 2) - a * c);
+	if (discrim < 0)
+		return (-1.0);
+	return ((b - sqrt(discrim)) / a);
 }

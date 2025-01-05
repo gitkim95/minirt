@@ -6,7 +6,7 @@
 /*   By: hwilkim <hwilkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/02 16:40:41 by hwilkim           #+#    #+#             */
-/*   Updated: 2025/01/04 21:50:42 by hwilkim          ###   ########.fr       */
+/*   Updated: 2025/01/05 17:25:49 by hwilkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ t_figure	*parse_sphere(char **figure_attr);
 
 void		draw_cylinder(t_figure *figure);
 void		draw_plane(t_figure *figure);
-int			hit_sphere(t_figure *figure, t_ray *ray);
+double		hit_sphere(t_figure *figure, t_ray *ray);
 
 /* rt_figure_utils */
 t_coord		parse_to_coord(char *str);

@@ -1,29 +1,44 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minirt.c                                           :+:      :+:    :+:   */
+/*   rt_utils_mem.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hwilkim <hwilkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/02 16:20:44 by hwilkim           #+#    #+#             */
-/*   Updated: 2025/01/03 17:49:40 by hwilkim          ###   ########.fr       */
+/*   Created: 2025/01/02 19:34:37 by hwilkim           #+#    #+#             */
+/*   Updated: 2025/01/06 19:17:58 by hwilkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "mlx.h"
-#include "rt_error.h"
-#include "rt_mlx.h"
+#include <stdlib.h>
 
-#include "minirt.h"
+#include "rt_utils.h"
 
-int	main(int argc, char **argv)
+void	rt_free_figure(t_fig_list *list)
 {
-	t_mlx	mlx;
+	t_figure	*figure;
+	t_figure	*tmp;
 
-	(void)argc;
-	(void)argv;
-	init_mlx_data(&mlx);
-	mlx_loop(mlx.mlx);
-	destroy_mlx_data(&mlx);
-	return (0);
+	figure = list->head;
+	while (figure)
+	{
+		tmp = figure;
+		figure = figure->next;
+		free(tmp);
+	}
+}
+
+void	rt_free_split(char **split)
+{
+	char	**start;
+
+	if (!split)
+		return ;
+	start = split;
+	while (*split)
+	{
+		free(*split);
+		++split;
+	}
+	free(start);
 }

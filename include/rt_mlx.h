@@ -1,29 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minirt.c                                           :+:      :+:    :+:   */
+/*   rt_mlx.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hwilkim <hwilkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/02 16:20:44 by hwilkim           #+#    #+#             */
-/*   Updated: 2025/01/03 17:49:40 by hwilkim          ###   ########.fr       */
+/*   Created: 2025/01/02 17:07:57 by hwilkim           #+#    #+#             */
+/*   Updated: 2025/01/03 18:18:42 by hwilkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "mlx.h"
-#include "rt_error.h"
-#include "rt_mlx.h"
+#ifndef RT_MLX_H
+# define RT_MLX_H
 
-#include "minirt.h"
+# include "rt_struct.h"
 
-int	main(int argc, char **argv)
-{
-	t_mlx	mlx;
+/* rt_mlx_hook */
+int		rt_key_hook(int keycode, t_mlx *mlx);
+int		rt_loop_hook(t_mlx *mlx);
 
-	(void)argc;
-	(void)argv;
-	init_mlx_data(&mlx);
-	mlx_loop(mlx.mlx);
-	destroy_mlx_data(&mlx);
-	return (0);
-}
+/* rt_mlx_utils */
+void	init_mlx_data(t_mlx *mlx);
+void	destroy_mlx_data(t_mlx *mlx);
+void	draw_pixel_to_img(t_data *data, int x, int y, unsigned int color);
+
+#endif

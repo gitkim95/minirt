@@ -1,29 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minirt.c                                           :+:      :+:    :+:   */
+/*   rt_ray.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hwilkim <hwilkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/02 16:20:44 by hwilkim           #+#    #+#             */
-/*   Updated: 2025/01/03 17:49:40 by hwilkim          ###   ########.fr       */
+/*   Created: 2025/01/04 15:44:59 by hwilkim           #+#    #+#             */
+/*   Updated: 2025/01/04 21:09:26 by hwilkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "mlx.h"
-#include "rt_error.h"
-#include "rt_mlx.h"
+#include "rt_vector.h"
 
-#include "minirt.h"
+#include "rt_ray.h"
 
-int	main(int argc, char **argv)
+t_coord	ray_at(t_ray *ray, double t)
 {
-	t_mlx	mlx;
-
-	(void)argc;
-	(void)argv;
-	init_mlx_data(&mlx);
-	mlx_loop(mlx.mlx);
-	destroy_mlx_data(&mlx);
-	return (0);
+	return (v_add(ray->origin, v_mul(ray->direction, t)));
 }

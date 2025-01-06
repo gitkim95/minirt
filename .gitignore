@@ -9,10 +9,11 @@ minilibx/
 
 # miniRT
 miniRT
-scene/
+test_files/
 
 # vscode
 .vscode
+test.c
 
 # Prerequisites
 *.d

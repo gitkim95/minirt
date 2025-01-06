@@ -1,29 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minirt.c                                           :+:      :+:    :+:   */
+/*   rt_vec_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hwilkim <hwilkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/02 16:20:44 by hwilkim           #+#    #+#             */
-/*   Updated: 2025/01/03 17:49:40 by hwilkim          ###   ########.fr       */
+/*   Created: 2025/01/04 16:31:28 by hwilkim           #+#    #+#             */
+/*   Updated: 2025/01/04 21:07:57 by hwilkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "mlx.h"
-#include "rt_error.h"
-#include "rt_mlx.h"
+#include <math.h>
 
-#include "minirt.h"
+#include "rt_vector.h"
 
-int	main(int argc, char **argv)
+double	v_length(t_vec vec)
 {
-	t_mlx	mlx;
+	return (sqrt(v_length_squared(vec)));
+}
 
-	(void)argc;
-	(void)argv;
-	init_mlx_data(&mlx);
-	mlx_loop(mlx.mlx);
-	destroy_mlx_data(&mlx);
-	return (0);
+double	v_length_squared(t_vec vec)
+{
+	return (v_dot(vec, vec));
+}
+
+t_vec	v_unit(t_vec vec)
+{
+	return (v_div(vec, v_length(vec)));
 }

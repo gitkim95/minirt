@@ -8,37 +8,41 @@ MINILIBX_DIR := minilibx
 MINILIBX := $(MINILIBX_DIR)/libmlx.a
 
 INCLUDES := -Iinclude -I$(LIBFT_DIR) -I$(MINILIBX_DIR)
-
 SYSLIB_FLG := -lXext -lX11 -lm
 
-SRC_DIRS := error	mlx_hook
+ENV_SRC := rt_env.c
+
+ERROR_SRC :=	rt_error.c
+
+FIGURE_SRC :=	rt_figure.c		rt_figure_cylinder.c	rt_figure_plane.c	\
+				rt_figure_sphere.c	rt_figure_utils.c
+
+RAY_SRC :=		rt_ray.c
+
+RT_MLX_SRC :=	rt_mlx_hook.c	rt_mlx_utils.c
+
+SCENE_SRC :=	rt_scene_draw.c	rt_scene_parse.c
+
+UTILS_SRC :=	rt_utils_mem.c	rt_utils_str.c
+
+VECTOR_SRC :=	rt_vec_op_arithmetic.c	rt_vec_op_product.c	rt_vec_utils.c
+
+SRC_DIRS :=	env		error	figure	ray		\
+			rt_mlx	scene	utils	vector
+SRCS :=	$(ENV_SRC)		$(ERROR_SRC)	$(FIGURE_SRC)	$(RAY_SRC)		\
+		$(RT_MLX_SRC)	$(SCENE_SRC)	$(UTILS_SRC)	$(VECTOR_SRC)	\
+		minirt.c 
+
 OBJ_DIR = obj
-
-SRCS :=	minirt.c	rt_error.c	rt_mlx_hook.c
 OBJS := $(addprefix $(OBJ_DIR)/,$(SRCS:%.c=%.o))
-
-MEN_SRCS := 
-MEN_OBJS := $(addprefix $(OBJ_DIR)/,$(MEN_SRCS:%.c=%.o))
-
-BON_SRCS := 
-BON_OBJS := $(addprefix $(OBJ_DIR)/,$(BON_SRCS:%.c=%.o))
 
 vpath %.c $(SRC_DIRS)
 
-ifdef BONUS
-	OBJS += $(BON_OBJS)
-else
-	OBJS += $(MEN_OBJS)
-endif
-
 NAME := miniRT
 
-.PHONY: clean fclean re all bonus check_dir
+.PHONY: clean fclean re all check_dir
 
 all: $(NAME)
-
-bonus:
-	@$(MAKE) --no-print-directory BONUS=1 $(NAME)
 
 check_dir:
 	@mkdir -p $(OBJ_DIR)
@@ -53,7 +57,7 @@ $(NAME): $(OBJS) $(LIBFT) $(MINILIBX)
 	$(CC) $(CFLAGS) $(OBJS) $(LIBFT) $(MINILIBX) $(SYSLIB_FLG) -o $@
 
 $(OBJ_DIR)/%.o: %.c | check_dir
-	$(CC) $(CFLAGS) $(INCLUDES) $(SYSLIB_FLG) -c $< -o $@
+	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
 clean: 
 	rm -rf $(OBJ_DIR)

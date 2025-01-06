@@ -6,12 +6,13 @@
 /*   By: hwilkim <hwilkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/02 16:43:56 by hwilkim           #+#    #+#             */
-/*   Updated: 2025/01/06 19:26:49 by hwilkim          ###   ########.fr       */
+/*   Updated: 2025/01/06 20:42:33 by hwilkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stddef.h>
 #include <math.h>
+#include "rt_ray.h"
 #include "rt_utils.h"
 #include "rt_vector.h"
 #include "libft.h"
@@ -54,4 +55,20 @@ double	hit_sphere(t_figure *figure, t_ray *ray)
 	if (discrim < 0)
 		return (-1.0);
 	return ((b - sqrt(discrim)) / a);
+}
+
+t_color	color_sphere(t_ray *cam, t_light *light, t_figure *figure, double hit)
+{
+	t_color	color;
+	t_vec	n;
+	t_vec	d;
+	double	t;
+
+	n = v_unit(v_sub(ray_at(cam, hit), figure->center));
+	d = v_unit(v_sub(light->center, ray_at(cam, hit)));
+	t = fmax(0, v_dot(n, d));
+	color.x = light->color.x * figure->color.x * t;
+	color.y = light->color.y * figure->color.y * t;
+	color.z = light->color.z * figure->color.z * t;
+	return (color);
 }

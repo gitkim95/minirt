@@ -6,12 +6,13 @@
 /*   By: hwilkim <hwilkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/02 17:08:21 by hwilkim           #+#    #+#             */
-/*   Updated: 2025/01/03 18:33:36 by hwilkim          ###   ########.fr       */
+/*   Updated: 2025/01/06 20:32:32 by hwilkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <X11/keysym.h>
 #include "mlx.h"
+#include "rt_scene.h"
 
 #include "rt_mlx.h"
 
@@ -30,6 +31,7 @@ int	rt_loop_hook(t_mlx *mlx)
 		mlx_destroy_image(mlx->mlx, mlx->img_data.img);
 	mlx->img_data.img = mlx_new_image(mlx->mlx, mlx->width, mlx->height);
 	mlx->img_data.addr = get_data_addr(mlx);
+	draw_scene(mlx);
 	mlx_put_image_to_window(mlx->mlx, mlx->win, mlx->img_data.img, 0, 0);
 	return (0);
 }

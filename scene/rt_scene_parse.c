@@ -6,7 +6,7 @@
 /*   By: hwilkim <hwilkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 18:41:32 by hwilkim           #+#    #+#             */
-/*   Updated: 2025/01/06 19:23:21 by hwilkim          ###   ########.fr       */
+/*   Updated: 2025/01/06 20:42:13 by hwilkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ t_scene	make_scene(t_mlx *mlx, char *filepath)
 	(void) filepath;
 	scene = &mlx->scene;
 	scene->cam = make_camera(mlx->width, mlx->height, (t_coord){0, 0, 0});
-	scene->light = make_light((t_coord){-40, 0, 30}, 0.7);
+	scene->light = make_light((t_coord){2, 2, 2}, 0.7);
 	scene->amb_light = make_amb_light(0.2, (t_color){1, 1, 1});
 	append_fig_list(&scene->figures, tmp_figure());
 	return (*scene);
@@ -37,7 +37,7 @@ static	t_figure	*tmp_figure(void)
 	char		**split;
 	t_figure	*figure;
 
-	split = ft_split("sp   0.0,0.0,20.6   12.6   10,0,255", ' ');
+	split = ft_split("sp   0.0,0.0,-1.0   1.0   10,0,255", ' ');
 	figure = make_figure(split);
 	rt_free_split(split);
 	return (figure);

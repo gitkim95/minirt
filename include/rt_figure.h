@@ -6,7 +6,7 @@
 /*   By: hwilkim <hwilkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/02 16:40:41 by hwilkim           #+#    #+#             */
-/*   Updated: 2025/01/06 18:48:06 by hwilkim          ###   ########.fr       */
+/*   Updated: 2025/01/06 20:23:36 by hwilkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ void		draw_cylinder(t_figure *figure);
 void		draw_plane(t_figure *figure);
 double		hit_sphere(t_figure *figure, t_ray *ray);
 
+t_color		color_sphere(t_ray *cam, t_light *light, t_figure *fig, double hit);
+
 /* rt_figure_utils */
 void		append_fig_list(t_fig_list *list, t_figure *figure);
 t_coord		parse_to_coord(char *str);
@@ -31,6 +33,7 @@ int			to_rgb_color(t_color color);
 
 /* rt_figure */
 t_figure	*make_figure(char **figure_attr);
-void		draw_figure(t_figure *figure, t_ray *ray);
+double		hit_figure(t_figure *figure, t_ray *ray);
+t_color		color_figure(t_ray *cam, t_light *light, t_figure *fig, double hit);
 
 #endif

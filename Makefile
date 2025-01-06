@@ -21,7 +21,7 @@ RAY_SRC :=		rt_ray.c
 
 RT_MLX_SRC :=	rt_mlx_hook.c	rt_mlx_utils.c
 
-SCENE_SRC :=	rt_scene_parse.c
+SCENE_SRC :=	rt_scene_draw.c	rt_scene_parse.c
 
 UTILS_SRC :=	rt_utils_mem.c	rt_utils_str.c
 

@@ -6,7 +6,7 @@
 /*   By: hwilkim <hwilkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/03 15:16:19 by hwilkim           #+#    #+#             */
-/*   Updated: 2025/01/03 15:26:17 by hwilkim          ###   ########.fr       */
+/*   Updated: 2025/01/06 18:49:29 by hwilkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,16 @@
 #include "libft.h"
 
 #include "rt_figure.h"
+
+void	append_fig_list(t_fig_list *list, t_figure *figure)
+{
+	if (list->size)
+		list->tail->next = figure;
+	else
+		list->head = figure;
+	list->tail = figure;
+	++list->size;
+}
 
 t_coord	parse_to_coord(char *str)
 {

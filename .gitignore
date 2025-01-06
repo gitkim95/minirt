@@ -9,7 +9,7 @@ minilibx/
 
 # miniRT
 miniRT
-scene/
+test_files/
 
 # vscode
 .vscode

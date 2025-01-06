@@ -6,7 +6,7 @@
 /*   By: hwilkim <hwilkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/02 19:21:13 by hwilkim           #+#    #+#             */
-/*   Updated: 2025/01/03 15:49:23 by hwilkim          ###   ########.fr       */
+/*   Updated: 2025/01/06 19:26:46 by hwilkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ t_figure	*parse_cylinder(char **figure_attr)
 	figure->diameter = rt_atof(figure_attr[3]);
 	figure->height = rt_atof(figure_attr[4]);
 	figure->color = parse_to_color(figure_attr[5]);
-	return (NULL);
+	return (figure);
 }
 
 void	draw_cylinder(t_figure *figure)

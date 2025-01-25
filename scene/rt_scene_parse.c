@@ -6,11 +6,11 @@
 /*   By: hwilkim <hwilkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 18:41:32 by hwilkim           #+#    #+#             */
-/*   Updated: 2025/01/06 20:42:13 by hwilkim          ###   ########.fr       */
+/*   Updated: 2025/01/26 16:53:23 by hwilkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "rt_env.h"
+#include "rt_component.h"
 #include "rt_figure.h"
 #include "rt_utils.h"
 #include "libft.h"

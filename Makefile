@@ -10,26 +10,26 @@ MINILIBX := $(MINILIBX_DIR)/libmlx.a
 INCLUDES := -Iinclude -I$(LIBFT_DIR) -I$(MINILIBX_DIR)
 SYSLIB_FLG := -lXext -lX11 -lm
 
-ENV_SRC := rt_env.c
+COMP_SRC	:=	rt_component.c
 
-ERROR_SRC :=	rt_error.c
+ERROR_SRC	:=	rt_error.c
 
-FIGURE_SRC :=	rt_figure.c		rt_figure_cylinder.c	rt_figure_plane.c	\
+FIGURE_SRC	:=	rt_figure.c		rt_figure_cylinder.c	rt_figure_plane.c	\
 				rt_figure_sphere.c	rt_figure_utils.c
 
-RAY_SRC :=		rt_ray.c
+RAY_SRC		:=	rt_ray.c
 
-RT_MLX_SRC :=	rt_mlx_hook.c	rt_mlx_utils.c
+RT_MLX_SRC	:=	rt_mlx_hook.c	rt_mlx_utils.c
 
-SCENE_SRC :=	rt_scene_draw.c	rt_scene_parse.c
+SCENE_SRC	:=	rt_scene_draw.c	rt_scene_parse.c
 
-UTILS_SRC :=	rt_utils_mem.c	rt_utils_str.c
+UTILS_SRC	:=	rt_utils_mem.c	rt_utils_str.c
 
-VECTOR_SRC :=	rt_vec_op_arithmetic.c	rt_vec_op_product.c	rt_vec_utils.c
+VECTOR_SRC	:=	rt_vec_op_arithmetic.c	rt_vec_op_product.c	rt_vec_utils.c
 
-SRC_DIRS :=	env		error	figure	ray		\
-			rt_mlx	scene	utils	vector
-SRCS :=	$(ENV_SRC)		$(ERROR_SRC)	$(FIGURE_SRC)	$(RAY_SRC)		\
+SRC_DIRS	:=	component	error	figure	ray		\
+				rt_mlx		scene	utils	vector
+SRCS :=	$(COMP_SRC)		$(ERROR_SRC)	$(FIGURE_SRC)	$(RAY_SRC)		\
 		$(RT_MLX_SRC)	$(SCENE_SRC)	$(UTILS_SRC)	$(VECTOR_SRC)	\
 		minirt.c 
 

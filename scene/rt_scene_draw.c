@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rt_scene_draw.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gitkim <gitkim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
+/*   By: hwilkim <hwilkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 18:41:32 by hwilkim           #+#    #+#             */
-/*   Updated: 2025/02/01 00:02:31 by gitkim           ###   ########.fr       */
+/*   Updated: 2025/02/02 04:20:41 by hwilkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ void	draw_scene(t_mlx *mlx)
 {
 	t_ray	cam_ray;
 	t_color	color;
+	int		color_value;
 	int		i;
 	int		j;
 
@@ -36,7 +37,10 @@ void	draw_scene(t_mlx *mlx)
 			cam_ray = calculate_cam_ray(&mlx->scene.cam, i, j);
 			color = calculate_figure_color(&cam_ray, mlx);
 			if (has_color(color))
-				draw_pixel_to_img(&mlx->img_data, i, j, to_rgb_color(color));
+				color_value = to_rgb_color(color);
+			else
+				color_value = to_rgb_color(mlx->scene.amb_light.color);
+			draw_pixel_to_img(&mlx->img_data, i, j, color_value);
 			++i;
 		}
 		++j;

@@ -6,13 +6,17 @@
 /*   By: hwilkim <hwilkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/04 16:18:50 by hwilkim           #+#    #+#             */
-/*   Updated: 2025/01/26 16:51:44 by hwilkim          ###   ########.fr       */
+/*   Updated: 2025/01/29 19:07:24 by hwilkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <math.h>
 #include "rt_vector.h"
 
 #include "rt_component.h"
+
+static t_vec	calculate_vp_upper_left(t_camera *camera);
+static t_vec	calculate_pixel_zero_loc(t_camera *camera);
 
 /**
  * Camera:	C    -50.0,0,20    0,0,1    70
@@ -23,27 +27,22 @@
  * FOV : Horizontal field of view in degrees in range [0,180]: 70
  */
 
-t_camera	make_camera(int width, int height, t_coord center)
+t_camera	make_camera(int width, int height, t_coord center, int fov)
 {
 	t_camera	camera;
-	t_vec		tmp;
+	double		fov_radians;
 
-	camera.focal_length = 1.0;
-	camera.vp_height = 2.0;
-	camera.vp_width = camera.vp_height * ((double)width / height);
-	camera.center = center;
+	fov_radians = fov * RT_RADIAN;
+	camera.vp_width = 2 * tan(fov_radians / 2);
+	camera.vp_height = camera.vp_width / ((double)width / height);
 	camera.vp_u = (t_vec){camera.vp_width, 0, 0};
 	camera.vp_v = (t_vec){0, -camera.vp_height, 0};
 	camera.pixel_delta_u = v_div(camera.vp_u, width);
 	camera.pixel_delta_v = v_div(camera.vp_v, height);
-	tmp = v_sub(camera.center, (t_vec){0, 0, camera.focal_length});
-	tmp = v_sub(tmp, v_div(camera.vp_u, 2));
-	tmp = v_sub(tmp, v_div(camera.vp_v, 2));
-	camera.vp_upper_left = tmp;
-	tmp = v_add(camera.pixel_delta_u, camera.pixel_delta_v);
-	tmp = v_mul(tmp, 0.5);
-	tmp = v_add(camera.vp_upper_left, tmp);
-	camera.pixel_zero_loc = tmp;
+	camera.center = center;
+	camera.focal_length = camera.vp_width / (2 * tan(fov_radians / 2));
+	camera.vp_upper_left = calculate_vp_upper_left(&camera);
+	camera.pixel_zero_loc = calculate_pixel_zero_loc(&camera);
 	return (camera);
 }
 
@@ -79,4 +78,24 @@ t_amb_light	make_amb_light(double bright, t_color color)
 	amb_light.bright = bright;
 	amb_light.color = color;
 	return (amb_light);
+}
+
+static t_vec	calculate_vp_upper_left(t_camera *camera)
+{
+	t_vec	vp_upper_left;
+
+	vp_upper_left = v_sub(camera->center, (t_vec){0, 0, camera->focal_length});
+	vp_upper_left = v_sub(vp_upper_left, v_div(camera->vp_u, 2));
+	vp_upper_left = v_sub(vp_upper_left, v_div(camera->vp_v, 2));
+	return (vp_upper_left);
+}
+
+static t_vec	calculate_pixel_zero_loc(t_camera *camera)
+{
+	t_vec	pixel_zero_loc;
+
+	pixel_zero_loc = v_add(camera->pixel_delta_u, camera->pixel_delta_v);
+	pixel_zero_loc = v_mul(pixel_zero_loc, 0.5);
+	pixel_zero_loc = v_add(camera->vp_upper_left, pixel_zero_loc);
+	return (pixel_zero_loc);
 }

@@ -6,7 +6,7 @@
 /*   By: hwilkim <hwilkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 18:41:32 by hwilkim           #+#    #+#             */
-/*   Updated: 2025/02/02 04:22:58 by hwilkim          ###   ########.fr       */
+/*   Updated: 2025/02/02 04:23:49 by hwilkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,13 +66,11 @@ static t_color	calculate_figure_color(t_ray *cam_ray, t_mlx *mlx)
 {
 	t_figure	*figure;
 	t_color		color;
-	t_color		amb_color;
 	double		hit;
 	double		hit_min;
 
 	figure = mlx->scene.figures.head;
 	color = empty_color();
-	amb_color = v_mul(mlx->scene.amb_light.color, mlx->scene.amb_light.bright);
 	hit_min = INFINITY;
 	while (figure)
 	{
@@ -80,12 +78,7 @@ static t_color	calculate_figure_color(t_ray *cam_ray, t_mlx *mlx)
 		if (hit > 0 && hit_min > hit)
 		{
 			hit_min = hit;
-			color = color_figure(ray_at(cam_ray, hit), &mlx->scene.light, \
-												figure, &mlx->scene.figures);
-			color = v_add(color, amb_color);
-			color.x = fmin(color.x, 1.0);
-			color.y = fmin(color.y, 1.0);
-			color.z = fmin(color.z, 1.0);
+			color = color_figure(ray_at(cam_ray, hit), &mlx->scene, figure);
 		}
 		figure = figure->next;
 	}

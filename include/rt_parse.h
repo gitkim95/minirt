@@ -1,30 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minirt.c                                           :+:      :+:    :+:   */
+/*   rt_parse.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gitkim <gitkim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/02 16:20:44 by hwilkim           #+#    #+#             */
-/*   Updated: 2025/01/30 17:30:46 by gitkim           ###   ########.fr       */
+/*   Created: 2025/01/30 17:25:08 by gitkim            #+#    #+#             */
+/*   Updated: 2025/01/30 17:44:38 by gitkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "mlx.h"
-#include "rt_error.h"
-#include "rt_mlx.h"
+#ifndef RT_PARSE_H
+# define RT_PARSE_H
 
-#include "minirt.h"
+/* rt_parse.c */
+void	parse_data(t_mlx *mlx, char *file_path);
 
-int	main(int argc, char **argv)
-{
-	t_mlx	mlx;
-
-	if (argc != 2)
-		return (0); // error msg
-	init_mlx_data(&mlx);
-	parse_data(&mlx, argv[1]);
-	mlx_loop(mlx.mlx);
-	destroy_mlx_data(&mlx);
-	return (0);
-}
+#endif

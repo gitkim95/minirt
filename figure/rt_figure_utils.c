@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rt_figure_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hwilkim <hwilkim@student.42.fr>            +#+  +:+       +#+        */
+/*   By: gitkim <gitkim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/03 15:16:19 by hwilkim           #+#    #+#             */
-/*   Updated: 2025/01/06 18:49:29 by hwilkim          ###   ########.fr       */
+/*   Updated: 2025/01/30 22:24:13 by gitkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,14 @@ t_coord	parse_to_coord(char *str)
 {
 	t_coord	coord;
 	char	**coord_split;
+	int		idx;
 
 	coord_split = ft_split(str, ',');
+	idx = 0;
+	while (coord_split[idx])
+		idx++;
+	if (idx != 3)
+		exit(0); // error, check for free
 	coord.x = rt_atof(coord_split[0]);
 	coord.y = rt_atof(coord_split[1]);
 	coord.z = rt_atof(coord_split[2]);

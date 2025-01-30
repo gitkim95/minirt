@@ -3,17 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   rt_figure.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gitkim <gitkim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
+/*   By: hwilkim <hwilkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/02 19:28:52 by hwilkim           #+#    #+#             */
-/*   Updated: 2025/02/02 03:11:51 by gitkim           ###   ########.fr       */
+/*   Updated: 2025/02/02 04:22:27 by hwilkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stddef.h>
+#include "rt_ray.h"
 #include "rt_utils.h"
+#include "rt_vector.h"
 
 #include "rt_figure.h"
+
+static int	check_shadow(t_coord hit_point, t_light *light, t_figure *figure, \
+							t_fig_list *list);
 
 t_figure	*make_figure(char **figure_attr)
 {
@@ -45,15 +50,42 @@ double	hit_figure(t_figure *figure, t_ray *ray)
 	return (-1.0);
 }
 
-t_color	color_figure(t_ray *cam, t_light *light, t_figure *figure, double hit)
+t_color	color_figure(t_coord hit_point, t_light *light, t_figure *figure, \
+						t_fig_list *list)
 {
-	if (hit < 0)
-		return (light->color);
-	else if (figure->identifier == RT_CY)
+	if (check_shadow(hit_point, light, figure, list))
+		return ((t_color){0, 0, 0});
+	if (figure->identifier == RT_CY)
 		draw_cylinder(figure);
 	else if (figure->identifier == RT_PL)
 		return (color_plane(cam, light, figure, hit));
 	else if (figure->identifier == RT_SP)
-		return (color_sphere(cam, light, figure, hit));
+		return (color_sphere(hit_point, light, figure));
 	return (light->color);
+}
+
+static int	check_shadow(t_coord hit_point, t_light *light, t_figure *figure, \
+							t_fig_list *list)
+{
+	t_figure	*node;
+	t_ray		surf_ray;
+	t_vec		light_dir;
+	double		light_dist;
+	double		hit_dist;
+
+	light_dir = v_unit(v_sub(light->center, hit_point));
+	light_dist = v_length(light_dir);
+	surf_ray = (t_ray){hit_point, light_dir};
+	node = list->head;
+	while (node)
+	{
+		if (node != figure)
+		{
+			hit_dist = hit_figure(node, &surf_ray);
+			if (hit_dist > 0 && hit_dist < light_dist)
+				return (1);
+		}
+		node = node->next;
+	}
+	return (0);
 }

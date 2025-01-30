@@ -6,14 +6,15 @@
 /*   By: hwilkim <hwilkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 18:41:32 by hwilkim           #+#    #+#             */
-/*   Updated: 2025/02/02 04:21:26 by hwilkim          ###   ########.fr       */
+/*   Updated: 2025/02/02 04:22:58 by hwilkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <math.h>
 #include "rt_figure.h"
-#include "rt_vector.h"
 #include "rt_mlx.h"
+#include "rt_ray.h"
+#include "rt_vector.h"
 
 #include "rt_scene.h"
 
@@ -79,7 +80,8 @@ static t_color	calculate_figure_color(t_ray *cam_ray, t_mlx *mlx)
 		if (hit > 0 && hit_min > hit)
 		{
 			hit_min = hit;
-			color = color_figure(cam_ray, &mlx->scene.light, figure, hit);
+			color = color_figure(ray_at(cam_ray, hit), &mlx->scene.light, \
+												figure, &mlx->scene.figures);
 			color = v_add(color, amb_color);
 			color.x = fmin(color.x, 1.0);
 			color.y = fmin(color.y, 1.0);

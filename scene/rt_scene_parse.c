@@ -6,7 +6,7 @@
 /*   By: hwilkim <hwilkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 18:41:32 by hwilkim           #+#    #+#             */
-/*   Updated: 2025/02/02 04:22:07 by hwilkim          ###   ########.fr       */
+/*   Updated: 2025/02/02 04:23:10 by hwilkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ static	t_figure	*tmp_figure2(void)
 	char		**split;
 	t_figure	*figure;
 
-	split = ft_split("sp   1.0,0.0,-2.0   1.0   255,0,10", ' ');
+	split = ft_split("sp   1.0,0.0,-0.5  1.0   255,0,10", ' ');
 	figure = make_figure(split);
 	rt_free_split(split);
 	return (figure);

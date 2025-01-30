@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rt_figure.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gitkim <gitkim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
+/*   By: hwilkim <hwilkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/02 16:40:41 by hwilkim           #+#    #+#             */
-/*   Updated: 2025/02/02 03:12:24 by gitkim           ###   ########.fr       */
+/*   Updated: 2025/02/02 04:22:46 by hwilkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ int			to_rgb_color(t_color color);
 /* rt_figure */
 t_figure	*make_figure(char **figure_attr);
 double		hit_figure(t_figure *figure, t_ray *ray);
-t_color		color_figure(t_ray *cam, t_light *light, t_figure *fig, double hit);
+t_color		color_figure(t_coord hit_point, t_light *light, t_figure *fig, \
+							t_fig_list *list);
 
 #endif

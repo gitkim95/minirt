@@ -6,7 +6,7 @@
 /*   By: gitkim <gitkim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 21:09:42 by gitkim            #+#    #+#             */
-/*   Updated: 2025/01/30 22:35:41 by gitkim           ###   ########.fr       */
+/*   Updated: 2025/01/30 23:14:46 by gitkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,12 +57,13 @@ void	set_light(t_light *light, char **data)
 {
 	double	bright;
 	t_color	color;
+	t_coord	center;
 	char	**temp_color;
 
 	if (!ft_strchr(data[1], '.'));
 		exit(0); // file_data_error;
-	bright = rt_atof(data[1]);
-	color = parse_to_color(data[2]);
+	bright = rt_atof(data[2]);
+	color = parse_to_color(data[3]);
 	check_color_value(&color);
 	light->bright = bright;
 	light->color = color;

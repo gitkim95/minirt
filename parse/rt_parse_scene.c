@@ -6,7 +6,7 @@
 /*   By: gitkim <gitkim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 21:09:42 by gitkim            #+#    #+#             */
-/*   Updated: 2025/01/30 23:14:46 by gitkim           ###   ########.fr       */
+/*   Updated: 2025/01/31 23:15:16 by gitkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,56 +18,59 @@
 #include "rt_figure.h"
 #include "rt_component.h"
 #include "rt_utils.h"
+#include "rt_vector.h"
 #include "rt_error.h"
 #include "libft.h"
 
-void	check_color_value(t_color *color)
-{
-	double	temp;
-	
-	temp = fmin(color->x, 255);
-	color->x = fmax(temp, 0);
-	temp = fmin(color->y, 255);
-	color->y = fmax(temp, 0);
-	temp = fmin(color->z, 255);
-	color->z = fmax(temp, 0);	
-}
-
-void	set_ambient_lightning(t_amb_light *amb, char **data)
+static void	set_ambient_lightning(t_amb_light *amb, char **data)
 {
 	double	bright;
 	t_color	color;
 	char	**temp_color;
 
-	if (!ft_strchr(data[1], '.'));
-		exit(0); // file_data_error;
 	bright = rt_atof(data[1]);
 	color = parse_to_color(data[2]);
-	check_color_value(&color);
 	amb->bright = bright;
 	amb->color = color;
 }
 
-void	set_camera(t_camera *camera, char **data)
+static void	set_camera(t_camera *camera, char **data)
 {
-	
+	t_vec	tmp;
+
+	camera->focal_length = 1.0;
+	camera->vp_height = 2.0;
+	camera->vp_width = camera->vp_height * ((double)RT_WIDTH / RT_HEIGHT);
+	camera->center = parse_to_coord(data[1]);
+	camera->vp_u = (t_vec){camera->vp_width, 0, 0};
+	camera->vp_v = (t_vec){0, -camera->vp_height, 0};
+	camera->pixel_delta_u = v_div(camera->vp_u, RT_WIDTH);
+	camera->pixel_delta_v = v_div(camera->vp_v, RT_HEIGHT);
+	tmp = v_sub(camera->center, (t_vec){0, 0, camera->focal_length});
+	tmp = v_sub(tmp, v_div(camera->vp_u, 2));
+	tmp = v_sub(tmp, v_div(camera->vp_v, 2));
+	camera->vp_upper_left = tmp;
+	tmp = v_add(camera->pixel_delta_u, camera->pixel_delta_v);
+	tmp = v_mul(tmp, 0.5);
+	tmp = v_add(camera->vp_upper_left, tmp);
+	camera->pixel_zero_loc = tmp;
 }
 
-void	set_light(t_light *light, char **data)
+static void	set_light(t_light *light, char **data)
 {
 	double	bright;
 	t_color	color;
 	t_coord	center;
 	char	**temp_color;
 
-	if (!ft_strchr(data[1], '.'));
-		exit(0); // file_data_error;
+	center = parse_to_coord(data[1]);
 	bright = rt_atof(data[2]);
 	color = parse_to_color(data[3]);
-	check_color_value(&color);
+	light->center = center;
 	light->bright = bright;
 	light->color = color;
 }
+
 void	set_scene_struct(t_scene *scene, char **data, t_scene_type type)
 {
 	if (type == RT_A)

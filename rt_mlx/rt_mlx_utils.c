@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rt_mlx_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hwilkim <hwilkim@student.42.fr>            +#+  +:+       +#+        */
+/*   By: gitkim <gitkim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/03 17:43:11 by hwilkim           #+#    #+#             */
-/*   Updated: 2025/01/06 19:19:17 by hwilkim          ###   ########.fr       */
+/*   Updated: 2025/01/31 23:13:24 by gitkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,12 @@
 #include "rt_error.h"
 #include "rt_scene.h"
 #include "rt_utils.h"
+#include "rt_parse.h"
 #include "libft.h"
 
 #include "rt_mlx.h"
 
-void	init_mlx_data(t_mlx *mlx)
+void	init_mlx_data(t_mlx *mlx, char *file_path)
 {
 	ft_bzero(mlx, sizeof(t_mlx));
 	mlx->mlx = mlx_init();
@@ -31,7 +32,7 @@ void	init_mlx_data(t_mlx *mlx)
 	mlx->width = RT_WIDTH;
 	mlx->height = RT_HEIGHT;
 	mlx->win = mlx_new_window(mlx->mlx, mlx->width, mlx->height, "miniRT");
-	mlx->scene = make_scene(mlx, "file");
+	parse_data(mlx, file_path);
 	mlx_hook(mlx->win, DestroyNotify, 0, mlx_loop_end, mlx->mlx);
 	mlx_hook(mlx->win, KeyPress, KeyPressMask, rt_key_hook, mlx);
 	mlx_loop_hook(mlx->mlx, rt_loop_hook, mlx);

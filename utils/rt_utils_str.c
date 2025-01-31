@@ -6,7 +6,7 @@
 /*   By: gitkim <gitkim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/02 19:34:37 by hwilkim           #+#    #+#             */
-/*   Updated: 2025/01/30 22:14:30 by gitkim           ###   ########.fr       */
+/*   Updated: 2025/01/31 17:13:52 by gitkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,11 @@ int	rt_strcmp(char *s1, char *s2)
 	return (c1 - c2);
 }
 
+static int	rt_issign(char c)
+{
+	return (c == '-' || c == '+');
+}
+
 int	rt_all_isdigit(char *str)
 {
 	int	idx;
@@ -41,6 +46,8 @@ int	rt_all_isdigit(char *str)
 	idx = 0;
 	while (str[idx])
 	{
+		if (idx == 0 && rt_issign(str[idx]))
+			idx++;
 		if (!ft_isdigit(str[idx]))
 			return (0);
 		idx++;
@@ -52,17 +59,23 @@ double	rt_atof(char *str)
 {
 	double	int_part;
 	double	fract_part;
-	char	*dot;
+	char	**sep_number;
+	int		idx;
 
-	dot = ft_strchr(str, '.');
-	*dot = '\0';
-	if (rt_all_isdigit(str))
-		int_part = ft_atoi(str);
-	if (rt_all_isdigit(dot + 1))
-		fract_part = ft_atoi(dot + 1);
+	sep_number = ft_split(str, '.');
+	idx = 0;
+	while (sep_number[idx])
+		idx++;
+	if (idx == 1)
+		fract_part = 0.0;
+	if (rt_all_isdigit(sep_number[0]))
+		int_part = ft_atoi(sep_number[0]);
+	if (idx == 2 && rt_all_isdigit(sep_number[1]))
+		fract_part = ft_atoi(sep_number[1]);
 	while (fract_part >= 1)
 		fract_part /= 10.0;
-	if (ft_strchr(str, '-'))
+	if (str[0] == '-')
 		fract_part *= -1;
+	rt_free_split(sep_number);
 	return (int_part + fract_part);
 }

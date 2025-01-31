@@ -6,7 +6,7 @@
 /*   By: gitkim <gitkim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 17:30:56 by gitkim            #+#    #+#             */
-/*   Updated: 2025/01/30 21:12:54 by gitkim           ###   ########.fr       */
+/*   Updated: 2025/01/31 23:14:02 by gitkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 #include "rt_utils.h"
 #include "libft.h"
 
-void	valid_data_type(t_mlx *mlx, char **split_data)
+static void	valid_data_type(t_mlx *mlx, char **split_data)
 {
 	if (rt_strcmp(split_data[0], "A"))
 		set_scene_struct(&(mlx->scene), split_data, RT_A);
@@ -30,16 +30,16 @@ void	valid_data_type(t_mlx *mlx, char **split_data)
 	else if (rt_strcmp(split_data[0], "L"))
 		set_scene_struct(&(mlx->scene), split_data, RT_L);
 	else if (rt_strcmp(split_data[0], "sp"))
-		set_scene_struct(&(mlx->scene.figures), split_data, RT_SP);
+		set_figure_struct(&(mlx->scene.figures), split_data, RT_SP);
 	else if (rt_strcmp(split_data[0], "pl"))
-		set_scene_struct(&(mlx->scene.figures), split_data, RT_PL);
+		set_figure_struct(&(mlx->scene.figures), split_data, RT_PL);
 	else if (rt_strcmp(split_data[0], "cy"))
-		set_scene_struct(&(mlx->scene.figures), split_data, RT_CY);
+		set_figure_struct(&(mlx->scene.figures), split_data, RT_CY);
 	else
 		return ;
 }
 
-bool	valid_file_extension(char *file_path)
+static bool	valid_file_extension(char *file_path)
 {
 	char	**file_path_split;
 	int		idx;
@@ -54,7 +54,7 @@ bool	valid_file_extension(char *file_path)
 	idx = 0;
 	while (file_path_split[idx])
 		idx++;
-	if (rt_strcmp(file_path_split[idx - 1], "rt"));
+	if (rt_strcmp(file_path_split[idx - 1], "rt"))
 		ret = true;
 	rt_free_split(file_path_split);
 	return (ret);
@@ -77,7 +77,7 @@ void	parse_data(t_mlx *mlx, char *file_path)
 		if (!read_line)
 			break ;
 		split_data = ft_split(read_line, ' ');
-		if (split_data)	
+		if (split_data)
 			exit_on_error(ENOMEM);// mem_leak_alert
 		free(read_line);
 		valid_data_type(mlx, split_data);

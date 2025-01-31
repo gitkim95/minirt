@@ -6,7 +6,7 @@
 /*   By: gitkim <gitkim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/03 15:16:19 by hwilkim           #+#    #+#             */
-/*   Updated: 2025/01/30 22:24:13 by gitkim           ###   ########.fr       */
+/*   Updated: 2025/01/31 22:32:03 by gitkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 #include "libft.h"
 
 #include "rt_figure.h"
+
+static double	normalize_color(double value);
 
 void	append_fig_list(t_fig_list *list, t_figure *figure)
 {
@@ -48,11 +50,17 @@ t_color	parse_to_color(char *str)
 {
 	t_color	color;
 	char	**color_split;
+	int		idx;
 
 	color_split = ft_split(str, ',');
-	color.x = ft_atoi(color_split[0]) / 255.0;
-	color.y = ft_atoi(color_split[1]) / 255.0;
-	color.z = ft_atoi(color_split[2]) / 255.0;
+	idx = 0;
+	while (color_split[idx])
+		idx++;
+	if (idx != 3)
+		exit(0); // error, check for free
+	color.x = normalize_color(ft_atoi(color_split[0]));
+	color.y = normalize_color(ft_atoi(color_split[1]));
+	color.z = normalize_color(ft_atoi(color_split[2]));
 	rt_free_split(color_split);
 	return (color);
 }
@@ -67,4 +75,11 @@ int	to_rgb_color(t_color color)
 	g = 255.999 * color.y;
 	b = 255.999 * color.z;
 	return (r << 16 | g << 8 | b);
+}
+
+static double	normalize_color(double value)
+{
+	value = fmin(value, 255);
+	value = fmax(value, 0);
+	return (value / 255.0);
 }

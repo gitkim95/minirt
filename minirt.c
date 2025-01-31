@@ -6,7 +6,7 @@
 /*   By: gitkim <gitkim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/02 16:20:44 by hwilkim           #+#    #+#             */
-/*   Updated: 2025/01/30 17:30:46 by gitkim           ###   ########.fr       */
+/*   Updated: 2025/01/31 23:10:09 by gitkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,7 @@ int	main(int argc, char **argv)
 
 	if (argc != 2)
 		return (0); // error msg
-	init_mlx_data(&mlx);
-	parse_data(&mlx, argv[1]);
+	init_mlx_data(&mlx, argv[1]);
 	mlx_loop(mlx.mlx);
 	destroy_mlx_data(&mlx);
 	return (0);

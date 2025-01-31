@@ -6,7 +6,7 @@
 /*   By: hwilkim <hwilkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/02 19:28:52 by hwilkim           #+#    #+#             */
-/*   Updated: 2025/02/02 04:23:27 by hwilkim          ###   ########.fr       */
+/*   Updated: 2025/02/02 04:24:04 by hwilkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,18 +54,16 @@ double	hit_figure(t_figure *figure, t_ray *ray)
 t_color	color_figure(t_coord hit_point, t_scene *scene, t_figure *figure)
 {
 	t_color	diffuse;
-	t_color	ambient;
 
-	ambient = v_mul(scene->amb_light.color, scene->amb_light.bright);
 	if (check_shadow(hit_point, scene, figure))
-		return ((t_color){0, 0, 0});
-	if (figure->identifier == RT_CY)
+		diffuse = RT_COLOR_BLACK;
+	else if (figure->identifier == RT_CY)
 		draw_cylinder(figure);
 	else if (figure->identifier == RT_PL)
 		return (color_plane(cam, light, figure, hit));
 	else if (figure->identifier == RT_SP)
 		diffuse = color_sphere(hit_point, &scene->light, figure);
-	return (to_phong(figure->color, diffuse, ambient));
+	return (to_phong(figure->color, diffuse, scene->amb_light.color_bright));
 }
 
 static int	check_shadow(t_coord hit_point, t_scene *scene, t_figure *figure)

@@ -6,7 +6,7 @@
 /*   By: hwilkim <hwilkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/02 16:40:41 by hwilkim           #+#    #+#             */
-/*   Updated: 2025/02/02 04:23:39 by hwilkim          ###   ########.fr       */
+/*   Updated: 2025/02/02 04:24:13 by hwilkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,9 @@
 # define RT_FIGURE_H
 
 # include "rt_struct.h"
+
+# define RT_COLOR_BLACK	(t_color){0, 0, 0}
+# define RT_COLOR_NONE	(t_color){-1, 0, 0}
 
 t_figure	*parse_cylinder(char **figure_attr);
 t_figure	*parse_plane(char **figure_attr);

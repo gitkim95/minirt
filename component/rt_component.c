@@ -6,7 +6,7 @@
 /*   By: hwilkim <hwilkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/04 16:18:50 by hwilkim           #+#    #+#             */
-/*   Updated: 2025/01/29 19:07:24 by hwilkim          ###   ########.fr       */
+/*   Updated: 2025/01/31 08:46:47 by hwilkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ t_light	make_light(t_coord center, double bright)
 	light.center = center;
 	light.bright = bright;
 	light.color = (t_color){1, 1, 1};
+	light.color_bright = v_mul(light.color, light.bright);
 	return (light);
 }
 
@@ -77,6 +78,7 @@ t_amb_light	make_amb_light(double bright, t_color color)
 
 	amb_light.bright = bright;
 	amb_light.color = color;
+	amb_light.color_bright = v_mul(amb_light.color, amb_light.bright);
 	return (amb_light);
 }
 

@@ -6,7 +6,7 @@
 /*   By: hwilkim <hwilkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/02 16:43:56 by hwilkim           #+#    #+#             */
-/*   Updated: 2025/01/30 22:17:37 by hwilkim          ###   ########.fr       */
+/*   Updated: 2025/01/31 08:48:09 by hwilkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,8 @@ t_color	color_sphere(t_coord hit_point, t_light *light, t_figure *figure)
 	n = v_unit(v_sub(hit_point, figure->center));
 	d = v_unit(v_sub(light->center, hit_point));
 	t = fmax(0, v_dot(n, d));
-	color.x = light->color.x * figure->color.x * t;
-	color.y = light->color.y * figure->color.y * t;
-	color.z = light->color.z * figure->color.z * t;
+	color.x = light->color_bright.x * figure->color.x * t;
+	color.y = light->color_bright.y * figure->color.y * t;
+	color.z = light->color_bright.z * figure->color.z * t;
 	return (color);
 }

@@ -6,7 +6,7 @@
 /*   By: hwilkim <hwilkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 18:41:32 by hwilkim           #+#    #+#             */
-/*   Updated: 2025/02/02 04:23:49 by hwilkim          ###   ########.fr       */
+/*   Updated: 2025/02/02 04:24:43 by hwilkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@
 #include "rt_scene.h"
 
 static t_ray	calculate_cam_ray(t_camera *cam, int i, int j);
-static t_color	empty_color(void);
 static t_color	calculate_figure_color(t_ray *cam_ray, t_mlx *mlx);
 static int		has_color(t_color color);
 
@@ -57,11 +56,6 @@ static t_ray	calculate_cam_ray(t_camera *cam, int i, int j)
 	return ((t_ray){cam->center, ray_direction});
 }
 
-static t_color	empty_color(void)
-{
-	return ((t_color){-1, 0, 0});
-}
-
 static t_color	calculate_figure_color(t_ray *cam_ray, t_mlx *mlx)
 {
 	t_figure	*figure;
@@ -70,7 +64,7 @@ static t_color	calculate_figure_color(t_ray *cam_ray, t_mlx *mlx)
 	double		hit_min;
 
 	figure = mlx->scene.figures.head;
-	color = empty_color();
+	color = RT_COLOR_NONE;
 	hit_min = INFINITY;
 	while (figure)
 	{

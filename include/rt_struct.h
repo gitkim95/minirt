@@ -6,7 +6,7 @@
 /*   By: hwilkim <hwilkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/02 16:49:45 by hwilkim           #+#    #+#             */
-/*   Updated: 2025/02/02 04:24:31 by hwilkim          ###   ########.fr       */
+/*   Updated: 2025/02/02 04:24:54 by hwilkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,8 @@ typedef struct s_camera
 	double	vp_height;
 	double	vp_width;
 	t_coord	center;
+	t_vec	cam_dir;
+	t_vec	vp_w;
 	t_vec	vp_u;
 	t_vec	vp_v;
 	t_vec	pixel_delta_u;

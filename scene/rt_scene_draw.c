@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rt_scene_draw.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hwilkim <hwilkim@student.42.fr>            +#+  +:+       +#+        */
+/*   By: gitkim <gitkim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 18:41:32 by hwilkim           #+#    #+#             */
-/*   Updated: 2025/01/06 20:42:41 by hwilkim          ###   ########.fr       */
+/*   Updated: 2025/02/01 00:02:31 by gitkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,10 @@ void	draw_scene(t_mlx *mlx)
 	int		j;
 
 	j = 0;
-	while (j < mlx->height)
+	while (j < RT_HEIGHT)
 	{
 		i = 0;
-		while (i < mlx->width)
+		while (i < RT_WIDTH)
 		{
 			cam_ray = calculate_cam_ray(&mlx->scene.cam, i, j);
 			color = calculate_figure_color(&cam_ray, mlx);

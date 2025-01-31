@@ -17,6 +17,8 @@ ERROR_SRC	:=	rt_error.c
 FIGURE_SRC	:=	rt_figure.c		rt_figure_cylinder.c	rt_figure_plane.c	\
 				rt_figure_sphere.c	rt_figure_utils.c
 
+PARSE_SRC	:=	rt_parse_figure.c	rt_parse_scene.c	rt_parse.c
+
 RAY_SRC		:=	rt_ray.c
 
 RT_MLX_SRC	:=	rt_mlx_hook.c	rt_mlx_utils.c
@@ -27,10 +29,11 @@ UTILS_SRC	:=	rt_utils_mem.c	rt_utils_str.c
 
 VECTOR_SRC	:=	rt_vec_op_arithmetic.c	rt_vec_op_product.c	rt_vec_utils.c
 
-SRC_DIRS	:=	component	error	figure	ray		\
+SRC_DIRS	:=	component	error	figure	parse	ray		\
 				rt_mlx		scene	utils	vector
-SRCS :=	$(COMP_SRC)		$(ERROR_SRC)	$(FIGURE_SRC)	$(RAY_SRC)		\
-		$(RT_MLX_SRC)	$(SCENE_SRC)	$(UTILS_SRC)	$(VECTOR_SRC)	\
+SRCS :=	$(COMP_SRC)		$(ERROR_SRC)	$(FIGURE_SRC)	$(PARSE_SRC)	\
+		$(RAY_SRC)		$(RT_MLX_SRC)	$(SCENE_SRC)	$(UTILS_SRC)	\
+		$(VECTOR_SRC)	\
 		minirt.c 
 
 OBJ_DIR = obj

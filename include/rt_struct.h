@@ -6,7 +6,7 @@
 /*   By: gitkim <gitkim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/02 16:49:45 by hwilkim           #+#    #+#             */
-/*   Updated: 2025/01/30 20:49:58 by gitkim           ###   ########.fr       */
+/*   Updated: 2025/01/31 23:54:11 by gitkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,8 +111,6 @@ typedef struct s_mlx
 {
 	void		*mlx;
 	void		*win;
-	int			width;
-	int			height;
 	t_data		img_data;
 	t_scene		scene;
 }	t_mlx;

@@ -6,13 +6,14 @@
 /*   By: gitkim <gitkim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 21:11:53 by gitkim            #+#    #+#             */
-/*   Updated: 2025/01/31 22:38:23 by gitkim           ###   ########.fr       */
+/*   Updated: 2025/02/01 00:21:08 by gitkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "rt_parse.h"
-#include "rt_struct.h"
 #include "rt_figure.h"
+#include "rt_struct.h"
+
+#include "rt_parse.h"
 
 void	set_figure_struct(t_fig_list *list, char **data, t_fig_type type)
 {

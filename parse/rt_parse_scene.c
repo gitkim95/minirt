@@ -6,27 +6,39 @@
 /*   By: gitkim <gitkim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 21:09:42 by gitkim            #+#    #+#             */
-/*   Updated: 2025/01/31 23:15:16 by gitkim           ###   ########.fr       */
+/*   Updated: 2025/02/01 00:20:47 by gitkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <errno.h>
-#include <math.h>
-
-#include "rt_parse.h"
-#include "rt_struct.h"
-#include "rt_figure.h"
 #include "rt_component.h"
+#include "rt_error.h"
+#include "rt_figure.h"
+#include "rt_struct.h"
 #include "rt_utils.h"
 #include "rt_vector.h"
-#include "rt_error.h"
 #include "libft.h"
+
+#include "rt_parse.h"
+
+static void	set_ambient_lightning(t_amb_light *amb, char **data);
+static void	set_camera(t_camera *camera, char **data);
+static void	set_light(t_light *light, char **data);
+
+void	set_scene_struct(t_scene *scene, char **data, t_scene_type type)
+{
+	if (type == RT_A)
+		set_ambient_lightning(&(scene->amb_light), data);
+	else if (type == RT_C)
+		set_camera(&(scene->cam), data);
+	else
+		set_light(&(scene->light), data);
+}
 
 static void	set_ambient_lightning(t_amb_light *amb, char **data)
 {
 	double	bright;
 	t_color	color;
-	char	**temp_color;
 
 	bright = rt_atof(data[1]);
 	color = parse_to_color(data[2]);
@@ -61,7 +73,6 @@ static void	set_light(t_light *light, char **data)
 	double	bright;
 	t_color	color;
 	t_coord	center;
-	char	**temp_color;
 
 	center = parse_to_coord(data[1]);
 	bright = rt_atof(data[2]);
@@ -69,14 +80,4 @@ static void	set_light(t_light *light, char **data)
 	light->center = center;
 	light->bright = bright;
 	light->color = color;
-}
-
-void	set_scene_struct(t_scene *scene, char **data, t_scene_type type)
-{
-	if (type == RT_A)
-		set_ambient_lightning(&(scene->amb_light), data);
-	else if (type == RT_C)
-		set_camera(&(scene->cam), data);
-	else
-		set_light(&(scene->light), data);
 }

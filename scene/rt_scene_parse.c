@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rt_scene_parse.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hwilkim <hwilkim@student.42.fr>            +#+  +:+       +#+        */
+/*   By: gitkim <gitkim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 18:41:32 by hwilkim           #+#    #+#             */
-/*   Updated: 2025/01/26 16:53:23 by hwilkim          ###   ########.fr       */
+/*   Updated: 2025/02/01 00:02:52 by gitkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ t_scene	make_scene(t_mlx *mlx, char *filepath)
 
 	(void) filepath;
 	scene = &mlx->scene;
-	scene->cam = make_camera(mlx->width, mlx->height, (t_coord){0, 0, 0});
+	scene->cam = make_camera(RT_WIDTH, RT_HEIGHT, (t_coord){0, 0, 0});
 	scene->light = make_light((t_coord){2, 2, 2}, 0.7);
 	scene->amb_light = make_amb_light(0.2, (t_color){1, 1, 1});
 	append_fig_list(&scene->figures, tmp_figure());

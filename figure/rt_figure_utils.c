@@ -6,10 +6,11 @@
 /*   By: gitkim <gitkim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/03 15:16:19 by hwilkim           #+#    #+#             */
-/*   Updated: 2025/01/31 22:32:03 by gitkim           ###   ########.fr       */
+/*   Updated: 2025/01/31 23:37:07 by gitkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <math.h>
 #include "rt_utils.h"
 #include "libft.h"
 

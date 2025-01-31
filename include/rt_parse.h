@@ -6,12 +6,14 @@
 /*   By: gitkim <gitkim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 17:25:08 by gitkim            #+#    #+#             */
-/*   Updated: 2025/01/31 22:49:28 by gitkim           ###   ########.fr       */
+/*   Updated: 2025/01/31 23:42:35 by gitkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef RT_PARSE_H
 # define RT_PARSE_H
+
+# include "rt_struct.h"
 
 /* rt_parse.c */
 void	parse_data(t_mlx *mlx, char *file_path);

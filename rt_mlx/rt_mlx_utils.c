@@ -6,7 +6,7 @@
 /*   By: gitkim <gitkim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/03 17:43:11 by hwilkim           #+#    #+#             */
-/*   Updated: 2025/01/31 23:13:24 by gitkim           ###   ########.fr       */
+/*   Updated: 2025/02/01 00:22:59 by gitkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@
 #include "mlx.h"
 #include "mlx_int.h"
 #include "rt_error.h"
+#include "rt_parse.h"
 #include "rt_scene.h"
 #include "rt_utils.h"
-#include "rt_parse.h"
 #include "libft.h"
 
 #include "rt_mlx.h"
@@ -26,13 +26,11 @@
 void	init_mlx_data(t_mlx *mlx, char *file_path)
 {
 	ft_bzero(mlx, sizeof(t_mlx));
+	parse_data(mlx, file_path);
 	mlx->mlx = mlx_init();
 	if (!(mlx->mlx))
 		exit_on_error(ENOMEM);
-	mlx->width = RT_WIDTH;
-	mlx->height = RT_HEIGHT;
-	mlx->win = mlx_new_window(mlx->mlx, mlx->width, mlx->height, "miniRT");
-	parse_data(mlx, file_path);
+	mlx->win = mlx_new_window(mlx->mlx, RT_WIDTH, RT_HEIGHT, "miniRT");
 	mlx_hook(mlx->win, DestroyNotify, 0, mlx_loop_end, mlx->mlx);
 	mlx_hook(mlx->win, KeyPress, KeyPressMask, rt_key_hook, mlx);
 	mlx_loop_hook(mlx->mlx, rt_loop_hook, mlx);

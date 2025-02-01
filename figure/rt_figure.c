@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rt_figure.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hwilkim <hwilkim@student.42.fr>            +#+  +:+       +#+        */
+/*   By: gitkim <gitkim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/02 19:28:52 by hwilkim           #+#    #+#             */
-/*   Updated: 2025/01/06 20:36:31 by hwilkim          ###   ########.fr       */
+/*   Updated: 2025/02/02 03:11:51 by gitkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ double	hit_figure(t_figure *figure, t_ray *ray)
 	else if (figure->identifier == RT_CY)
 		draw_cylinder(figure);
 	else if (figure->identifier == RT_PL)
-		draw_plane(figure);
+		return (hit_plane(figure, ray));
 	else if (figure->identifier == RT_SP)
 		return (hit_sphere(figure, ray));
 	return (-1.0);
@@ -52,7 +52,7 @@ t_color	color_figure(t_ray *cam, t_light *light, t_figure *figure, double hit)
 	else if (figure->identifier == RT_CY)
 		draw_cylinder(figure);
 	else if (figure->identifier == RT_PL)
-		draw_plane(figure);
+		return (color_plane(cam, light, figure, hit));
 	else if (figure->identifier == RT_SP)
 		return (color_sphere(cam, light, figure, hit));
 	return (light->color);

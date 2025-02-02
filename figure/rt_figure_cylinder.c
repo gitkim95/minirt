@@ -6,7 +6,7 @@
 /*   By: gitkim <gitkim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/02 19:21:13 by hwilkim           #+#    #+#             */
-/*   Updated: 2025/02/03 03:45:47 by gitkim           ###   ########.fr       */
+/*   Updated: 2025/02/03 04:04:37 by gitkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ double	hit_cylinder(t_figure *figure, t_ray *ray)
 	double	discrim[4];
 	double	t;
 
+	t = -1.0;
 	fig_dir = v_unit(figure->vector);
 	ray_dir = ray->direction;
 	offset = v_sub(ray->origin, figure->center);
@@ -62,8 +63,6 @@ double	hit_cylinder(t_figure *figure, t_ray *ray)
 	discrim[3] = discrim[1] * discrim[1] - 4 * discrim[0] * discrim[2];
 	if (discrim[3] >= 0)
 		check_hit_body(figure, ray, &t, discrim);
-	else
-		t = -1.0;
 	check_hit_cap(figure, ray, &t, -figure->height);
 	check_hit_cap(figure, ray, &t, figure->height);
 	return (t);

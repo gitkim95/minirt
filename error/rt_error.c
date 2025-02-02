@@ -6,7 +6,7 @@
 /*   By: gitkim <gitkim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/02 16:53:25 by hwilkim           #+#    #+#             */
-/*   Updated: 2025/02/03 00:32:04 by gitkim           ###   ########.fr       */
+/*   Updated: 2025/02/03 03:47:56 by gitkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void	free_gnl(int fd)
 			break ;
 		free(temp);
 	}
-	close(fd);	
+	close(fd);
 }
 
 void	exit_on_error(t_fig_list *list, int rt_errno)

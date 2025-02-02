@@ -3,16 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   rt_scene_draw.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gitkim <gitkim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
+/*   By: hwilkim <hwilkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 18:41:32 by hwilkim           #+#    #+#             */
-/*   Updated: 2025/02/01 00:02:31 by gitkim           ###   ########.fr       */
+/*   Updated: 2025/02/02 04:24:43 by hwilkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <math.h>
 #include "rt_figure.h"
-#include "rt_vector.h"
 #include "rt_mlx.h"
+#include "rt_ray.h"
+#include "rt_vector.h"
 
 #include "rt_scene.h"
 
@@ -59,14 +61,19 @@ static t_color	calculate_figure_color(t_ray *cam_ray, t_mlx *mlx)
 	t_figure	*figure;
 	t_color		color;
 	double		hit;
+	double		hit_min;
 
 	figure = mlx->scene.figures.head;
-	color = (t_color){-1, 0, 0};
+	color = RT_COLOR_NONE;
+	hit_min = INFINITY;
 	while (figure)
 	{
 		hit = hit_figure(figure, cam_ray);
-		if (hit > 0)
-			color = color_figure(cam_ray, &mlx->scene.light, figure, hit);
+		if (hit > 0 && hit_min > hit)
+		{
+			hit_min = hit;
+			color = color_figure(ray_at(cam_ray, hit), &mlx->scene, figure);
+		}
 		figure = figure->next;
 	}
 	return (color);

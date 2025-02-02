@@ -6,7 +6,7 @@
 /*   By: hwilkim <hwilkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/02 16:43:56 by hwilkim           #+#    #+#             */
-/*   Updated: 2025/01/06 20:42:33 by hwilkim          ###   ########.fr       */
+/*   Updated: 2025/01/31 08:48:09 by hwilkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,18 +57,18 @@ double	hit_sphere(t_figure *figure, t_ray *ray)
 	return ((b - sqrt(discrim)) / a);
 }
 
-t_color	color_sphere(t_ray *cam, t_light *light, t_figure *figure, double hit)
+t_color	color_sphere(t_coord hit_point, t_light *light, t_figure *figure)
 {
 	t_color	color;
 	t_vec	n;
 	t_vec	d;
 	double	t;
 
-	n = v_unit(v_sub(ray_at(cam, hit), figure->center));
-	d = v_unit(v_sub(light->center, ray_at(cam, hit)));
+	n = v_unit(v_sub(hit_point, figure->center));
+	d = v_unit(v_sub(light->center, hit_point));
 	t = fmax(0, v_dot(n, d));
-	color.x = light->color.x * figure->color.x * t;
-	color.y = light->color.y * figure->color.y * t;
-	color.z = light->color.z * figure->color.z * t;
+	color.x = light->color_bright.x * figure->color.x * t;
+	color.y = light->color_bright.y * figure->color.y * t;
+	color.z = light->color_bright.z * figure->color.z * t;
 	return (color);
 }

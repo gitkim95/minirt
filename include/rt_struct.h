@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rt_struct.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hwilkim <hwilkim@student.42.fr>            +#+  +:+       +#+        */
+/*   By: gitkim <gitkim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/02 16:49:45 by hwilkim           #+#    #+#             */
-/*   Updated: 2025/01/06 18:43:35 by hwilkim          ###   ########.fr       */
+/*   Updated: 2025/01/31 23:54:11 by gitkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,14 @@
 # define RT_HEIGHT	600
 
 # define RT_FIGURE	"cy\0pl\0sp"
+# define RT_SCENE	"A\0C\0L"
+
+typedef enum e_scene_type
+{
+	RT_A = 0,
+	RT_C = 2,
+	RT_L = 4,
+}	t_scene_type;
 
 typedef enum e_fig_type
 {
@@ -103,8 +111,6 @@ typedef struct s_mlx
 {
 	void		*mlx;
 	void		*win;
-	int			width;
-	int			height;
 	t_data		img_data;
 	t_scene		scene;
 }	t_mlx;

@@ -1,27 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   rt_mlx.h                                           :+:      :+:    :+:   */
+/*   rt_parse_figure.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gitkim <gitkim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/02 17:07:57 by hwilkim           #+#    #+#             */
-/*   Updated: 2025/01/31 23:10:41 by gitkim           ###   ########.fr       */
+/*   Created: 2025/01/30 21:11:53 by gitkim            #+#    #+#             */
+/*   Updated: 2025/02/01 00:21:08 by gitkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef RT_MLX_H
-# define RT_MLX_H
+#include "rt_figure.h"
+#include "rt_struct.h"
 
-# include "rt_struct.h"
+#include "rt_parse.h"
 
-/* rt_mlx_hook */
-int		rt_key_hook(int keycode, t_mlx *mlx);
-int		rt_loop_hook(t_mlx *mlx);
+void	set_figure_struct(t_fig_list *list, char **data, t_fig_type type)
+{
+	t_figure	*new_figure;
 
-/* rt_mlx_utils */
-void	init_mlx_data(t_mlx *mlx, char *file_path);
-void	destroy_mlx_data(t_mlx *mlx);
-void	draw_pixel_to_img(t_data *data, int x, int y, unsigned int color);
-
-#endif
+	if (type == RT_SP)
+		new_figure = parse_sphere(data);
+	else if (type == RT_PL)
+		new_figure = parse_plane(data);
+	else
+		new_figure = parse_cylinder(data);
+	append_fig_list(list, new_figure);
+}

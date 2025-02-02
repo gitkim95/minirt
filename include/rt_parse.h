@@ -1,27 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   rt_mlx.h                                           :+:      :+:    :+:   */
+/*   rt_parse.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gitkim <gitkim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/02 17:07:57 by hwilkim           #+#    #+#             */
-/*   Updated: 2025/01/31 23:10:41 by gitkim           ###   ########.fr       */
+/*   Created: 2025/01/30 17:25:08 by gitkim            #+#    #+#             */
+/*   Updated: 2025/01/31 23:42:35 by gitkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef RT_MLX_H
-# define RT_MLX_H
+#ifndef RT_PARSE_H
+# define RT_PARSE_H
 
 # include "rt_struct.h"
 
-/* rt_mlx_hook */
-int		rt_key_hook(int keycode, t_mlx *mlx);
-int		rt_loop_hook(t_mlx *mlx);
+/* rt_parse.c */
+void	parse_data(t_mlx *mlx, char *file_path);
 
-/* rt_mlx_utils */
-void	init_mlx_data(t_mlx *mlx, char *file_path);
-void	destroy_mlx_data(t_mlx *mlx);
-void	draw_pixel_to_img(t_data *data, int x, int y, unsigned int color);
+/* rt_parse_figure.c */
+void	set_figure_struct(t_fig_list *list, char **data, t_fig_type type);
+
+/* rt_parse_scene.c */
+void	set_scene_struct(t_scene *scene, char **data, t_scene_type type);
 
 #endif

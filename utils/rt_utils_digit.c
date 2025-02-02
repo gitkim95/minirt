@@ -1,36 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   rt_parse.h                                         :+:      :+:    :+:   */
+/*   rt_utils_digit.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hwilkim <hwilkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/30 17:25:08 by gitkim            #+#    #+#             */
-/*   Updated: 2025/02/02 05:44:36 by hwilkim          ###   ########.fr       */
+/*   Created: 2025/01/02 19:34:37 by hwilkim           #+#    #+#             */
+/*   Updated: 2025/02/02 05:41:53 by hwilkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef RT_PARSE_H
-# define RT_PARSE_H
+#include "libft.h"
 
-# include "rt_struct.h"
+#include "rt_utils.h"
 
-typedef struct s_comp_init
+bool	rt_issign(char c)
 {
-	t_coord	center;
-	t_vec	dir;
-	int		fov;
-	double	bright;
-	t_color	color;
-}	t_comp_init;
+	return (c == '-' || c == '+');
+}
 
-/* rt_parse_component.c */
-void	parse_component(t_scene *scene, char **data);
-
-/* rt_parse_figure.c */
-void	parse_figure(t_fig_list *list, char **data);
-
-/* rt_parse.c */
-void	parse_data(t_mlx *mlx, char *file_path);
-
-#endif
+bool	rt_isupper(char c)
+{
+	return (c >= 'A' && c <= 'Z');
+}

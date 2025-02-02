@@ -6,13 +6,12 @@
 /*   By: hwilkim <hwilkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/02 16:43:56 by hwilkim           #+#    #+#             */
-/*   Updated: 2025/01/31 08:48:09 by hwilkim          ###   ########.fr       */
+/*   Updated: 2025/02/02 04:30:21 by hwilkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stddef.h>
 #include <math.h>
-#include "rt_ray.h"
 #include "rt_utils.h"
 #include "rt_vector.h"
 #include "libft.h"

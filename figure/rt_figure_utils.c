@@ -3,13 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   rt_figure_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gitkim <gitkim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
+/*   By: hwilkim <hwilkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/03 15:16:19 by hwilkim           #+#    #+#             */
-/*   Updated: 2025/01/31 23:37:07 by gitkim           ###   ########.fr       */
+/*   Updated: 2025/02/02 04:32:49 by hwilkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdlib.h>
 #include <math.h>
 #include "rt_utils.h"
 #include "libft.h"

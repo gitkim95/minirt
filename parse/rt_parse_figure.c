@@ -3,27 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   rt_parse_figure.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gitkim <gitkim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
+/*   By: hwilkim <hwilkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 21:11:53 by gitkim            #+#    #+#             */
-/*   Updated: 2025/02/01 00:21:08 by gitkim           ###   ########.fr       */
+/*   Updated: 2025/02/02 05:36:08 by hwilkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt_figure.h"
-#include "rt_struct.h"
 
 #include "rt_parse.h"
 
-void	set_figure_struct(t_fig_list *list, char **data, t_fig_type type)
+void	parse_figure(t_fig_list *list, char **data)
 {
-	t_figure	*new_figure;
+	t_figure	*figure;
 
-	if (type == RT_SP)
-		new_figure = parse_sphere(data);
-	else if (type == RT_PL)
-		new_figure = parse_plane(data);
-	else
-		new_figure = parse_cylinder(data);
-	append_fig_list(list, new_figure);
+	figure = make_figure(data);
+	if (figure)
+		append_fig_list(list, figure);
 }

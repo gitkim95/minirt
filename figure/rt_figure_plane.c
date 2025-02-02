@@ -3,16 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   rt_figure_plane.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gitkim <gitkim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
+/*   By: hwilkim <hwilkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/02 16:43:56 by hwilkim           #+#    #+#             */
-/*   Updated: 2025/02/02 03:46:15 by gitkim           ###   ########.fr       */
+/*   Updated: 2025/02/02 04:30:35 by hwilkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stddef.h>
 #include <math.h>
-#include "rt_ray.h"
 #include "rt_vector.h"
 #include "libft.h"
 
@@ -61,16 +60,16 @@ double	hit_plane(t_figure *figure, t_ray *ray)
 	return (v_dot(p0_to_origin, figure->vector) / denom);
 }
 
-t_color	color_plane(t_ray *cam, t_light *light, t_figure *figure, double hit)
+t_color	color_plane(t_coord hit_point, t_light *light, t_figure *figure)
 {
 	t_color	color;
 	t_vec	d;
 	double	t;
 
-	d = v_unit(v_sub(light->center, ray_at(cam, hit)));
+	d = v_unit(v_sub(light->center, hit_point));
 	t = fmax(0, v_dot(v_unit(figure->vector), d));
-	color.x = light->color.x * figure->color.x * t;
-	color.y = light->color.y * figure->color.y * t;
-	color.z = light->color.z * figure->color.z * t;
+	color.x = light->color_bright.x * figure->color.x * t;
+	color.y = light->color_bright.y * figure->color.y * t;
+	color.z = light->color_bright.z * figure->color.z * t;
 	return (color);
 }

@@ -6,7 +6,7 @@
 /*   By: hwilkim <hwilkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/04 16:19:02 by hwilkim           #+#    #+#             */
-/*   Updated: 2025/02/01 17:43:02 by hwilkim          ###   ########.fr       */
+/*   Updated: 2025/02/02 05:42:01 by hwilkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 # define RT_EPSILON		1e-6
 
 t_camera	make_camera(t_coord center, t_vec dir, int fov);
-t_light		make_light(t_coord center, double bright);
+t_light		make_light(t_coord center, double bright, t_color color);
 t_amb_light	make_amb_light(double bright, t_color color);
 
 #endif

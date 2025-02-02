@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rt_parse.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gitkim <gitkim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
+/*   By: hwilkim <hwilkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 17:30:56 by gitkim            #+#    #+#             */
-/*   Updated: 2025/02/01 00:19:32 by gitkim           ###   ########.fr       */
+/*   Updated: 2025/02/02 05:41:04 by hwilkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 #include <stdlib.h>
 #include <errno.h>
 #include <stdbool.h>
+#include "rt_component.h"
 #include "rt_error.h"
-#include "rt_struct.h"
 #include "rt_utils.h"
 #include "libft.h"
 
@@ -49,20 +49,13 @@ void	parse_data(t_mlx *mlx, char *file_path)
 
 static void	match_data_type(t_mlx *mlx, char **split_data)
 {
-	if (!rt_strcmp(split_data[0], "A"))
-		set_scene_struct(&(mlx->scene), split_data, RT_A);
-	else if (!rt_strcmp(split_data[0], "C"))
-		set_scene_struct(&(mlx->scene), split_data, RT_C);
-	else if (!rt_strcmp(split_data[0], "L"))
-		set_scene_struct(&(mlx->scene), split_data, RT_L);
-	else if (!rt_strcmp(split_data[0], "sp"))
-		set_figure_struct(&(mlx->scene.figures), split_data, RT_SP);
-	else if (!rt_strcmp(split_data[0], "pl"))
-		set_figure_struct(&(mlx->scene.figures), split_data, RT_PL);
-	else if (!rt_strcmp(split_data[0], "cy"))
-		set_figure_struct(&(mlx->scene.figures), split_data, RT_CY);
+	char	*identifier;
+
+	identifier = split_data[0];
+	if (rt_isupper(*identifier))
+		parse_component(&(mlx->scene), split_data);
 	else
-		return ;
+		parse_figure(&(mlx->scene.figures), split_data);
 }
 
 static bool	valid_file_extension(char *file_path)

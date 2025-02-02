@@ -6,7 +6,7 @@
 /*   By: hwilkim <hwilkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/04 16:18:50 by hwilkim           #+#    #+#             */
-/*   Updated: 2025/02/01 18:14:35 by hwilkim          ###   ########.fr       */
+/*   Updated: 2025/02/02 05:33:39 by hwilkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,13 +61,13 @@ t_camera	make_camera(t_coord center, t_vec dir, int fov)
  * (unused in mandatory part)R,G,B colors in range [0-255]: 10, 0, 255
  */
 
-t_light	make_light(t_coord center, double bright)
+t_light	make_light(t_coord center, double bright, t_color color)
 {
 	t_light	light;
 
 	light.center = center;
 	light.bright = bright;
-	light.color = (t_color){1, 1, 1};
+	light.color = color;
 	light.color_bright = v_mul(light.color, light.bright);
 	return (light);
 }

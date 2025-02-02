@@ -6,7 +6,7 @@
 /*   By: hwilkim <hwilkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/02 19:28:52 by hwilkim           #+#    #+#             */
-/*   Updated: 2025/02/02 04:24:04 by hwilkim          ###   ########.fr       */
+/*   Updated: 2025/02/02 05:36:34 by hwilkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,11 @@ t_figure	*make_figure(char **figure_attr)
 
 	if (!*figure_attr)
 		return (NULL);
-	else if (rt_strcmp(*figure_attr, (char *)RT_FIGURE + RT_CY) == 0)
+	else if (rt_str_equals(*figure_attr, (char *)RT_FIGURE + RT_CY))
 		figure = parse_cylinder(figure_attr);
-	else if (rt_strcmp(*figure_attr, (char *)RT_FIGURE + RT_PL) == 0)
+	else if (rt_str_equals(*figure_attr, (char *)RT_FIGURE + RT_PL))
 		figure = parse_plane(figure_attr);
-	else if (rt_strcmp(*figure_attr, (char *)RT_FIGURE + RT_SP) == 0)
+	else if (rt_str_equals(*figure_attr, (char *)RT_FIGURE + RT_SP))
 		figure = parse_sphere(figure_attr);
 	else
 		figure = NULL;
@@ -60,7 +60,7 @@ t_color	color_figure(t_coord hit_point, t_scene *scene, t_figure *figure)
 	else if (figure->identifier == RT_CY)
 		draw_cylinder(figure);
 	else if (figure->identifier == RT_PL)
-		return (color_plane(cam, light, figure, hit));
+		diffuse = color_plane(hit_point, &scene->light, figure);
 	else if (figure->identifier == RT_SP)
 		diffuse = color_sphere(hit_point, &scene->light, figure);
 	return (to_phong(figure->color, diffuse, scene->amb_light.color_bright));

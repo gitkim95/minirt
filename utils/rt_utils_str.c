@@ -3,16 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   rt_utils_str.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gitkim <gitkim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
+/*   By: hwilkim <hwilkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/02 19:34:37 by hwilkim           #+#    #+#             */
-/*   Updated: 2025/01/31 17:13:52 by gitkim           ###   ########.fr       */
+/*   Updated: 2025/02/02 05:42:09 by hwilkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
 #include "rt_utils.h"
+
+static bool	rt_all_isdigit(char *str);
 
 int	rt_strcmp(char *s1, char *s2)
 {
@@ -34,25 +36,9 @@ int	rt_strcmp(char *s1, char *s2)
 	return (c1 - c2);
 }
 
-static int	rt_issign(char c)
+bool	rt_str_equals(char *s1, char *s2)
 {
-	return (c == '-' || c == '+');
-}
-
-int	rt_all_isdigit(char *str)
-{
-	int	idx;
-
-	idx = 0;
-	while (str[idx])
-	{
-		if (idx == 0 && rt_issign(str[idx]))
-			idx++;
-		if (!ft_isdigit(str[idx]))
-			return (0);
-		idx++;
-	}
-	return (1);
+	return (rt_strcmp(s1, s2) == 0);
 }
 
 double	rt_atof(char *str)
@@ -78,4 +64,20 @@ double	rt_atof(char *str)
 		fract_part *= -1;
 	rt_free_split(sep_number);
 	return (int_part + fract_part);
+}
+
+static bool	rt_all_isdigit(char *str)
+{
+	int	idx;
+
+	idx = 0;
+	while (str[idx])
+	{
+		if (idx == 0 && rt_issign(str[idx]))
+			idx++;
+		if (!ft_isdigit(str[idx]))
+			return (false);
+		idx++;
+	}
+	return (true);
 }

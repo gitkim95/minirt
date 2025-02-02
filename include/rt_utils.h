@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rt_utils.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hwilkim <hwilkim@student.42.fr>            +#+  +:+       +#+        */
+/*   By: gitkim <gitkim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/02 19:35:02 by hwilkim           #+#    #+#             */
-/*   Updated: 2025/02/02 05:41:18 by hwilkim          ###   ########.fr       */
+/*   Updated: 2025/02/03 02:42:47 by gitkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include "rt_struct.h"
 
 /* rt_utils_digit */
+void	rt_swap(double *a, double *b);
 bool	rt_issign(char c);
 bool	rt_isupper(char c);
 

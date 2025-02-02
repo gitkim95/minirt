@@ -6,7 +6,7 @@
 /*   By: gitkim <gitkim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/03 17:43:11 by hwilkim           #+#    #+#             */
-/*   Updated: 2025/02/01 00:22:59 by gitkim           ###   ########.fr       */
+/*   Updated: 2025/02/02 17:57:50 by gitkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	init_mlx_data(t_mlx *mlx, char *file_path)
 	parse_data(mlx, file_path);
 	mlx->mlx = mlx_init();
 	if (!(mlx->mlx))
-		exit_on_error(ENOMEM);
+		exit_on_error(mlx, RT_ERR_MEM);
 	mlx->win = mlx_new_window(mlx->mlx, RT_WIDTH, RT_HEIGHT, "miniRT");
 	mlx_hook(mlx->win, DestroyNotify, 0, mlx_loop_end, mlx->mlx);
 	mlx_hook(mlx->win, KeyPress, KeyPressMask, rt_key_hook, mlx);

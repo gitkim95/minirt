@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rt_figure_plane.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hwilkim <hwilkim@student.42.fr>            +#+  +:+       +#+        */
+/*   By: gitkim <gitkim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/02 16:43:56 by hwilkim           #+#    #+#             */
-/*   Updated: 2025/02/02 04:30:35 by hwilkim          ###   ########.fr       */
+/*   Updated: 2025/02/02 15:49:55 by gitkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,23 +38,13 @@ t_figure	*parse_plane(char **figure_attr)
 	return (figure);
 }
 
-t_vec	make_vec(double x, double y, double z)
-{
-	t_vec	vec;
-
-	vec.x = x;
-	vec.y = y;
-	vec.z = z;
-	return (vec);
-}
-
 double	hit_plane(t_figure *figure, t_ray *ray)
 {
 	double	denom;
 	t_vec	p0_to_origin;
 
-	denom = v_dot(figure->vector, ray->direction); // 광원과 평면의 내적
-	if (fabs(denom) < 1e-6) // 광원과 평면이 평행한 경우
+	denom = v_dot(figure->vector, ray->direction);
+	if (fabs(denom) < 1e-6)
 		return (-1.0);
 	p0_to_origin = v_sub(figure->center, ray->origin);
 	return (v_dot(p0_to_origin, figure->vector) / denom);

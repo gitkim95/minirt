@@ -1,33 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   rt_error.h                                         :+:      :+:    :+:   */
+/*   rt_print_error.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gitkim <gitkim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/02 16:49:45 by hwilkim           #+#    #+#             */
-/*   Updated: 2025/02/02 17:56:13 by gitkim           ###   ########.fr       */
+/*   Created: 2025/02/02 16:11:19 by gitkim            #+#    #+#             */
+/*   Updated: 2025/02/02 17:50:51 by gitkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef RT_ERROR_H
-# define RT_ERROR_H
+#include <string.h>
+#include "libft.h"
 
-# include "rt_struct.h"
+#include "rt_error.h"
 
-# define RT_ERRNO_GET			0
-
-# define RT_ERR_FILE_DATA		1
-# define RT_ERR_NUM_OF_ARG		2
-# define RT_ERR_FILE_EXTENSION	3
-# define RT_ERR_MEM				4
-
-/* rt_error.c */
-void	exit_on_error(t_mlx *mlx, int rt_errno);
-int		rt_errno(int errno);
-char	*rt_err_str(int errno);
-
-/* rt_print_error.c */
-void	print_error(int	rt_errno);
-
-#endif
+void	print_error(int rt_errno)
+{
+	ft_putendl_fd(rt_err_str(rt_errno), STDERR_FILENO);
+}

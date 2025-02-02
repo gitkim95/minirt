@@ -12,7 +12,7 @@ SYSLIB_FLG := -lXext -lX11 -lm
 
 COMP_SRC	:=	rt_component.c
 
-ERROR_SRC	:=	rt_error.c		rt_error_print.c
+ERROR_SRC	:=	rt_error.c
 
 FIGURE_SRC	:=	rt_figure.c		rt_figure_cylinder.c	rt_figure_plane.c	\
 				rt_figure_sphere.c	rt_figure_utils.c

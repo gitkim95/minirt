@@ -6,7 +6,7 @@
 /*   By: gitkim <gitkim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/02 16:53:25 by hwilkim           #+#    #+#             */
-/*   Updated: 2025/02/02 20:09:04 by gitkim           ###   ########.fr       */
+/*   Updated: 2025/02/03 00:32:04 by gitkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 #include "libft.h"
 
 #include "rt_error.h"
+
+static void	print_error(int rt_errno);
 
 int	rt_errno(int errno)
 {
@@ -27,7 +29,7 @@ int	rt_errno(int errno)
 
 char	*rt_err_str(int errno)
 {
-	static char	*rt_err_str[6];
+	static char	*rt_err_str[RT_ERR_SIZE];
 
 	if (!rt_err_str[0])
 	{
@@ -41,19 +43,31 @@ char	*rt_err_str(int errno)
 	return (rt_err_str[errno]);
 }
 
-void	free_data(t_mlx *mlx)
+void	free_gnl(int fd)
 {
-	if (mlx->scene.figures.size)
-		rt_free_figure(&(mlx->scene.figures));
-	if (mlx->mlx)
-		free(mlx->mlx);
+	char	*temp;
+
+	while (1)
+	{
+		temp = get_next_line(fd);
+		if (!temp)
+			break ;
+		free(temp);
+	}
+	close(fd);	
 }
 
-void	exit_on_error(t_mlx *mlx, int rt_errno)
+void	exit_on_error(t_fig_list *list, int rt_errno)
 {
-	if (mlx)
-		free_data(mlx);
+	if (list && list->size)
+		rt_free_figure(list);
 	if (rt_errno > 0)
 		print_error(rt_errno);
 	exit(rt_errno);
+}
+
+static void	print_error(int rt_errno)
+{
+	ft_putendl_fd("Error", STDERR_FILENO);
+	ft_putendl_fd(rt_err_str(rt_errno), STDERR_FILENO);
 }

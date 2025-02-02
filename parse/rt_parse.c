@@ -6,7 +6,7 @@
 /*   By: gitkim <gitkim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 17:30:56 by gitkim            #+#    #+#             */
-/*   Updated: 2025/02/02 20:12:02 by gitkim           ###   ########.fr       */
+/*   Updated: 2025/02/03 00:26:01 by gitkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,12 +40,12 @@ void	parse_data(t_mlx *mlx, char *file_path)
 		if (!read_line)
 			break ;
 		split_data = ft_split(read_line, ' ');
-		if (!split_data)
-		{
-			free(read_line);
-			exit_on_error(mlx, RT_ERR_MEM);
-		}
 		free(read_line);
+		if (!split_data || rt_errno(RT_ERRNO_GET))
+		{
+			free_gnl(fd);
+			exit_on_error(&mlx->scene.figures, rt_errno(RT_ERRNO_GET));
+		}
 		match_data_type(mlx, split_data);
 		rt_free_split(split_data);
 	}
@@ -61,8 +61,6 @@ static void	match_data_type(t_mlx *mlx, char **split_data)
 		parse_component(&(mlx->scene), split_data);
 	else
 		parse_figure(&(mlx->scene.figures), split_data);
-	if (rt_errno(RT_ERRNO_GET) > 0)
-		exit_on_error(mlx, rt_errno(RT_ERRNO_GET));
 }
 
 static bool	valid_file_extension(char *file_path)

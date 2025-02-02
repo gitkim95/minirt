@@ -6,7 +6,7 @@
 /*   By: hwilkim <hwilkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/02 16:49:45 by hwilkim           #+#    #+#             */
-/*   Updated: 2025/02/02 04:24:54 by hwilkim          ###   ########.fr       */
+/*   Updated: 2025/02/02 16:30:54 by hwilkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@
 
 # define RT_FIGURE	"cy\0pl\0sp"
 # define RT_SCENE	"A\0C\0L"
+
+# define RT_EPSILON	1e-6
 
 typedef enum e_scene_type
 {

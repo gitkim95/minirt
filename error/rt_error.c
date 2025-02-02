@@ -6,7 +6,7 @@
 /*   By: gitkim <gitkim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/02 16:53:25 by hwilkim           #+#    #+#             */
-/*   Updated: 2025/02/02 17:57:36 by gitkim           ###   ########.fr       */
+/*   Updated: 2025/02/02 20:09:04 by gitkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	rt_errno(int errno)
 
 char	*rt_err_str(int errno)
 {
-	static char	*rt_err_str[5];
+	static char	*rt_err_str[6];
 
 	if (!rt_err_str[0])
 	{
@@ -36,7 +36,7 @@ char	*rt_err_str(int errno)
 		rt_err_str[RT_ERR_NUM_OF_ARG] = "Invalid number of arguments";
 		rt_err_str[RT_ERR_FILE_EXTENSION] = "Invalid file extension";
 		rt_err_str[RT_ERR_MEM] = "Cannot allocate memory";
-
+		rt_err_str[RT_ERR_OPEN] = "Failed to open the file";
 	}
 	return (rt_err_str[errno]);
 }

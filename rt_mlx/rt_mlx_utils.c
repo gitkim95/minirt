@@ -6,13 +6,12 @@
 /*   By: gitkim <gitkim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/03 17:43:11 by hwilkim           #+#    #+#             */
-/*   Updated: 2025/02/02 17:57:50 by gitkim           ###   ########.fr       */
+/*   Updated: 2025/02/02 20:12:13 by gitkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <X11/X.h>
 #include <stdlib.h>
-#include <errno.h>
 #include "mlx.h"
 #include "mlx_int.h"
 #include "rt_error.h"

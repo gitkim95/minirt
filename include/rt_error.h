@@ -6,7 +6,7 @@
 /*   By: gitkim <gitkim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/02 16:49:45 by hwilkim           #+#    #+#             */
-/*   Updated: 2025/02/02 17:56:13 by gitkim           ###   ########.fr       */
+/*   Updated: 2025/02/02 20:09:11 by gitkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # define RT_ERR_NUM_OF_ARG		2
 # define RT_ERR_FILE_EXTENSION	3
 # define RT_ERR_MEM				4
+# define RT_ERR_OPEN			5
 
 /* rt_error.c */
 void	exit_on_error(t_mlx *mlx, int rt_errno);

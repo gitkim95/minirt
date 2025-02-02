@@ -6,7 +6,7 @@
 /*   By: gitkim <gitkim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/02 16:49:45 by hwilkim           #+#    #+#             */
-/*   Updated: 2025/02/02 20:09:11 by gitkim           ###   ########.fr       */
+/*   Updated: 2025/02/02 22:29:50 by gitkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,6 @@ int		rt_errno(int errno);
 char	*rt_err_str(int errno);
 
 /* rt_print_error.c */
-void	print_error(int	rt_errno);
+void	print_error(int rt_errno);
 
 #endif

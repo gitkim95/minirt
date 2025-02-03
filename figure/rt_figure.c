@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rt_figure.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hwilkim <hwilkim@student.42.fr>            +#+  +:+       +#+        */
+/*   By: gitkim <gitkim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/02 19:28:52 by hwilkim           #+#    #+#             */
-/*   Updated: 2025/02/02 05:36:34 by hwilkim          ###   ########.fr       */
+/*   Updated: 2025/02/02 21:08:07 by gitkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ double	hit_figure(t_figure *figure, t_ray *ray)
 	if (!figure)
 		return (-1.0);
 	else if (figure->identifier == RT_CY)
-		draw_cylinder(figure);
+		return (hit_cylinder(figure, ray));
 	else if (figure->identifier == RT_PL)
 		return (hit_plane(figure, ray));
 	else if (figure->identifier == RT_SP)
@@ -58,7 +58,7 @@ t_color	color_figure(t_coord hit_point, t_scene *scene, t_figure *figure)
 	if (check_shadow(hit_point, scene, figure))
 		diffuse = RT_COLOR_BLACK;
 	else if (figure->identifier == RT_CY)
-		draw_cylinder(figure);
+		diffuse = color_cylinder(hit_point, &scene->light, figure);
 	else if (figure->identifier == RT_PL)
 		diffuse = color_plane(hit_point, &scene->light, figure);
 	else if (figure->identifier == RT_SP)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rt_figure.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hwilkim <hwilkim@student.42.fr>            +#+  +:+       +#+        */
+/*   By: gitkim <gitkim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/02 16:40:41 by hwilkim           #+#    #+#             */
-/*   Updated: 2025/02/02 04:31:50 by hwilkim          ###   ########.fr       */
+/*   Updated: 2025/02/03 03:26:22 by gitkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,13 @@ t_figure	*parse_cylinder(char **figure_attr);
 t_figure	*parse_plane(char **figure_attr);
 t_figure	*parse_sphere(char **figure_attr);
 
-void		draw_cylinder(t_figure *figure);
+void		check_hit_cap(t_figure *fig, t_ray *ray, double *t, double height);
+void		check_hit_body(t_figure *fig, t_ray *ray, double *t, double *disc);
+double		hit_cylinder(t_figure *figure, t_ray *ray);
 double		hit_plane(t_figure *figure, t_ray *ray);
 double		hit_sphere(t_figure *figure, t_ray *ray);
 
+t_color		color_cylinder(t_coord hit_point, t_light *light, t_figure *figure);
 t_color		color_plane(t_coord hit_point, t_light *light, t_figure *figure);
 t_color		color_sphere(t_coord hit_point, t_light *light, t_figure *figure);
 

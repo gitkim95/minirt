@@ -3,16 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   rt_parse.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hwilkim <hwilkim@student.42.fr>            +#+  +:+       +#+        */
+/*   By: gitkim <gitkim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 17:30:56 by gitkim            #+#    #+#             */
-/*   Updated: 2025/02/02 05:41:04 by hwilkim          ###   ########.fr       */
+/*   Updated: 2025/02/03 00:26:01 by gitkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <fcntl.h>
 #include <stdlib.h>
-#include <errno.h>
 #include <stdbool.h>
 #include "rt_component.h"
 #include "rt_error.h"
@@ -31,20 +30,26 @@ void	parse_data(t_mlx *mlx, char *file_path)
 	char	**split_data;
 
 	if (!valid_file_extension(file_path))
-		exit(0);// error msg
+		exit_on_error(NULL, RT_ERR_FILE_EXTENSION);
 	fd = open(file_path, O_RDONLY);
+	if (fd < 0)
+		exit_on_error(NULL, RT_ERR_OPEN);
 	while (1)
 	{
 		read_line = get_next_line(fd);
 		if (!read_line)
 			break ;
 		split_data = ft_split(read_line, ' ');
-		if (!split_data)
-			exit_on_error(ENOMEM);// mem_leak_alert
 		free(read_line);
+		if (!split_data || rt_errno(RT_ERRNO_GET))
+		{
+			free_gnl(fd);
+			exit_on_error(&mlx->scene.figures, rt_errno(RT_ERRNO_GET));
+		}
 		match_data_type(mlx, split_data);
 		rt_free_split(split_data);
 	}
+	close(fd);
 }
 
 static void	match_data_type(t_mlx *mlx, char **split_data)
@@ -69,7 +74,7 @@ static bool	valid_file_extension(char *file_path)
 		return (ret);
 	file_path_split = ft_split(file_path, '.');
 	if (!file_path_split)
-		exit_on_error(ENOMEM);
+		exit_on_error(NULL, RT_ERR_MEM);
 	idx = 0;
 	while (file_path_split[idx])
 		idx++;

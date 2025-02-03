@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   rt_figure_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hwilkim <hwilkim@student.42.fr>            +#+  +:+       +#+        */
+/*   By: gitkim <gitkim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/03 15:16:19 by hwilkim           #+#    #+#             */
-/*   Updated: 2025/02/02 04:32:49 by hwilkim          ###   ########.fr       */
+/*   Updated: 2025/02/02 20:11:47 by gitkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include <math.h>
+#include "rt_error.h"
 #include "rt_utils.h"
 #include "libft.h"
 
@@ -35,12 +36,17 @@ t_coord	parse_to_coord(char *str)
 	char	**coord_split;
 	int		idx;
 
+	coord = (t_coord){0, 0, 0};
 	coord_split = ft_split(str, ',');
 	idx = 0;
 	while (coord_split[idx])
 		idx++;
 	if (idx != 3)
-		exit(0); // error, check for free
+	{
+		rt_free_split(coord_split);
+		rt_errno(RT_ERR_FILE_DATA);
+		return (coord);
+	}
 	coord.x = rt_atof(coord_split[0]);
 	coord.y = rt_atof(coord_split[1]);
 	coord.z = rt_atof(coord_split[2]);
@@ -54,12 +60,17 @@ t_color	parse_to_color(char *str)
 	char	**color_split;
 	int		idx;
 
+	color = (t_color){0, 0, 0};
 	color_split = ft_split(str, ',');
 	idx = 0;
 	while (color_split[idx])
 		idx++;
 	if (idx != 3)
-		exit(0); // error, check for free
+	{
+		rt_free_split(color_split);
+		rt_errno(RT_ERR_FILE_DATA);
+		return (color);
+	}
 	color.x = normalize_color(ft_atoi(color_split[0]));
 	color.y = normalize_color(ft_atoi(color_split[1]));
 	color.z = normalize_color(ft_atoi(color_split[2]));

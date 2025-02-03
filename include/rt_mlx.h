@@ -6,7 +6,7 @@
 /*   By: hwilkim <hwilkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/02 17:07:57 by hwilkim           #+#    #+#             */
-/*   Updated: 2025/02/02 22:19:13 by hwilkim          ###   ########.fr       */
+/*   Updated: 2025/02/03 20:19:53 by hwilkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@
 # define RT_COS	1
 # define RT_NEG	0
 # define RT_POS	1
+
+# define RT_WHITE		0xFFFFFF
 
 typedef int		(*t_handler)(int keycode, t_mlx *mlx);
 typedef void	(*t_trans)(void *arg, int x, int y, int z);
@@ -41,5 +43,6 @@ int			rt_loop_hook(t_mlx *mlx);
 void		init_mlx_data(t_mlx *mlx, char *file_path);
 void		destroy_mlx_data(t_mlx *mlx);
 void		draw_pixel_to_img(t_data *data, int x, int y, unsigned int color);
+void		print_status(t_mlx *mlx);
 
 #endif

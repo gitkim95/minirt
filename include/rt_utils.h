@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rt_utils.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gitkim <gitkim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
+/*   By: hwilkim <hwilkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/02 19:35:02 by hwilkim           #+#    #+#             */
-/*   Updated: 2025/02/03 02:42:47 by gitkim           ###   ########.fr       */
+/*   Updated: 2025/02/03 20:40:16 by hwilkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ void	rt_free_split(char **split);
 
 /* rt_utils_str */
 int		rt_strcmp(char *s1, char *s2);
+char	*rt_strcat(char *dest, char const *src);
 bool	rt_str_equals(char *s1, char *s2);
 double	rt_atof(char *str);
 

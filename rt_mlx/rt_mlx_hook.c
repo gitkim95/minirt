@@ -6,7 +6,7 @@
 /*   By: hwilkim <hwilkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/02 17:08:21 by hwilkim           #+#    #+#             */
-/*   Updated: 2025/02/02 20:30:44 by hwilkim          ###   ########.fr       */
+/*   Updated: 2025/02/03 20:11:40 by hwilkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ int	rt_loop_hook(t_mlx *mlx)
 	mlx->img_data.addr = get_data_addr(mlx);
 	draw_scene(mlx);
 	mlx_put_image_to_window(mlx->mlx, mlx->win, mlx->img_data.img, 0, 0);
+	print_status(mlx);
 	return (0);
 }
 

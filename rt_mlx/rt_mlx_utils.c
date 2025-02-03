@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rt_mlx_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gitkim <gitkim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
+/*   By: hwilkim <hwilkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/03 17:43:11 by hwilkim           #+#    #+#             */
-/*   Updated: 2025/02/03 00:27:29 by gitkim           ###   ########.fr       */
+/*   Updated: 2025/02/03 21:04:12 by hwilkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@
 #include "libft.h"
 
 #include "rt_mlx.h"
+
+static char	*stat_str(t_mlx *mlx, char *buf, int flg);
 
 void	init_mlx_data(t_mlx *mlx, char *file_path)
 {
@@ -55,4 +57,35 @@ void	draw_pixel_to_img(t_data *data, int x, int y, unsigned int color)
 		return ;
 	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
 	*((unsigned int *)dst) = color;
+}
+
+void	print_status(t_mlx *mlx)
+{
+	char	buf[256];
+
+	mlx_string_put(mlx->mlx, mlx->win, 2, 10, RT_WHITE, "mode");
+	mlx_string_put(mlx->mlx, mlx->win, 2, 21, RT_WHITE, "select");
+	mlx_string_put(mlx->mlx, mlx->win, 2, 32, RT_WHITE, "  X   -Q +W");
+	mlx_string_put(mlx->mlx, mlx->win, 2, 43, RT_WHITE, "  Y   -A +S");
+	mlx_string_put(mlx->mlx, mlx->win, 2, 54, RT_WHITE, "  Z   -Z +X");
+	mlx_string_put(mlx->mlx, mlx->win, 2, 65, RT_WHITE, "change mode    M");
+	mlx_string_put(mlx->mlx, mlx->win, 2, 76, RT_WHITE, "select light   L");
+	mlx_string_put(mlx->mlx, mlx->win, 2, 87, RT_WHITE, "select camera  C");
+	mlx_string_put(mlx->mlx, mlx->win, 2, 98, RT_WHITE, "select figure  F");
+	mlx_string_put(mlx->mlx, mlx->win, 50, 10, RT_WHITE, stat_str(mlx, buf, 1));
+	mlx_string_put(mlx->mlx, mlx->win, 50, 21, RT_WHITE, stat_str(mlx, buf, 0));
+}
+
+static char	*stat_str(t_mlx *mlx, char *buf, int flg)
+{
+	buf[0] = '\0';
+	if (flg)
+		return (RT_MLX_MODE + mlx->trans_mode);
+	if (!mlx->trans_arg.type)
+		return (buf);
+	if (mlx->trans_arg.type != RT_F)
+		return (RT_SCENE + mlx->trans_arg.type);
+	rt_strcat(buf, "F  ");
+	rt_strcat(buf, RT_FIGURE + ((t_figure *)mlx->trans_arg.arg)->identifier);
+	return (buf);
 }

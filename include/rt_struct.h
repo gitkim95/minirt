@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rt_struct.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hwilkim <hwilkim@student.42.fr>            +#+  +:+       +#+        */
+/*   By: gitkim <gitkim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/02 16:49:45 by hwilkim           #+#    #+#             */
-/*   Updated: 2025/02/02 22:15:31 by hwilkim          ###   ########.fr       */
+/*   Updated: 2025/02/03 21:30:26 by gitkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,13 @@
 
 # define RT_RADIAN	0.0174533
 # define RT_EPSILON	1e-6
+
+typedef enum e_hit_type
+{
+	HIT_NONE = 0,
+	HIT_BODY = 1,
+	HIT_CAP = 2
+}	t_hit_type;
 
 typedef enum e_scene_type
 {
@@ -90,6 +97,7 @@ typedef struct s_figure
 	double			diameter;
 	double			height;
 	t_color			color;
+	t_hit_type		hit_type;
 	struct s_figure	*next;
 }	t_figure;
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rt_mlx_hook.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gitkim <gitkim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
+/*   By: hwilkim <hwilkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/02 17:08:21 by hwilkim           #+#    #+#             */
-/*   Updated: 2025/02/01 00:02:13 by gitkim           ###   ########.fr       */
+/*   Updated: 2025/02/02 20:30:44 by hwilkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,17 @@
 
 #include "rt_mlx.h"
 
-static char	*get_data_addr(t_mlx *mlx);
+static char				*get_data_addr(t_mlx *mlx);
 
 int	rt_key_hook(int keycode, t_mlx *mlx)
 {
+	t_handler	keycode_handler;
+
 	if (keycode == XK_Escape)
 		mlx_loop_end(mlx->mlx);
+	keycode_handler = get_handler(keycode);
+	if (keycode_handler)
+		return (keycode_handler(keycode, mlx));
 	return (0);
 }
 

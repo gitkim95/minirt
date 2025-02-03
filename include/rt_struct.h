@@ -6,7 +6,7 @@
 /*   By: hwilkim <hwilkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/02 16:49:45 by hwilkim           #+#    #+#             */
-/*   Updated: 2025/02/02 04:24:54 by hwilkim          ###   ########.fr       */
+/*   Updated: 2025/02/02 22:15:31 by hwilkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,19 @@
 # define RT_WIDTH	800
 # define RT_HEIGHT	600
 
-# define RT_FIGURE	"cy\0pl\0sp"
-# define RT_SCENE	"A\0C\0L"
+# define RT_FIGURE		"cy\0pl\0sp"
+# define RT_SCENE		"A\0C\0L"
+# define RT_MLX_MODE	"translate\0rotate\0resize"
+
+# define RT_RADIAN	0.0174533
+# define RT_EPSILON	1e-6
 
 typedef enum e_scene_type
 {
 	RT_A = 0,
 	RT_C = 2,
 	RT_L = 4,
+	RT_F = 8,
 }	t_scene_type;
 
 typedef enum e_fig_type
@@ -32,6 +37,13 @@ typedef enum e_fig_type
 	RT_PL = 3,
 	RT_SP = 6,
 }	t_fig_type;
+
+typedef enum e_mlx_mode
+{
+	RT_TRANSLATE = 0,
+	RT_ROTATE = 10,
+	RT_RESIZE = 17,
+}	t_mlx_mode;
 
 typedef struct s_vec
 {
@@ -48,6 +60,7 @@ typedef struct s_camera
 	double	focal_length;
 	double	vp_height;
 	double	vp_width;
+	double	fov;
 	t_coord	center;
 	t_vec	cam_dir;
 	t_vec	vp_w;
@@ -110,12 +123,20 @@ typedef struct s_data
 	int		endian;
 }	t_data;
 
+typedef struct s_trans_arg
+{
+	t_scene_type	type;
+	void			*arg;
+}	t_trans_arg;
+
 typedef struct s_mlx
 {
 	void		*mlx;
 	void		*win;
 	t_data		img_data;
 	t_scene		scene;
+	t_trans_arg	trans_arg;
+	t_mlx_mode	trans_mode;
 }	t_mlx;
 
 #endif

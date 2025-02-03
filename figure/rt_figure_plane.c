@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rt_figure_plane.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gitkim <gitkim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
+/*   By: hwilkim <hwilkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/02 16:43:56 by hwilkim           #+#    #+#             */
-/*   Updated: 2025/02/02 15:49:55 by gitkim           ###   ########.fr       */
+/*   Updated: 2025/02/03 15:26:50 by hwilkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ double	hit_plane(t_figure *figure, t_ray *ray)
 	t_vec	p0_to_origin;
 
 	denom = v_dot(figure->vector, ray->direction);
-	if (fabs(denom) < 1e-6)
+	if (fabs(denom) < RT_EPSILON)
 		return (-1.0);
 	p0_to_origin = v_sub(figure->center, ray->origin);
 	return (v_dot(p0_to_origin, figure->vector) / denom);

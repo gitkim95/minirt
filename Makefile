@@ -22,7 +22,8 @@ PARSE_SRC	:=	rt_parse_component.c	rt_parse_figure.c	rt_parse.c
 
 RAY_SRC		:=	rt_ray.c
 
-RT_MLX_SRC	:=	rt_mlx_hook.c	rt_mlx_utils.c
+RT_MLX_SRC	:=	rt_mlx_hook.c	rt_mlx_handler_key.c	rt_mlx_handler_trans.c	\
+				rt_mlx_handler_utils.c	rt_mlx_utils.c
 
 SCENE_SRC	:=	rt_scene_draw.c
 

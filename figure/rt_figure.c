@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rt_figure.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gitkim <gitkim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
+/*   By: hwilkim <hwilkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/02 19:28:52 by hwilkim           #+#    #+#             */
-/*   Updated: 2025/02/02 21:08:07 by gitkim           ###   ########.fr       */
+/*   Updated: 2025/02/03 15:28:55 by hwilkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,15 +23,17 @@ static t_color	to_phong(t_color fig_color, t_color diffuse, t_color ambient);
 
 t_figure	*make_figure(char **figure_attr)
 {
+	char		*identifier;
 	t_figure	*figure;
 
-	if (!*figure_attr)
+	identifier = *figure_attr;
+	if (!identifier)
 		return (NULL);
-	else if (rt_str_equals(*figure_attr, (char *)RT_FIGURE + RT_CY))
+	else if (rt_str_equals(identifier, RT_FIGURE + RT_CY))
 		figure = parse_cylinder(figure_attr);
-	else if (rt_str_equals(*figure_attr, (char *)RT_FIGURE + RT_PL))
+	else if (rt_str_equals(identifier, RT_FIGURE + RT_PL))
 		figure = parse_plane(figure_attr);
-	else if (rt_str_equals(*figure_attr, (char *)RT_FIGURE + RT_SP))
+	else if (rt_str_equals(identifier, RT_FIGURE + RT_SP))
 		figure = parse_sphere(figure_attr);
 	else
 		figure = NULL;
@@ -74,9 +76,9 @@ static int	check_shadow(t_coord hit_point, t_scene *scene, t_figure *figure)
 	double		light_dist;
 	double		hit_dist;
 
-	light_dir = v_unit(v_sub(scene->light.center, hit_point));
+	light_dir = v_sub(scene->light.center, hit_point);
 	light_dist = v_length(light_dir);
-	surf_ray = (t_ray){hit_point, light_dir};
+	surf_ray = (t_ray){hit_point, v_unit(light_dir)};
 	node = scene->figures.head;
 	while (node)
 	{

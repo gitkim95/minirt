@@ -3,13 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   rt_error.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gitkim <gitkim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
+/*   By: hwilkim <hwilkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/02 16:53:25 by hwilkim           #+#    #+#             */
-/*   Updated: 2025/02/03 03:47:56 by gitkim           ###   ########.fr       */
+/*   Updated: 2025/02/03 15:39:10 by hwilkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <unistd.h>
 #include <stdlib.h>
 #include "rt_utils.h"
 #include "libft.h"

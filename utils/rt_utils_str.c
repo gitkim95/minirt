@@ -6,7 +6,7 @@
 /*   By: hwilkim <hwilkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/02 19:34:37 by hwilkim           #+#    #+#             */
-/*   Updated: 2025/02/02 05:42:09 by hwilkim          ###   ########.fr       */
+/*   Updated: 2025/02/03 20:40:08 by hwilkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,29 @@ int	rt_strcmp(char *s1, char *s2)
 	c1 = s1[idx];
 	c2 = s2[idx];
 	return (c1 - c2);
+}
+
+char	*rt_strcat(char *dest, char const *src)
+{
+	int	dest_idx;
+	int	src_idx;
+
+	dest_idx = 0;
+	src_idx = 0;
+	if (!src)
+	{
+		return (dest);
+	}
+	while (dest[dest_idx] != '\0')
+	{
+		++dest_idx;
+	}
+	while (src[src_idx] != '\0')
+	{
+		dest[dest_idx++] = src[src_idx++];
+	}
+	dest[dest_idx] = '\0';
+	return (dest);
 }
 
 bool	rt_str_equals(char *s1, char *s2)

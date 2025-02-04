@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rt_figure_plane.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hwilkim <hwilkim@student.42.fr>            +#+  +:+       +#+        */
+/*   By: gitkim <gitkim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/02 16:43:56 by hwilkim           #+#    #+#             */
-/*   Updated: 2025/02/03 15:26:50 by hwilkim          ###   ########.fr       */
+/*   Updated: 2025/02/04 05:00:59 by gitkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ t_figure	*parse_plane(char **figure_attr)
 
 double	hit_plane(t_figure *figure, t_ray *ray)
 {
+	double	t;
 	double	denom;
 	t_vec	p0_to_origin;
 
@@ -47,17 +48,26 @@ double	hit_plane(t_figure *figure, t_ray *ray)
 	if (fabs(denom) < RT_EPSILON)
 		return (-1.0);
 	p0_to_origin = v_sub(figure->center, ray->origin);
-	return (v_dot(p0_to_origin, figure->vector) / denom);
+	t = v_dot(p0_to_origin, figure->vector) / denom;
+	if (denom < 0)
+		figure->hit_side = HIT_OUTSIDE;
+	else
+		figure->hit_side = HIT_INSIDE;
+	return (t);
 }
 
 t_color	color_plane(t_coord hit_point, t_light *light, t_figure *figure)
 {
 	t_color	color;
+	t_vec	n;
 	t_vec	d;
 	double	t;
 
+	n = v_unit(figure->vector);
+	if (figure->hit_side == HIT_INSIDE)
+		n = v_mul(n, -1);
 	d = v_unit(v_sub(light->center, hit_point));
-	t = fmax(0, v_dot(v_unit(figure->vector), d));
+	t = fmax(0, v_dot(n, d));
 	color.x = light->color_bright.x * figure->color.x * t;
 	color.y = light->color_bright.y * figure->color.y * t;
 	color.z = light->color_bright.z * figure->color.z * t;

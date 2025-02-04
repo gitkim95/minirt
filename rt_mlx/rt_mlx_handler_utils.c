@@ -6,7 +6,7 @@
 /*   By: hwilkim <hwilkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/02 21:58:40 by hwilkim           #+#    #+#             */
-/*   Updated: 2025/02/02 22:30:40 by hwilkim          ###   ########.fr       */
+/*   Updated: 2025/02/05 01:05:20 by hwilkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,9 @@ void	*get_handler_arg(t_mlx *mlx)
 	else if (mlx->trans_mode == RT_ROTATE)
 	{
 		if (mlx->trans_arg.type == RT_C)
-			return (&mlx->scene.cam.cam_dir);
+			return (&mlx->scene.cam.rotate);
 		else if (mlx->trans_arg.type == RT_F)
-			return (&((t_figure *)mlx->trans_arg.arg)->vector);
+			return (&((t_figure *)mlx->trans_arg.arg)->rotate);
 	}
 	else
 		if (mlx->trans_arg.type == RT_F)

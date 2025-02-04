@@ -6,7 +6,7 @@
 /*   By: hwilkim <hwilkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/02 20:29:08 by hwilkim           #+#    #+#             */
-/*   Updated: 2025/02/02 22:34:19 by hwilkim          ###   ########.fr       */
+/*   Updated: 2025/02/05 01:42:05 by hwilkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,16 +104,18 @@ static int	transform_element(int keycode, t_mlx *mlx)
 		transform_handler(arg, 0, 0, -1);
 	else if (keycode == XK_x)
 		transform_handler(arg, 0, 0, 1);
-	post_transform(mlx);
+	if (mlx->trans_arg.type == RT_C && mlx->trans_mode == RT_TRANSLATE)
+		post_transform(mlx);
 	return (0);
 }
 
 static void	post_transform(t_mlx *mlx)
 {
 	t_camera	*camera;
+	t_rotate	rotate;
 
 	camera = &mlx->scene.cam;
-	if (mlx->trans_arg.type != RT_C)
-		return ;
+	rotate = camera->rotate;
 	mlx->scene.cam = make_camera(camera->center, camera->cam_dir, camera->fov);
+	mlx->scene.cam.rotate = (t_rotate){&camera->cam_dir, rotate.axis};
 }

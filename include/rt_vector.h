@@ -6,7 +6,7 @@
 /*   By: hwilkim <hwilkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/02 19:35:02 by hwilkim           #+#    #+#             */
-/*   Updated: 2025/01/04 21:09:03 by hwilkim          ###   ########.fr       */
+/*   Updated: 2025/02/05 01:03:26 by hwilkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,5 +29,6 @@ t_vec	v_cross(t_vec u, t_vec v);
 double	v_length(t_vec vec);
 double	v_length_squared(t_vec vec);
 t_vec	v_unit(t_vec vec);
+t_axis	get_default_axis(void);
 
 #endif

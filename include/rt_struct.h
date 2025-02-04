@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rt_struct.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gitkim <gitkim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
+/*   By: hwilkim <hwilkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/02 16:49:45 by hwilkim           #+#    #+#             */
-/*   Updated: 2025/02/06 03:35:18 by gitkim           ###   ########.fr       */
+/*   Updated: 2025/02/06 03:19:18 by hwilkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,19 @@ typedef struct s_vec
 	double	z;
 }	t_vec;
 
+typedef struct s_axis
+{
+	t_vec	x;
+	t_vec	y;
+	t_vec	z;
+}	t_axis;
+
+typedef struct s_rotate
+{
+	t_vec	*vector;
+	t_axis	axis;
+}	t_rotate;
+
 typedef t_vec	t_coord;
 typedef t_vec	t_color;
 
@@ -77,19 +90,20 @@ typedef struct s_ray
 
 typedef struct s_camera
 {
-	double	focal_length;
-	double	vp_height;
-	double	vp_width;
-	double	fov;
-	t_coord	center;
-	t_vec	cam_dir;
-	t_vec	vp_w;
-	t_vec	vp_u;
-	t_vec	vp_v;
-	t_vec	pixel_delta_u;
-	t_vec	pixel_delta_v;
-	t_vec	vp_upper_left;
-	t_vec	pixel_zero_loc;
+	double		focal_length;
+	double		vp_height;
+	double		vp_width;
+	double		fov;
+	t_coord		center;
+	t_vec		cam_dir;
+	t_vec		vp_w;
+	t_vec		vp_u;
+	t_vec		vp_v;
+	t_vec		pixel_delta_u;
+	t_vec		pixel_delta_v;
+	t_vec		vp_upper_left;
+	t_vec		pixel_zero_loc;
+	t_rotate	rotate;
 }	t_camera;
 
 typedef struct s_light
@@ -112,6 +126,7 @@ typedef struct s_figure
 	t_color			color;
 	t_hit_type		hit_type;
 	t_hit_side		hit_side;
+	t_rotate		rotate;
 	double			(*calculate_hit)(struct s_figure *, t_ray *);
 	t_vec			(*get_surf_normal)(t_coord, t_ray *, struct s_figure *);
 	struct s_figure	*next;

@@ -6,7 +6,7 @@
 /*   By: hwilkim <hwilkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/04 16:18:50 by hwilkim           #+#    #+#             */
-/*   Updated: 2025/02/04 21:23:35 by hwilkim          ###   ########.fr       */
+/*   Updated: 2025/02/05 01:28:38 by hwilkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ t_camera	make_camera(t_coord center, t_vec dir, int fov)
 	camera.focal_length = camera.vp_width / (2 * tan(fov_radians / 2));
 	camera.vp_upper_left = calculate_vp_upper_left(&camera);
 	camera.pixel_zero_loc = calculate_pixel_zero_loc(&camera);
+	camera.rotate = (t_rotate){&camera.cam_dir, get_default_axis()};
 	return (camera);
 }
 

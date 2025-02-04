@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rt_figure_sphere.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hwilkim <hwilkim@student.42.fr>            +#+  +:+       +#+        */
+/*   By: gitkim <gitkim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/02 16:43:56 by hwilkim           #+#    #+#             */
-/*   Updated: 2025/02/02 04:30:21 by hwilkim          ###   ########.fr       */
+/*   Updated: 2025/02/04 05:08:37 by gitkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,16 @@ double	hit_sphere(t_figure *figure, t_ray *ray)
 	discrim = (pow(b, 2) - a * c);
 	if (discrim < 0)
 		return (-1.0);
-	return ((b - sqrt(discrim)) / a);
+	if (c > 0)
+	{
+		figure->hit_side = HIT_OUTSIDE;
+		return ((b - sqrt(discrim)) / a);
+	}
+	else
+	{
+		figure->hit_side = HIT_INSIDE;
+		return ((b + sqrt(discrim)) / a);
+	}
 }
 
 t_color	color_sphere(t_coord hit_point, t_light *light, t_figure *figure)
@@ -64,6 +73,8 @@ t_color	color_sphere(t_coord hit_point, t_light *light, t_figure *figure)
 	double	t;
 
 	n = v_unit(v_sub(hit_point, figure->center));
+	if (figure->hit_side == HIT_INSIDE)
+		n = v_mul(n, -1);
 	d = v_unit(v_sub(light->center, hit_point));
 	t = fmax(0, v_dot(n, d));
 	color.x = light->color_bright.x * figure->color.x * t;

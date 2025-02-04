@@ -6,7 +6,7 @@
 /*   By: gitkim <gitkim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 21:32:37 by gitkim            #+#    #+#             */
-/*   Updated: 2025/02/03 23:56:49 by gitkim           ###   ########.fr       */
+/*   Updated: 2025/02/04 06:10:13 by gitkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 
 static void	check_hit_cap(t_figure *fig, t_ray *ray, double *t, double height);
 static void	check_hit_body(t_figure *fig, t_ray *ray, double *t, double *disc);
+static void	set_hit_direction(t_figure *fig, t_hit_type type, t_hit_side side);
 
 double	hit_cylinder(t_figure *figure, t_ray *ray)
 {
@@ -48,25 +49,26 @@ static void	check_hit_cap(t_figure *fig, t_ray *ray, double *t, double height)
 {
 	t_vec	hit_point;
 	t_vec	fig_dir;
-	t_vec	ray_dir;
 	double	cap;
 
 	fig_dir = v_unit(fig->vector);
-	ray_dir = ray->direction;
-	if (fabs(v_dot(ray_dir, fig_dir)) < RT_EPSILON)
+	if (fabs(v_dot(ray->direction, fig_dir)) < RT_EPSILON)
 		return ;
 	cap = v_dot(v_sub(v_add(fig->center, v_mul(fig_dir, height)), ray->origin) \
-					, fig_dir) / v_dot(ray_dir, fig_dir);
+					, fig_dir) / v_dot(ray->direction, fig_dir);
 	if (cap < RT_EPSILON)
 		return ;
-	hit_point = v_add(ray->origin, v_mul(ray_dir, cap));
+	hit_point = v_add(ray->origin, v_mul(ray->direction, cap));
 	if (v_length_squared(v_sub(hit_point, v_add(fig->center, \
 		v_mul(fig_dir, height)))) <= pow(fig->diameter / 2.0, 2))
 	{
 		if (*t < 0 || cap < *t)
 		{
 			*t = cap;
-			fig->hit_type = HIT_CAP;
+			if (v_dot(ray->direction, fig_dir) < 0)
+				set_hit_direction(fig, HIT_CAP, HIT_OUTSIDE);
+			else
+				set_hit_direction(fig, HIT_CAP, HIT_INSIDE);
 		}
 	}
 }
@@ -86,7 +88,7 @@ static void	check_hit_body(t_figure *fig, t_ray *ray, double *t, double *disc)
 	if (hit_height >= -fig->height / 2.0 && hit_height <= fig->height / 2.0)
 	{
 		*t = body[0];
-		fig->hit_type = HIT_BODY;
+		set_hit_direction(fig, HIT_BODY, HIT_OUTSIDE);
 	}
 	else
 	{
@@ -95,7 +97,13 @@ static void	check_hit_body(t_figure *fig, t_ray *ray, double *t, double *disc)
 		if (hit_height >= -fig->height / 2.0 && hit_height <= fig->height / 2.0)
 		{
 			*t = body[1];
-			fig->hit_type = HIT_BODY;
+			set_hit_direction(fig, HIT_BODY, HIT_INSIDE);
 		}
 	}
+}
+
+static void	set_hit_direction(t_figure *fig, t_hit_type type, t_hit_side side)
+{
+	fig->hit_type = type;
+	fig->hit_side = side;
 }

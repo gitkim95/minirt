@@ -6,7 +6,7 @@
 /*   By: gitkim <gitkim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 23:38:03 by gitkim            #+#    #+#             */
-/*   Updated: 2025/02/04 07:08:18 by gitkim           ###   ########.fr       */
+/*   Updated: 2025/02/04 16:54:33 by gitkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,8 @@ static t_color	color_cylinder_body(t_coord h_p, t_light *light, t_figure *fig)
 	double	t;
 
 	hit_normal = get_cylinder_normal(fig, h_p);
-	// if (fig->hit_side == HIT_INSIDE)
-    //     hit_normal = v_mul(hit_normal, -1);
+	if (fig->hit_side == HIT_INSIDE)
+		hit_normal = v_mul(hit_normal, -1);
 	d = v_unit(v_sub(light->center, h_p));
 	t = fmax(0, v_dot(hit_normal, d));
 	color.x = light->color_bright.x * fig->color.x * t;
@@ -56,7 +56,7 @@ static t_color	color_cylinder_cap(t_coord h_p, t_light *light, t_figure *fig)
 	if (fig->hit_side == HIT_INSIDE)
 		hit_normal = v_mul(hit_normal, -1);
 	if (v_dot(hit_normal, v_sub(light->center, h_p)) < 0)
-        hit_normal = v_mul(hit_normal, -1);
+		hit_normal = v_mul(hit_normal, -1);
 	d = v_unit(v_sub(light->center, h_p));
 	t = fmax(0, v_dot(hit_normal, d));
 	if (t == 0)
@@ -73,6 +73,7 @@ static t_color	color_cylinder_cap(t_coord h_p, t_light *light, t_figure *fig)
 	}
 	return (color);
 }
+
 static t_vec	get_cylinder_normal(t_figure *cylinder, t_vec hit_point)
 {
 	t_vec	normal;

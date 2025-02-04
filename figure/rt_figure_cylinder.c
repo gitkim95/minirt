@@ -6,7 +6,7 @@
 /*   By: gitkim <gitkim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/02 19:21:13 by hwilkim           #+#    #+#             */
-/*   Updated: 2025/02/03 23:29:10 by gitkim           ###   ########.fr       */
+/*   Updated: 2025/02/04 18:55:30 by gitkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,4 +41,22 @@ t_figure	*parse_cylinder(char **figure_attr)
 	figure->height = rt_atof(figure_attr[4]);
 	figure->color = parse_to_color(figure_attr[5]);
 	return (figure);
+}
+
+void	resize_cylinder(t_figure *figure, int x, int y)
+{
+	if (x)
+	{
+		if (x < 0 && figure->diameter <= 1)
+			return ;
+		figure->diameter += x;
+	}
+	else if (y)
+	{
+		if (y < 0 && figure->height <= 1)
+			return ;
+		figure->height += y;
+	}
+	else
+		return ;
 }

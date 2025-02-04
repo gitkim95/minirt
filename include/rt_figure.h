@@ -6,7 +6,7 @@
 /*   By: gitkim <gitkim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/02 16:40:41 by hwilkim           #+#    #+#             */
-/*   Updated: 2025/02/03 23:43:34 by gitkim           ###   ########.fr       */
+/*   Updated: 2025/02/04 18:55:24 by gitkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,9 @@
 
 # define RT_COLOR_BLACK	(t_color){0, 0, 0}
 # define RT_COLOR_NONE	(t_color){-1, 0, 0}
+
+void		resize_cylinder(t_figure *figure, int x, int y);
+void		resize_sphere(t_figure *figure, int x);
 
 t_figure	*parse_cylinder(char **figure_attr);
 t_figure	*parse_plane(char **figure_attr);

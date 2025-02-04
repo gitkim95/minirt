@@ -3,12 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   rt_mlx_handler_trans.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hwilkim <hwilkim@student.42.fr>            +#+  +:+       +#+        */
+/*   By: gitkim <gitkim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/02 20:29:08 by hwilkim           #+#    #+#             */
-/*   Updated: 2025/02/02 22:26:56 by hwilkim          ###   ########.fr       */
+/*   Updated: 2025/02/04 18:55:48 by gitkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "rt_figure.h"
 
 #include "rt_mlx.h"
 
@@ -66,12 +68,12 @@ static void	rotate(void *arg, int x, int y, int z)
 
 static void	resize(void *arg, int x, int y, int z)
 {
-	// t_figure	*figure;
+	t_figure	*figure;
 
-	// figure = (t_figure *)arg;
-	// (void)figure;
-	(void)arg;
-	(void)x;
-	(void)y;
 	(void)z;
+	figure = (t_figure *)arg;
+	if (figure->identifier == RT_CY)
+		resize_cylinder(figure, x, y);
+	else if (figure->identifier == RT_SP)
+		resize_sphere(figure, x);
 }

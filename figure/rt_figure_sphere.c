@@ -6,7 +6,7 @@
 /*   By: gitkim <gitkim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/02 16:43:56 by hwilkim           #+#    #+#             */
-/*   Updated: 2025/02/04 05:08:37 by gitkim           ###   ########.fr       */
+/*   Updated: 2025/02/04 18:54:47 by gitkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,4 +81,14 @@ t_color	color_sphere(t_coord hit_point, t_light *light, t_figure *figure)
 	color.y = light->color_bright.y * figure->color.y * t;
 	color.z = light->color_bright.z * figure->color.z * t;
 	return (color);
+}
+
+void	resize_sphere(t_figure *figure, int x)
+{
+	if (x)
+	{
+		if (x < 0 && figure->diameter <= 1)
+			return ;
+		figure->diameter += x;
+	}
 }

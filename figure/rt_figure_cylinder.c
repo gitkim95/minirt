@@ -6,7 +6,7 @@
 /*   By: hwilkim <hwilkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/02 19:21:13 by hwilkim           #+#    #+#             */
-/*   Updated: 2025/02/04 21:42:22 by hwilkim          ###   ########.fr       */
+/*   Updated: 2025/02/04 21:46:13 by hwilkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ t_figure	*parse_cylinder(char **figure_attr)
 	figure->diameter = rt_atof(figure_attr[3]);
 	figure->height = rt_atof(figure_attr[4]);
 	figure->color = parse_to_color(figure_attr[5]);
+	figure->calculate_hit = hit_cylinder;
 	figure->get_surf_normal = get_surf_normal;
 	return (figure);
 }

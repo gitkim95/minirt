@@ -6,7 +6,7 @@
 /*   By: hwilkim <hwilkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/02 16:43:56 by hwilkim           #+#    #+#             */
-/*   Updated: 2025/02/04 21:45:08 by hwilkim          ###   ########.fr       */
+/*   Updated: 2025/02/04 21:46:20 by hwilkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ t_figure	*parse_sphere(char **figure_attr)
 	figure->center = parse_to_coord(figure_attr[1]);
 	figure->diameter = rt_atof(figure_attr[2]);
 	figure->color = parse_to_color(figure_attr[3]);
+	figure->calculate_hit = hit_sphere;
 	figure->get_surf_normal = get_surf_normal;
 	return (figure);
 }

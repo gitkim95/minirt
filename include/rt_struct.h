@@ -6,7 +6,7 @@
 /*   By: hwilkim <hwilkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/02 16:49:45 by hwilkim           #+#    #+#             */
-/*   Updated: 2025/02/04 21:19:25 by hwilkim          ###   ########.fr       */
+/*   Updated: 2025/02/04 21:37:08 by hwilkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,6 +111,7 @@ typedef struct s_figure
 	t_color			color;
 	t_hit_type		hit_type;
 	t_hit_side		hit_side;
+	double			(*calculate_hit)(struct s_figure *, t_ray *);
 	t_vec			(*get_surf_normal)(t_coord, t_ray *, struct s_figure *);
 	struct s_figure	*next;
 }	t_figure;

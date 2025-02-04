@@ -6,7 +6,7 @@
 /*   By: hwilkim <hwilkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/02 19:28:52 by hwilkim           #+#    #+#             */
-/*   Updated: 2025/02/04 21:23:51 by hwilkim          ###   ########.fr       */
+/*   Updated: 2025/02/04 21:38:05 by hwilkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,19 +40,6 @@ t_figure	*make_figure(char **figure_attr)
 	return (figure);
 }
 
-double	hit_figure(t_figure *figure, t_ray *ray)
-{
-	if (!figure)
-		return (-1.0);
-	else if (figure->identifier == RT_CY)
-		return (hit_cylinder(figure, ray));
-	else if (figure->identifier == RT_PL)
-		return (hit_plane(figure, ray));
-	else if (figure->identifier == RT_SP)
-		return (hit_sphere(figure, ray));
-	return (-1.0);
-}
-
 t_color	color_figure(t_coord coord, t_ray *ray, t_scene *scene, t_figure *fig)
 {
 	t_color	diffuse;
@@ -76,7 +63,7 @@ t_color	color_figure(t_coord coord, t_ray *ray, t_scene *scene, t_figure *fig)
 
 static int	check_shadow(t_coord coord, t_scene *scene)
 {
-	t_figure	*node;
+	t_figure	*figure;
 	t_ray		surf_ray;
 	t_vec		light_dir;
 	double		light_dist;
@@ -85,13 +72,13 @@ static int	check_shadow(t_coord coord, t_scene *scene)
 	light_dir = v_sub(scene->light.center, coord);
 	light_dist = v_length(light_dir);
 	surf_ray = (t_ray){coord, v_unit(light_dir)};
-	node = scene->figures.head;
-	while (node)
+	figure = scene->figures.head;
+	while (figure)
 	{
-		hit_dist = hit_figure(node, &surf_ray);
+		hit_dist = figure->calculate_hit(figure, &surf_ray);
 		if (hit_dist > 0 && hit_dist < light_dist)
 			return (1);
-		node = node->next;
+		figure = figure->next;
 	}
 	return (0);
 }

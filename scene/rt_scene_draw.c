@@ -6,7 +6,7 @@
 /*   By: hwilkim <hwilkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 18:41:32 by hwilkim           #+#    #+#             */
-/*   Updated: 2025/02/04 21:30:04 by hwilkim          ###   ########.fr       */
+/*   Updated: 2025/02/04 21:35:49 by hwilkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ static t_color	calculate_figure_color(t_ray *ray, t_mlx *mlx, t_figure	*fig)
 	hit_min = INFINITY;
 	while (fig)
 	{
-		hit = hit_figure(fig, ray);
+		hit = fig->calculate_hit(fig, ray);
 		if (hit > 0 && hit_min > hit)
 		{
 			hit_min = hit;

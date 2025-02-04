@@ -6,7 +6,7 @@
 /*   By: hwilkim <hwilkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 18:41:32 by hwilkim           #+#    #+#             */
-/*   Updated: 2025/02/04 19:55:15 by hwilkim          ###   ########.fr       */
+/*   Updated: 2025/02/04 21:30:04 by hwilkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,17 +19,19 @@
 #include "rt_scene.h"
 
 static t_ray	calculate_cam_ray(t_camera *cam, int i, int j);
-static t_color	calculate_figure_color(t_ray *cam_ray, t_mlx *mlx);
+static t_color	calculate_figure_color(t_ray *ray, t_mlx *mlx, t_figure	*fig);
+static t_coord	get_surface_coord(t_ray *cam_ray, double hit, t_vec offset);
 static int		has_color(t_color color);
-static t_coord	get_offset(t_ray *cam_ray, double hit, t_vec offset);
 
 void	draw_scene(t_mlx *mlx)
 {
-	t_ray	cam_ray;
-	t_color	color;
-	int		i;
-	int		j;
+	t_ray		cam_ray;
+	t_color		color;
+	t_figure	*head;
+	int			i;
+	int			j;
 
+	head = mlx->scene.figures.head;
 	j = 0;
 	while (j < RT_HEIGHT)
 	{
@@ -37,7 +39,7 @@ void	draw_scene(t_mlx *mlx)
 		while (i < RT_WIDTH)
 		{
 			cam_ray = calculate_cam_ray(&mlx->scene.cam, i, j);
-			color = calculate_figure_color(&cam_ray, mlx);
+			color = calculate_figure_color(&cam_ray, mlx, head);
 			if (has_color(color))
 				draw_pixel_to_img(&mlx->img_data, i, j, to_rgb_color(color));
 			++i;
@@ -57,37 +59,37 @@ static t_ray	calculate_cam_ray(t_camera *cam, int i, int j)
 	return ((t_ray){cam->center, ray_direction});
 }
 
-static t_color	calculate_figure_color(t_ray *cam_ray, t_mlx *mlx)
+static t_color	calculate_figure_color(t_ray *ray, t_mlx *mlx, t_figure	*fig)
 {
-	t_figure	*figure;
+	t_coord		coord;
 	t_color		color;
 	t_vec		offset;
 	double		hit;
 	double		hit_min;
 
-	figure = mlx->scene.figures.head;
-	color = RT_COLOR_NONE;
-	offset = v_mul(cam_ray->direction, -RT_EPSILON);
+	color = (t_color){RT_COLOR_NONE, 0, 0};
+	offset = v_mul(ray->direction, -RT_EPSILON);
 	hit_min = INFINITY;
-	while (figure)
+	while (fig)
 	{
-		hit = hit_figure(figure, cam_ray);
+		hit = hit_figure(fig, ray);
 		if (hit > 0 && hit_min > hit)
 		{
 			hit_min = hit;
-			color = color_figure(get_offset(cam_ray, hit, offset), cam_ray, &mlx->scene, figure);
+			coord = get_surface_coord(ray, hit, offset);
+			color = color_figure(coord, ray, &mlx->scene, fig);
 		}
-		figure = figure->next;
+		fig = fig->next;
 	}
 	return (color);
+}
+
+static t_coord	get_surface_coord(t_ray *cam_ray, double hit, t_vec offset)
+{
+	return (v_add(ray_at(cam_ray, hit), offset));
 }
 
 static int	has_color(t_color color)
 {
 	return (color.x >= 0);
-}
-
-static t_coord	get_offset(t_ray *cam_ray, double hit, t_vec offset)
-{
-	return (v_add(ray_at(cam_ray, hit), offset));
 }

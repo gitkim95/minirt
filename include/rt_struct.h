@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rt_struct.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gitkim <gitkim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
+/*   By: hwilkim <hwilkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/02 16:49:45 by hwilkim           #+#    #+#             */
-/*   Updated: 2025/02/04 04:50:49 by gitkim           ###   ########.fr       */
+/*   Updated: 2025/02/04 21:19:25 by hwilkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,12 @@ typedef struct s_vec
 typedef t_vec	t_coord;
 typedef t_vec	t_color;
 
+typedef struct s_ray
+{
+	t_coord	origin;
+	t_vec	direction;
+}	t_ray;
+
 typedef struct s_camera
 {
 	double	focal_length;
@@ -105,6 +111,7 @@ typedef struct s_figure
 	t_color			color;
 	t_hit_type		hit_type;
 	t_hit_side		hit_side;
+	t_vec			(*get_surf_normal)(t_coord, t_ray *, struct s_figure *);
 	struct s_figure	*next;
 }	t_figure;
 
@@ -122,12 +129,6 @@ typedef struct s_scene
 	t_amb_light	amb_light;
 	t_fig_list	figures;
 }	t_scene;
-
-typedef struct s_ray
-{
-	t_coord	origin;
-	t_vec	direction;
-}	t_ray;
 
 typedef struct s_data
 {

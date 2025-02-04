@@ -6,7 +6,7 @@
 /*   By: hwilkim <hwilkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/02 16:43:56 by hwilkim           #+#    #+#             */
-/*   Updated: 2025/02/04 21:41:13 by hwilkim          ###   ########.fr       */
+/*   Updated: 2025/02/04 21:45:08 by hwilkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@
 #include "libft.h"
 
 #include "rt_figure.h"
+
+static t_vec	get_surf_normal(t_coord coord, t_ray *ray, t_figure *fig);
 
 /**
  * Sphere: sp	0.0,0.0,20.6	12.6	10,0,255
@@ -35,6 +37,7 @@ t_figure	*parse_sphere(char **figure_attr)
 	figure->center = parse_to_coord(figure_attr[1]);
 	figure->diameter = rt_atof(figure_attr[2]);
 	figure->color = parse_to_color(figure_attr[3]);
+	figure->get_surf_normal = get_surf_normal;
 	return (figure);
 }
 
@@ -58,22 +61,14 @@ double	hit_sphere(t_figure *figure, t_ray *ray)
 	return ((b + sqrt(discrim)) / a);
 }
 
-t_color	color_sphere(t_coord hit_point, t_ray *cam_ray, t_light *light, t_figure *figure)
+static t_vec	get_surf_normal(t_coord coord, t_ray *ray, t_figure *fig)
 {
-	t_color	color;
 	t_vec	n;
-	t_vec	d;
-	double	t;
 
-	n = v_unit(v_sub(hit_point, figure->center));
-	if (v_dot(cam_ray->direction, n) > 0)
+	n = v_unit(v_sub(coord, fig->center));
+	if (v_dot(ray->direction, n) > 0)
 		n = v_mul(n, -1);
-	d = v_unit(v_sub(light->center, hit_point));
-	t = fmax(0, v_dot(n, d));
-	color.x = light->color_bright.x * figure->color.x * t;
-	color.y = light->color_bright.y * figure->color.y * t;
-	color.z = light->color_bright.z * figure->color.z * t;
-	return (color);
+	return (n);
 }
 
 void	resize_sphere(t_figure *figure, int x)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rt_figure_sphere.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gitkim <gitkim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
+/*   By: hwilkim <hwilkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/02 16:43:56 by hwilkim           #+#    #+#             */
-/*   Updated: 2025/02/04 18:54:47 by gitkim           ###   ########.fr       */
+/*   Updated: 2025/02/04 21:41:13 by hwilkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,18 +54,11 @@ double	hit_sphere(t_figure *figure, t_ray *ray)
 	if (discrim < 0)
 		return (-1.0);
 	if (c > 0)
-	{
-		figure->hit_side = HIT_OUTSIDE;
 		return ((b - sqrt(discrim)) / a);
-	}
-	else
-	{
-		figure->hit_side = HIT_INSIDE;
-		return ((b + sqrt(discrim)) / a);
-	}
+	return ((b + sqrt(discrim)) / a);
 }
 
-t_color	color_sphere(t_coord hit_point, t_light *light, t_figure *figure)
+t_color	color_sphere(t_coord hit_point, t_ray *cam_ray, t_light *light, t_figure *figure)
 {
 	t_color	color;
 	t_vec	n;
@@ -73,7 +66,7 @@ t_color	color_sphere(t_coord hit_point, t_light *light, t_figure *figure)
 	double	t;
 
 	n = v_unit(v_sub(hit_point, figure->center));
-	if (figure->hit_side == HIT_INSIDE)
+	if (v_dot(cam_ray->direction, n) > 0)
 		n = v_mul(n, -1);
 	d = v_unit(v_sub(light->center, hit_point));
 	t = fmax(0, v_dot(n, d));

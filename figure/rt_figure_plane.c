@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rt_figure_plane.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gitkim <gitkim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
+/*   By: hwilkim <hwilkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/02 16:43:56 by hwilkim           #+#    #+#             */
-/*   Updated: 2025/02/04 05:00:59 by gitkim           ###   ########.fr       */
+/*   Updated: 2025/02/04 19:49:07 by hwilkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,14 +49,10 @@ double	hit_plane(t_figure *figure, t_ray *ray)
 		return (-1.0);
 	p0_to_origin = v_sub(figure->center, ray->origin);
 	t = v_dot(p0_to_origin, figure->vector) / denom;
-	if (denom < 0)
-		figure->hit_side = HIT_OUTSIDE;
-	else
-		figure->hit_side = HIT_INSIDE;
 	return (t);
 }
 
-t_color	color_plane(t_coord hit_point, t_light *light, t_figure *figure)
+t_color	color_plane(t_coord hit_point, t_ray *cam_ray, t_light *light, t_figure *figure)
 {
 	t_color	color;
 	t_vec	n;
@@ -64,7 +60,7 @@ t_color	color_plane(t_coord hit_point, t_light *light, t_figure *figure)
 	double	t;
 
 	n = v_unit(figure->vector);
-	if (figure->hit_side == HIT_INSIDE)
+	if (v_dot(cam_ray->direction, n) > 0)
 		n = v_mul(n, -1);
 	d = v_unit(v_sub(light->center, hit_point));
 	t = fmax(0, v_dot(n, d));

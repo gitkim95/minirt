@@ -6,7 +6,7 @@
 /*   By: hwilkim <hwilkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/02 19:28:52 by hwilkim           #+#    #+#             */
-/*   Updated: 2025/02/03 15:28:55 by hwilkim          ###   ########.fr       */
+/*   Updated: 2025/02/04 19:49:19 by hwilkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 
 #include "rt_figure.h"
 
-static int		check_shadow(t_coord hit_point, t_scene *scene, t_figure *fig);
+static int		check_shadow(t_coord hit_point, t_scene *scene);
 static t_color	to_phong(t_color fig_color, t_color diffuse, t_color ambient);
 
 t_figure	*make_figure(char **figure_attr)
@@ -53,22 +53,22 @@ double	hit_figure(t_figure *figure, t_ray *ray)
 	return (-1.0);
 }
 
-t_color	color_figure(t_coord hit_point, t_scene *scene, t_figure *figure)
+t_color	color_figure(t_coord hit_point, t_ray *cam_ray, t_scene *scene, t_figure *figure)
 {
 	t_color	diffuse;
 
-	if (check_shadow(hit_point, scene, figure))
+	if (check_shadow(hit_point, scene))
 		diffuse = RT_COLOR_BLACK;
 	else if (figure->identifier == RT_CY)
 		diffuse = color_cylinder(hit_point, &scene->light, figure);
 	else if (figure->identifier == RT_PL)
-		diffuse = color_plane(hit_point, &scene->light, figure);
+		diffuse = color_plane(hit_point, cam_ray, &scene->light, figure);
 	else if (figure->identifier == RT_SP)
-		diffuse = color_sphere(hit_point, &scene->light, figure);
+		diffuse = color_sphere(hit_point, cam_ray, &scene->light, figure);
 	return (to_phong(figure->color, diffuse, scene->amb_light.color_bright));
 }
 
-static int	check_shadow(t_coord hit_point, t_scene *scene, t_figure *figure)
+static int	check_shadow(t_coord hit_point, t_scene *scene)
 {
 	t_figure	*node;
 	t_ray		surf_ray;
@@ -82,12 +82,9 @@ static int	check_shadow(t_coord hit_point, t_scene *scene, t_figure *figure)
 	node = scene->figures.head;
 	while (node)
 	{
-		if (node != figure)
-		{
-			hit_dist = hit_figure(node, &surf_ray);
-			if (hit_dist > 0 && hit_dist < light_dist)
-				return (1);
-		}
+		hit_dist = hit_figure(node, &surf_ray);
+		if (hit_dist > 0 && hit_dist < light_dist)
+			return (1);
 		node = node->next;
 	}
 	return (0);

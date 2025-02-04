@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rt_figure.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gitkim <gitkim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
+/*   By: hwilkim <hwilkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/02 16:40:41 by hwilkim           #+#    #+#             */
-/*   Updated: 2025/02/04 18:55:24 by gitkim           ###   ########.fr       */
+/*   Updated: 2025/02/04 21:41:23 by hwilkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@ double		hit_plane(t_figure *figure, t_ray *ray);
 double		hit_sphere(t_figure *figure, t_ray *ray);
 
 t_color		color_cylinder(t_coord hit_point, t_light *light, t_figure *figure);
-t_color		color_plane(t_coord hit_point, t_light *light, t_figure *figure);
-t_color		color_sphere(t_coord hit_point, t_light *light, t_figure *figure);
+t_color		color_plane(t_coord hit_point, t_ray *cam_ray, t_light *light, t_figure *figure);
+t_color		color_sphere(t_coord hit_point, t_ray *cam_ray, t_light *light, t_figure *figure);
 
 /* rt_figure_utils */
 void		append_fig_list(t_fig_list *list, t_figure *figure);
@@ -42,6 +42,6 @@ int			to_rgb_color(t_color color);
 /* rt_figure */
 t_figure	*make_figure(char **figure_attr);
 double		hit_figure(t_figure *figure, t_ray *ray);
-t_color		color_figure(t_coord hit_point, t_scene *scene, t_figure *figure);
+t_color		color_figure(t_coord hit_point, t_ray *cam_ray, t_scene *scene, t_figure *figure);
 
 #endif

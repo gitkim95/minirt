@@ -6,7 +6,7 @@
 /*   By: hwilkim <hwilkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 18:41:32 by hwilkim           #+#    #+#             */
-/*   Updated: 2025/02/02 04:24:43 by hwilkim          ###   ########.fr       */
+/*   Updated: 2025/02/04 19:55:15 by hwilkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 static t_ray	calculate_cam_ray(t_camera *cam, int i, int j);
 static t_color	calculate_figure_color(t_ray *cam_ray, t_mlx *mlx);
 static int		has_color(t_color color);
+static t_coord	get_offset(t_ray *cam_ray, double hit, t_vec offset);
 
 void	draw_scene(t_mlx *mlx)
 {
@@ -60,11 +61,13 @@ static t_color	calculate_figure_color(t_ray *cam_ray, t_mlx *mlx)
 {
 	t_figure	*figure;
 	t_color		color;
+	t_vec		offset;
 	double		hit;
 	double		hit_min;
 
 	figure = mlx->scene.figures.head;
 	color = RT_COLOR_NONE;
+	offset = v_mul(cam_ray->direction, -RT_EPSILON);
 	hit_min = INFINITY;
 	while (figure)
 	{
@@ -72,7 +75,7 @@ static t_color	calculate_figure_color(t_ray *cam_ray, t_mlx *mlx)
 		if (hit > 0 && hit_min > hit)
 		{
 			hit_min = hit;
-			color = color_figure(ray_at(cam_ray, hit), &mlx->scene, figure);
+			color = color_figure(get_offset(cam_ray, hit, offset), cam_ray, &mlx->scene, figure);
 		}
 		figure = figure->next;
 	}
@@ -82,4 +85,9 @@ static t_color	calculate_figure_color(t_ray *cam_ray, t_mlx *mlx)
 static int	has_color(t_color color)
 {
 	return (color.x >= 0);
+}
+
+static t_coord	get_offset(t_ray *cam_ray, double hit, t_vec offset)
+{
+	return (v_add(ray_at(cam_ray, hit), offset));
 }

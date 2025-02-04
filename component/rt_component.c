@@ -6,7 +6,7 @@
 /*   By: hwilkim <hwilkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/04 16:18:50 by hwilkim           #+#    #+#             */
-/*   Updated: 2025/02/02 21:50:36 by hwilkim          ###   ########.fr       */
+/*   Updated: 2025/02/04 21:23:35 by hwilkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,9 @@ t_camera	make_camera(t_coord center, t_vec dir, int fov)
 	camera.vp_width = 2 * tan(fov_radians / 2);
 	camera.vp_height = camera.vp_width / ((double)RT_WIDTH / RT_HEIGHT);
 	camera.vp_w = v_mul(camera.cam_dir, -1);
-	camera.vp_u = v_cross(RT_UPPER_VEC, camera.vp_w);
+	camera.vp_u = v_cross((t_vec){0, 1, 0}, camera.vp_w);
 	if (v_length(camera.vp_u) < RT_EPSILON)
-		camera.vp_u = RT_AXIS_X;
+		camera.vp_u = (t_vec){1, 0, 0};
 	camera.vp_u = v_unit(camera.vp_u);
 	camera.vp_v = v_unit(v_cross(camera.vp_w, camera.vp_u));
 	camera.vp_u = v_mul(camera.vp_u, camera.vp_width);

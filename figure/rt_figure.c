@@ -6,7 +6,7 @@
 /*   By: hwilkim <hwilkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/02 19:28:52 by hwilkim           #+#    #+#             */
-/*   Updated: 2025/02/03 15:28:55 by hwilkim          ###   ########.fr       */
+/*   Updated: 2025/02/04 21:38:05 by hwilkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 
 #include "rt_figure.h"
 
-static int		check_shadow(t_coord hit_point, t_scene *scene, t_figure *fig);
+static int		check_shadow(t_coord coord, t_scene *scene);
 static t_color	to_phong(t_color fig_color, t_color diffuse, t_color ambient);
 
 t_figure	*make_figure(char **figure_attr)
@@ -40,55 +40,45 @@ t_figure	*make_figure(char **figure_attr)
 	return (figure);
 }
 
-double	hit_figure(t_figure *figure, t_ray *ray)
-{
-	if (!figure)
-		return (-1.0);
-	else if (figure->identifier == RT_CY)
-		return (hit_cylinder(figure, ray));
-	else if (figure->identifier == RT_PL)
-		return (hit_plane(figure, ray));
-	else if (figure->identifier == RT_SP)
-		return (hit_sphere(figure, ray));
-	return (-1.0);
-}
-
-t_color	color_figure(t_coord hit_point, t_scene *scene, t_figure *figure)
+t_color	color_figure(t_coord coord, t_ray *ray, t_scene *scene, t_figure *fig)
 {
 	t_color	diffuse;
+	t_vec	n;
+	t_vec	d;
+	double	t;
 
-	if (check_shadow(hit_point, scene, figure))
-		diffuse = RT_COLOR_BLACK;
-	else if (figure->identifier == RT_CY)
-		diffuse = color_cylinder(hit_point, &scene->light, figure);
-	else if (figure->identifier == RT_PL)
-		diffuse = color_plane(hit_point, &scene->light, figure);
-	else if (figure->identifier == RT_SP)
-		diffuse = color_sphere(hit_point, &scene->light, figure);
-	return (to_phong(figure->color, diffuse, scene->amb_light.color_bright));
+	if (check_shadow(coord, scene))
+		diffuse = (t_color){0, 0, 0};
+	else
+	{
+		n = fig->get_surf_normal(coord, ray, fig);
+		d = v_unit(v_sub(scene->light.center, coord));
+		t = fmax(0, v_dot(n, d));
+		diffuse.x = scene->light.color_bright.x * fig->color.x * t;
+		diffuse.y = scene->light.color_bright.y * fig->color.y * t;
+		diffuse.z = scene->light.color_bright.z * fig->color.z * t;
+	}
+	return (to_phong(fig->color, diffuse, scene->amb_light.color_bright));
 }
 
-static int	check_shadow(t_coord hit_point, t_scene *scene, t_figure *figure)
+static int	check_shadow(t_coord coord, t_scene *scene)
 {
-	t_figure	*node;
+	t_figure	*figure;
 	t_ray		surf_ray;
 	t_vec		light_dir;
 	double		light_dist;
 	double		hit_dist;
 
-	light_dir = v_sub(scene->light.center, hit_point);
+	light_dir = v_sub(scene->light.center, coord);
 	light_dist = v_length(light_dir);
-	surf_ray = (t_ray){hit_point, v_unit(light_dir)};
-	node = scene->figures.head;
-	while (node)
+	surf_ray = (t_ray){coord, v_unit(light_dir)};
+	figure = scene->figures.head;
+	while (figure)
 	{
-		if (node != figure)
-		{
-			hit_dist = hit_figure(node, &surf_ray);
-			if (hit_dist > 0 && hit_dist < light_dist)
-				return (1);
-		}
-		node = node->next;
+		hit_dist = figure->calculate_hit(figure, &surf_ray);
+		if (hit_dist > 0 && hit_dist < light_dist)
+			return (1);
+		figure = figure->next;
 	}
 	return (0);
 }

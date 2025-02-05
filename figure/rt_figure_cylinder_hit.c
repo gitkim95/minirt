@@ -6,7 +6,7 @@
 /*   By: gitkim <gitkim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 21:32:37 by gitkim            #+#    #+#             */
-/*   Updated: 2025/02/06 04:13:18 by gitkim           ###   ########.fr       */
+/*   Updated: 2025/02/06 04:18:38 by gitkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,11 @@ double	hit_cylinder(t_figure *fig, t_ray *ray)
 	double	cap_t[3];
 	t_vec	cap_center[2];
 
-	body_t = hit_cylinder_body(fig, ray);
+	body_t = hit_body(fig, ray);
 	cap_center[0] = v_add(fig->center, v_mul(fig->vector, fig->height / 2));
-	cap_t[0] = hit_cylinder_cap(cap_center[0], \
-								fig->vector, fig->diameter / 2, ray);
+	cap_t[0] = hit_cap(cap_center[0], fig->vector, fig->diameter / 2, ray);
 	cap_center[1] = v_sub(fig->center, v_mul(fig->vector, fig->height / 2));
-	cap_t[1] = hit_cylinder_cap(cap_center[1], \
+	cap_t[1] = hit_cap(cap_center[1], \
 								v_mul(fig->vector, -1), fig->diameter / 2, ray);
 	if (cap_t[0] < 0 && cap_t[1] < 0)
 		cap_t[2] = -1.0;

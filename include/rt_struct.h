@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rt_struct.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hwilkim <hwilkim@student.42.fr>            +#+  +:+       +#+        */
+/*   By: gitkim <gitkim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/02 16:49:45 by hwilkim           #+#    #+#             */
-/*   Updated: 2025/02/04 21:37:08 by hwilkim          ###   ########.fr       */
+/*   Updated: 2025/02/06 03:35:18 by gitkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,9 @@
 # define RT_SCENE		"A\0C\0L"
 # define RT_MLX_MODE	"translate\0rotate\0resize"
 
-# define RT_RADIAN	0.0174533
-# define RT_EPSILON	1e-6
+# define RT_RADIAN				0.0174533
+# define RT_EPSILON				1e-6
+# define RT_TOLERANCE_EPSILON	1e-5
 
 typedef enum e_hit_side
 {

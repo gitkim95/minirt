@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rt_figure_cylinder_hit.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hwilkim <hwilkim@student.42.fr>            +#+  +:+       +#+        */
+/*   By: gitkim <gitkim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 21:32:37 by gitkim            #+#    #+#             */
-/*   Updated: 2025/02/04 21:35:11 by hwilkim          ###   ########.fr       */
+/*   Updated: 2025/02/06 04:13:18 by gitkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,94 +16,74 @@
 
 #include "rt_figure.h"
 
-static void	check_hit_cap(t_figure *fig, t_ray *ray, double *t, double height);
-static void	check_hit_body(t_figure *fig, t_ray *ray, double *t, double *disc);
-static void	set_hit_direction(t_figure *fig, t_hit_type type, t_hit_side side);
+static double	hit_body(t_figure *figure, t_ray *ray);
+static double	hit_cap(t_vec cap_c, t_vec cap_n, double radius, t_ray *ray);
 
-double	hit_cylinder(t_figure *figure, t_ray *ray)
+double	hit_cylinder(t_figure *fig, t_ray *ray)
 {
-	t_vec	offset;
-	t_vec	fig_dir;
-	t_vec	ray_dir;
-	double	discrim[4];
-	double	t;
+	double	body_t;
+	double	cap_t[3];
+	t_vec	cap_center[2];
 
-	t = -1.0;
-	fig_dir = v_unit(figure->vector);
-	ray_dir = ray->direction;
-	offset = v_sub(ray->origin, figure->center);
-	discrim[0] = v_length_squared(ray_dir) - pow(v_dot(ray_dir, fig_dir), 2);
-	discrim[1] = 2 * (v_dot(ray_dir, offset) \
-			- v_dot(ray_dir, fig_dir) * v_dot(offset, fig_dir));
-	discrim[2] = v_length_squared(offset) \
-			- pow(v_dot(offset, fig_dir), 2) - pow(figure->diameter / 2.0, 2);
-	discrim[3] = discrim[1] * discrim[1] - 4 * discrim[0] * discrim[2];
-	if (discrim[3] >= 0)
-		check_hit_body(figure, ray, &t, discrim);
-	check_hit_cap(figure, ray, &t, -figure->height / 2);
-	check_hit_cap(figure, ray, &t, figure->height / 2);
-	return (t);
-}
-
-static void	check_hit_cap(t_figure *fig, t_ray *ray, double *t, double height)
-{
-	t_vec	hit_point;
-	t_vec	fig_dir;
-	double	cap;
-
-	fig_dir = v_unit(fig->vector);
-	if (fabs(v_dot(ray->direction, fig_dir)) < RT_EPSILON)
-		return ;
-	cap = v_dot(v_sub(v_add(fig->center, v_mul(fig_dir, height)), ray->origin) \
-					, fig_dir) / v_dot(ray->direction, fig_dir);
-	if (cap < RT_EPSILON)
-		return ;
-	hit_point = v_add(ray->origin, v_mul(ray->direction, cap));
-	if (v_length_squared(v_sub(hit_point, v_add(fig->center, \
-		v_mul(fig_dir, height)))) <= pow(fig->diameter / 2.0, 2))
-	{
-		if (*t < 0 || cap < *t)
-		{
-			*t = cap;
-			if (v_dot(ray->direction, fig_dir) < 0)
-				set_hit_direction(fig, HIT_CAP, HIT_OUTSIDE);
-			else
-				set_hit_direction(fig, HIT_CAP, HIT_INSIDE);
-		}
-	}
-}
-
-static void	check_hit_body(t_figure *fig, t_ray *ray, double *t, double *disc)
-{
-	t_vec	hit_point;
-	double	hit_height;
-	double	body[2];
-
-	body[0] = (-disc[1] - sqrt(disc[3])) / (2 * disc[0]);
-	body[1] = (-disc[1] + sqrt(disc[3])) / (2 * disc[0]);
-	if (body[0] > body[1])
-		rt_swap(&body[0], &body[1]);
-	hit_point = v_add(ray->origin, v_mul(ray->direction, body[0]));
-	hit_height = v_dot(v_sub(hit_point, fig->center), v_unit(fig->vector));
-	if (hit_height >= -fig->height / 2.0 && hit_height <= fig->height / 2.0)
-	{
-		*t = body[0];
-		set_hit_direction(fig, HIT_BODY, HIT_OUTSIDE);
-	}
+	body_t = hit_cylinder_body(fig, ray);
+	cap_center[0] = v_add(fig->center, v_mul(fig->vector, fig->height / 2));
+	cap_t[0] = hit_cylinder_cap(cap_center[0], \
+								fig->vector, fig->diameter / 2, ray);
+	cap_center[1] = v_sub(fig->center, v_mul(fig->vector, fig->height / 2));
+	cap_t[1] = hit_cylinder_cap(cap_center[1], \
+								v_mul(fig->vector, -1), fig->diameter / 2, ray);
+	if (cap_t[0] < 0 && cap_t[1] < 0)
+		cap_t[2] = -1.0;
+	else if (cap_t[0] > 0 && cap_t[1] == -1.0)
+		cap_t[2] = cap_t[0];
+	else if (cap_t[1] > 0 && cap_t[0] == -1.0)
+		cap_t[2] = cap_t[1];
 	else
-	{
-		hit_point = v_add(ray->origin, v_mul(ray->direction, body[1]));
-		hit_height = v_dot(v_sub(hit_point, fig->center), v_unit(fig->vector));
-		if (hit_height >= -fig->height / 2.0 && hit_height <= fig->height / 2.0)
-		{
-			*t = body[1];
-			set_hit_direction(fig, HIT_BODY, HIT_INSIDE);
-		}
-	}
+		cap_t[2] = fmin(cap_t[0], cap_t[1]);
+	if (body_t > 0 && cap_t[2] > 0)
+		return (fmin(body_t, cap_t[2]));
+	if (body_t > 0 && cap_t[2] == -1.0)
+		return (body_t);
+	return (cap_t[2]);
 }
 
-static void	set_hit_direction(t_figure *fig, t_hit_type type, t_hit_side side)
+static double	hit_cap(t_vec cap_c, t_vec cap_n, double radius, t_ray *ray)
 {
-	fig->hit_type = type;
-	fig->hit_side = side;
+	double	cap_t;
+	t_vec	hit_point;
+
+	cap_t = v_dot(v_sub(cap_c, ray->origin), cap_n) \
+												/ v_dot(ray->direction, cap_n);
+	hit_point = v_add(ray->origin, v_mul(ray->direction, cap_t));
+	if (v_length(v_sub(hit_point, cap_c)) <= radius && cap_t > RT_EPSILON)
+		return (cap_t);
+	return (-1.0);
+}
+
+static double	hit_body(t_figure *fig, t_ray *ray)
+{
+	t_vec	oc;
+	double	discrim[4];
+	double	t[2];
+	double	m[2];
+
+	oc = v_sub(ray->origin, fig->center);
+	discrim[0] = v_dot(ray->direction, ray->direction) \
+								- pow(v_dot(ray->direction, fig->vector), 2);
+	discrim[1] = 2 * (v_dot(ray->direction, oc) \
+			- (v_dot(ray->direction, fig->vector) * v_dot(oc, fig->vector)));
+	discrim[2] = v_dot(oc, oc) - pow(v_dot(oc, fig->vector), 2) \
+								- pow(fig->diameter / 2, 2);
+	discrim[3] = pow(discrim[1], 2) - 4 * discrim[0] * discrim[2];
+	if (discrim[3] < 0)
+		return (-1.0);
+	t[0] = (-discrim[1] - sqrt(discrim[3])) / (2 * discrim[0]);
+	t[1] = (-discrim[1] + sqrt(discrim[3])) / (2 * discrim[0]);
+	m[0] = v_dot(ray->direction, fig->vector) * t[0] + v_dot(oc, fig->vector);
+	m[1] = v_dot(ray->direction, fig->vector) * t[1] + v_dot(oc, fig->vector);
+	if (fabs(m[0]) <= fig->height / 2 && t[0] > RT_EPSILON)
+		return (t[0]);
+	else if (fabs(m[1]) <= fig->height / 2 && t[1] > RT_EPSILON)
+		return (t[1]);
+	return (-1.0);
 }

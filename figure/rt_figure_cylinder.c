@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rt_figure_cylinder.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hwilkim <hwilkim@student.42.fr>            +#+  +:+       +#+        */
+/*   By: gitkim <gitkim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/02 19:21:13 by hwilkim           #+#    #+#             */
-/*   Updated: 2025/02/04 21:46:13 by hwilkim          ###   ########.fr       */
+/*   Updated: 2025/02/06 03:43:25 by gitkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,6 @@
 #include "rt_figure.h"
 
 static t_vec	get_surf_normal(t_coord coord, t_ray *ray, t_figure *fig);
-static t_vec	surf_normal_cap(t_coord coord, t_figure *fig);
-static t_vec	surf_normal_body(t_coord coord, t_figure *fig);
-static t_vec	get_cylinder_normal(t_figure *cylinder, t_vec hit_point);
 
 /**
  * Cylinder: cy	50.0,0.0,20.6	0.0,0.0,1.0		14.2	21.42	10,0,255
@@ -70,52 +67,19 @@ void	resize_cylinder(t_figure *figure, int x, int y)
 
 static t_vec	get_surf_normal(t_coord coord, t_ray *ray, t_figure *fig)
 {
-	(void) ray;
-	if (fig->hit_type == HIT_BODY)
-		return (surf_normal_body(coord, fig));
+	t_vec	n;
+	t_vec	cp;
+	double	m;
+
+	cp = v_sub(coord, fig->center);
+	m = v_dot(cp, fig->vector);
+	if (fabs(m + fig->height / 2) < RT_TOLERANCE_EPSILON)
+		n = v_mul(fig->vector, -1);
+	else if (fabs(m - fig->height / 2) < RT_TOLERANCE_EPSILON)
+		n = fig->vector;
 	else
-		return (surf_normal_cap(coord, fig));
-}
-
-static t_vec	surf_normal_body(t_coord coord, t_figure *fig)
-{
-	t_vec	n;
-
-	n = get_cylinder_normal(fig, coord);
-	if (fig->hit_side == HIT_INSIDE)
+		n = v_unit(v_sub(cp, v_mul(fig->vector, m)));
+	if (v_dot(ray->direction, n) > 0)
 		n = v_mul(n, -1);
 	return (n);
-}
-
-static t_vec	surf_normal_cap(t_coord coord, t_figure *fig)
-{
-	t_vec	n;
-
-	n = get_cylinder_normal(fig, coord);
-	if (fig->hit_side == HIT_INSIDE)
-		n = v_mul(n, -1);
-	// if (v_dot(n, v_sub(light->center, coord)) < 0)
-	// 	n = v_mul(n, -1);
-	return (n);
-}
-
-static t_vec	get_cylinder_normal(t_figure *cylinder, t_vec hit_point)
-{
-	t_vec	normal;
-	t_vec	fig_dir;
-
-	fig_dir = v_unit(cylinder->vector);
-	if (cylinder->hit_type == HIT_BODY)
-	{
-		normal = v_sub(hit_point, cylinder->center);
-		normal = v_sub(normal, v_mul(fig_dir, v_dot(normal, fig_dir)));
-		normal = v_unit(normal);
-	}
-	else if (cylinder->hit_type == HIT_CAP)
-	{
-		normal = fig_dir;
-		if (v_dot(v_sub(hit_point, cylinder->center), fig_dir) < 0)
-			normal = v_mul(normal, -1);
-	}
-	return (normal);
 }

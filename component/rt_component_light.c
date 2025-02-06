@@ -6,7 +6,7 @@
 /*   By: hwilkim <hwilkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 06:30:53 by hwilkim           #+#    #+#             */
-/*   Updated: 2025/02/06 07:18:11 by hwilkim          ###   ########.fr       */
+/*   Updated: 2025/02/07 02:15:55 by hwilkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,81 +16,45 @@
 
 #include "rt_component.h"
 
-double hit_light(t_light *light, t_ray *ray)
-{
-    double max_distance = 50.0; // 광원의 최대 영향 범위
-    
-    t_vec offset = v_sub(light->center, ray->origin);
-    double distance = v_length(offset);
-    
-    if (distance > max_distance)
-        return (-1.0);
-    
-    return (distance);
-}
+double hit_light(t_light *light, t_ray *ray) {
+    // 광원의 위치와 카메라 광선 상의 충돌 여부 검사
 
-double calculate_attenuation(t_coord point, t_light *light)
-{
-    t_vec distance_vec = v_sub(point, light->center);
-    double distance = v_length(distance_vec);
-    
-    // 거리에 따른 감쇠 계수 (inverse square law)
-    double constant = 1.0;
-    double linear = 0.09;
-    double quadratic = 0.032;
-    
-    return (1.0 / (constant + linear * distance + quadratic * distance * distance));
-}
-// 그림자 광선을 생성하는 함수
-t_ray create_shadow_ray(t_coord hit_point, t_light *light)
-{
-    t_ray shadow_ray;
-    t_vec light_dir = v_sub(light->center, hit_point);
-    
-    // 시작점을 약간 오프셋하여 자체 교차 방지
-    shadow_ray.origin = v_add(hit_point, v_mul(v_unit(light_dir), 0.001));
-    shadow_ray.direction = v_unit(light_dir);
-    
-    return shadow_ray;
-}
+    // 광원을 구(Sphere)로 가정하고 광선과의 교차점 계산
+    t_coord oc = v_sub(ray->origin, light->center);
+    double a = v_dot(ray->direction, ray->direction);
+    double b = 2.0 * v_dot(oc, ray->direction);
+    double c = v_dot(oc, oc) - 400;
 
-// 그림자 검사 함수
-bool is_in_shadow(t_coord hit_point, t_light *light, t_figure *fig)
-{
-    t_ray shadow_ray = create_shadow_ray(hit_point, light);
-    double dist_to_light = v_length(v_sub(light->center, hit_point));
-    
-    // 모든 물체에 대해 교차 검사
-    while(fig)
-    {
-        double t = fig->calculate_hit(fig, &shadow_ray);
-        // 교차점이 있고, 그 거리가 광원까지의 거리보다 작으면 그림자
-        if (t > 0.001 && t < dist_to_light)
-            return true;
-		fig = fig->next;
+    double discriminant = b * b - 4 * a * c;
+
+    if (discriminant > 0) {
+        double t1 = (-b - sqrt(discriminant)) / (2 * a);
+        double t2 = (-b + sqrt(discriminant)) / (2 * a);
+        double t = (t1 + t2) / 2;
+
+        if (t >= 0) {
+            return t; // 충돌 발생
+        }
     }
-    return false;
+
+    return -1; // 충돌 없음
 }
 
-// 수정된 color_light 함수
-t_color color_light(t_color color, t_coord hit_point, t_light *light, t_figure *fig)
+t_color color_light(t_color color, t_coord hit_point, t_light *light)
 {
-    
-    // 그림자 검사
-    if (is_in_shadow(hit_point, light, fig))
-        return color;
-    
-    // 그림자가 아닌 경우 기존의 조명 계산 수행
-    double attenuation = calculate_attenuation(hit_point, light);
-    
-    // 감쇠값이 최소 밝기보다 작지 않도록 조정
-    attenuation = fmax(attenuation, 0.1);
-    
+    // 광원의 표면 좌표를 이용해 색상 계산
+    t_coord light_dir = v_sub(light->center, hit_point); // 광원 -> 충돌 지점 방향 벡터
+    double distance = v_length(light_dir); // 광원과 충돌 지점 사이의 거리
+
+    // 자연스러운 감쇠 효과 적용 (거리 제곱에 반비례)
+    double attenuation = 1.0 / (1.0 + distance * distance);
+
+    // 광원의 색상과 세기를 이용하여 최종 색상 계산
+
 	if (color.x < 0)
 		color.x = 0;
-	color.x = fmin(1.0, color.x + (light->color_bright.x * attenuation));
-	color.y = fmin(1.0, color.y + (light->color_bright.y * attenuation));
-	color.z = fmin(1.0, color.z + (light->color_bright.z * attenuation));
-    
+	color.x = fmin(1.0, color.x + light->color.x * attenuation);
+	color.y = fmin(1.0, color.y + light->color.y * attenuation);
+	color.z = fmin(1.0, color.z + light->color.z * attenuation);
     return color;
 }

@@ -6,7 +6,7 @@
 /*   By: hwilkim <hwilkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 18:41:32 by hwilkim           #+#    #+#             */
-/*   Updated: 2025/02/06 22:40:17 by hwilkim          ###   ########.fr       */
+/*   Updated: 2025/02/07 02:21:08 by hwilkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	draw_scene(t_mlx *mlx)
 			cam_ray = calculate_cam_ray(&mlx->scene.cam, i, j);
 			color = calculate_figure_color(&cam_ray, mlx, head);
 			if (hit_light(&mlx->scene.light, &cam_ray))
-				color = color_light(color, ray_at(&cam_ray, hit_light(&mlx->scene.light, &cam_ray)), &mlx->scene.light, head);
+				color = color_light(color, ray_at(&cam_ray, hit_light(&mlx->scene.light, &cam_ray)), &mlx->scene.light);
 			if (has_color(color))
 				draw_pixel_to_img(&mlx->img_data, i, j, to_rgb_color(color));
 			++i;

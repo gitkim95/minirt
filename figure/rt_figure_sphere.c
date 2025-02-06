@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rt_figure_sphere.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hwilkim <hwilkim@student.42.fr>            +#+  +:+       +#+        */
+/*   By: gitkim <gitkim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/02 16:43:56 by hwilkim           #+#    #+#             */
-/*   Updated: 2025/02/04 21:46:20 by hwilkim          ###   ########.fr       */
+/*   Updated: 2025/02/06 22:30:20 by gitkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ t_figure	*parse_sphere(char **figure_attr)
 {
 	t_figure	*figure;
 
+	if (data_count(figure_attr) != 4)
+		return (NULL);
 	figure = (t_figure *)ft_calloc(1, sizeof(t_figure));
 	figure->identifier = RT_SP;
 	figure->center = parse_to_coord(figure_attr[1]);

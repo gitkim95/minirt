@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   rt_figure_plane.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hwilkim <hwilkim@student.42.fr>            +#+  +:+       +#+        */
+/*   By: gitkim <gitkim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/02 16:43:56 by hwilkim           #+#    #+#             */
-/*   Updated: 2025/02/06 20:28:34 by hwilkim          ###   ########.fr       */
+/*   Updated: 2025/02/06 22:44:48 by gitkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stddef.h>
 #include <math.h>
+#include "rt_utils.h"
 #include "rt_vector.h"
 #include "libft.h"
 
@@ -32,6 +33,8 @@ t_figure	*parse_plane(char **figure_attr)
 {
 	t_figure	*figure;
 
+	if (data_count(figure_attr) != 4)
+		return (NULL);
 	figure = (t_figure *)ft_calloc(1, sizeof(t_figure));
 	figure->identifier = RT_PL;
 	figure->center = parse_to_coord(figure_attr[1]);

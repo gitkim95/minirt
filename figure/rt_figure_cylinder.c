@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rt_figure_cylinder.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hwilkim <hwilkim@student.42.fr>            +#+  +:+       +#+        */
+/*   By: gitkim <gitkim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/02 19:21:13 by hwilkim           #+#    #+#             */
-/*   Updated: 2025/02/06 20:28:39 by hwilkim          ###   ########.fr       */
+/*   Updated: 2025/02/06 22:30:58 by gitkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ t_figure	*parse_cylinder(char **figure_attr)
 {
 	t_figure	*figure;
 
+	if (data_count(figure_attr) != 6)
+		return (NULL);
 	figure = (t_figure *)ft_calloc(1, sizeof(t_figure));
 	figure->identifier = RT_CY;
 	figure->center = parse_to_coord(figure_attr[1]);

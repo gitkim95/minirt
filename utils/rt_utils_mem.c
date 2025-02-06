@@ -6,7 +6,7 @@
 /*   By: gitkim <gitkim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/02 19:34:37 by hwilkim           #+#    #+#             */
-/*   Updated: 2025/02/06 20:44:59 by gitkim           ###   ########.fr       */
+/*   Updated: 2025/02/06 22:44:12 by gitkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,4 +46,14 @@ void	rt_free_split(char **split)
 bool	component_exist(t_scene *scene)
 {
 	return (scene->cam.exist && scene->light.exist && scene->amb_light.exist);
+}
+
+int	data_count(char **data)
+{
+	int	i;
+
+	i = 0;
+	while (data[i])
+		i++;
+	return (i);
 }

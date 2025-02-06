@@ -6,7 +6,7 @@
 /*   By: gitkim <gitkim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 21:32:37 by gitkim            #+#    #+#             */
-/*   Updated: 2025/02/06 04:18:38 by gitkim           ###   ########.fr       */
+/*   Updated: 2025/02/06 19:33:32 by gitkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,17 +33,17 @@ double	hit_cylinder(t_figure *fig, t_ray *ray)
 								v_mul(fig->vector, -1), fig->diameter / 2, ray);
 	if (cap_t[0] < 0 && cap_t[1] < 0)
 		cap_t[2] = -1.0;
-	else if (cap_t[0] > 0 && cap_t[1] == -1.0)
-		cap_t[2] = cap_t[0];
-	else if (cap_t[1] > 0 && cap_t[0] == -1.0)
+	else if (cap_t[0] < 0)
 		cap_t[2] = cap_t[1];
+	else if (cap_t[1] < 0)
+		cap_t[2] = cap_t[0];
 	else
 		cap_t[2] = fmin(cap_t[0], cap_t[1]);
-	if (body_t > 0 && cap_t[2] > 0)
-		return (fmin(body_t, cap_t[2]));
-	if (body_t > 0 && cap_t[2] == -1.0)
+	if (cap_t[2] < 0)
 		return (body_t);
-	return (cap_t[2]);
+	if (body_t < 0)
+		return (cap_t[2]);
+	return (fmin(body_t, cap_t[2]));
 }
 
 static double	hit_cap(t_vec cap_c, t_vec cap_n, double radius, t_ray *ray)

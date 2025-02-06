@@ -6,7 +6,7 @@
 /*   By: hwilkim <hwilkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/02 16:43:56 by hwilkim           #+#    #+#             */
-/*   Updated: 2025/02/04 21:34:57 by hwilkim          ###   ########.fr       */
+/*   Updated: 2025/02/06 20:28:34 by hwilkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,9 @@ t_figure	*parse_plane(char **figure_attr)
 	figure = (t_figure *)ft_calloc(1, sizeof(t_figure));
 	figure->identifier = RT_PL;
 	figure->center = parse_to_coord(figure_attr[1]);
-	figure->vector = parse_to_coord(figure_attr[2]);
+	figure->vector = v_unit(parse_to_coord(figure_attr[2]));
+	figure->rotate.vector = figure->vector;
+	figure->rotate.axis = get_default_axis();
 	figure->color = parse_to_color(figure_attr[3]);
 	figure->calculate_hit = hit_plane;
 	figure->get_surf_normal = get_surf_normal;

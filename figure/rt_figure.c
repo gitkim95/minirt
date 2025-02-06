@@ -6,7 +6,7 @@
 /*   By: hwilkim <hwilkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/02 19:28:52 by hwilkim           #+#    #+#             */
-/*   Updated: 2025/02/06 03:51:48 by hwilkim          ###   ########.fr       */
+/*   Updated: 2025/02/06 20:18:40 by hwilkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 #include "rt_figure.h"
 
 static int		check_shadow(t_coord coord, t_scene *scene);
+static t_coord	get_offset_coord(t_coord coord, t_vec light_dir);
 static t_color	to_phong(t_color fig_color, t_color diffuse, t_color ambient);
 
 t_figure	*make_figure(char **figure_attr)
@@ -71,7 +72,7 @@ static int	check_shadow(t_coord coord, t_scene *scene)
 
 	light_dir = v_sub(scene->light.center, coord);
 	light_dist = v_length(light_dir);
-	surf_ray = (t_ray){coord, v_unit(light_dir)};
+	surf_ray = (t_ray){get_offset_coord(coord, light_dir), v_unit(light_dir)};
 	figure = scene->figures.head;
 	while (figure)
 	{
@@ -81,6 +82,11 @@ static int	check_shadow(t_coord coord, t_scene *scene)
 		figure = figure->next;
 	}
 	return (0);
+}
+
+static t_coord	get_offset_coord(t_coord coord, t_vec light_dir)
+{
+	return (v_add(coord, v_mul(v_unit(light_dir), RT_EPSILON)));
 }
 
 static t_color	to_phong(t_color fig_color, t_color diffuse, t_color ambient)

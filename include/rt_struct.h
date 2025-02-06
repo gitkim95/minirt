@@ -3,15 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   rt_struct.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hwilkim <hwilkim@student.42.fr>            +#+  +:+       +#+        */
+/*   By: gitkim <gitkim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/02 16:49:45 by hwilkim           #+#    #+#             */
-/*   Updated: 2025/02/06 03:52:01 by hwilkim          ###   ########.fr       */
+/*   Updated: 2025/02/06 20:39:18 by gitkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef RT_STRUCT_H
 # define RT_STRUCT_H
+
+# include <stdbool.h>
 
 # define RT_WIDTH	800
 # define RT_HEIGHT	600
@@ -23,19 +25,6 @@
 # define RT_RADIAN				0.0174533
 # define RT_EPSILON				1e-6
 # define RT_TOLERANCE_EPSILON	1e-5
-
-typedef enum e_hit_side
-{
-	HIT_NONE = 0,
-	HIT_INSIDE = 1,
-	HIT_OUTSIDE = 2,
-}	t_hit_side;
-
-typedef enum e_hit_type
-{
-	HIT_BODY = 1,
-	HIT_CAP = 2,
-}	t_hit_type;
 
 typedef enum e_scene_type
 {
@@ -90,6 +79,7 @@ typedef struct s_ray
 
 typedef struct s_camera
 {
+	bool		exist;
 	double		focal_length;
 	double		vp_height;
 	double		vp_width;
@@ -107,6 +97,7 @@ typedef struct s_camera
 
 typedef struct s_light
 {
+	bool	exist;
 	t_coord	center;
 	double	bright;
 	t_color	color;
@@ -123,8 +114,6 @@ typedef struct s_figure
 	double			diameter;
 	double			height;
 	t_color			color;
-	t_hit_type		hit_type;
-	t_hit_side		hit_side;
 	t_rotate		rotate;
 	double			(*calculate_hit)(struct s_figure *, t_ray *);
 	t_vec			(*get_surf_normal)(t_coord, t_ray *, struct s_figure *);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rt_mlx_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hwilkim <hwilkim@student.42.fr>            +#+  +:+       +#+        */
+/*   By: gitkim <gitkim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/03 17:43:11 by hwilkim           #+#    #+#             */
-/*   Updated: 2025/02/03 21:04:12 by hwilkim          ###   ########.fr       */
+/*   Updated: 2025/02/06 20:44:31 by gitkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ void	init_mlx_data(t_mlx *mlx, char *file_path)
 {
 	ft_bzero(mlx, sizeof(t_mlx));
 	parse_data(mlx, file_path);
+	if (!component_exist(&mlx->scene))
+		exit_on_error(&mlx->scene.figures, RT_ERR_FILE_DATA);
 	mlx->mlx = mlx_init();
 	if (!(mlx->mlx))
 		exit_on_error(&mlx->scene.figures, RT_ERR_MEM);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rt_component.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hwilkim <hwilkim@student.42.fr>            +#+  +:+       +#+        */
+/*   By: gitkim <gitkim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/04 16:18:50 by hwilkim           #+#    #+#             */
-/*   Updated: 2025/02/06 03:40:22 by hwilkim          ###   ########.fr       */
+/*   Updated: 2025/02/06 20:40:36 by gitkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ t_camera	make_camera(t_coord center, t_rotate rotate, int fov)
 	camera.focal_length = camera.vp_width / (2 * tan(fov_radians / 2));
 	camera.vp_upper_left = calculate_vp_upper_left(&camera);
 	camera.pixel_zero_loc = calculate_pixel_zero_loc(&camera);
+	camera.exist = true;
 	return (camera);
 }
 
@@ -70,6 +71,7 @@ t_light	make_light(t_coord center, double bright, t_color color)
 	light.bright = bright;
 	light.color = color;
 	light.color_bright = v_mul(light.color, light.bright);
+	light.exist = true;
 	return (light);
 }
 
@@ -87,6 +89,7 @@ t_amb_light	make_amb_light(double bright, t_color color)
 	amb_light.bright = bright;
 	amb_light.color = color;
 	amb_light.color_bright = v_mul(amb_light.color, amb_light.bright);
+	amb_light.exist = true;
 	return (amb_light);
 }
 

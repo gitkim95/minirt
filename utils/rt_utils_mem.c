@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rt_utils_mem.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hwilkim <hwilkim@student.42.fr>            +#+  +:+       +#+        */
+/*   By: gitkim <gitkim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/02 19:34:37 by hwilkim           #+#    #+#             */
-/*   Updated: 2025/01/06 19:17:58 by hwilkim          ###   ########.fr       */
+/*   Updated: 2025/02/06 20:44:59 by gitkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,4 +41,9 @@ void	rt_free_split(char **split)
 		++split;
 	}
 	free(start);
+}
+
+bool	component_exist(t_scene *scene)
+{
+	return (scene->cam.exist && scene->light.exist && scene->amb_light.exist);
 }

@@ -6,7 +6,7 @@
 /*   By: hwilkim <hwilkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/02 19:35:02 by hwilkim           #+#    #+#             */
-/*   Updated: 2025/02/06 04:32:04 by hwilkim          ###   ########.fr       */
+/*   Updated: 2025/02/06 06:28:55 by hwilkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ t_vec	v_div(t_vec vec, double t);
 /* rt_vec_op_product */
 double	v_dot(t_vec u, t_vec v);
 t_vec	v_cross(t_vec u, t_vec v);
+t_vec	projection(t_vec u, t_vec v);
 
 /* rt_vec_rotate */
 t_axis	rotate_axis_x(t_rotate *rotate, int positive_flag);

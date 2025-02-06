@@ -6,7 +6,7 @@
 /*   By: hwilkim <hwilkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 18:41:32 by hwilkim           #+#    #+#             */
-/*   Updated: 2025/02/07 02:21:08 by hwilkim          ###   ########.fr       */
+/*   Updated: 2025/02/06 19:22:04 by hwilkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,23 +25,25 @@ static int		has_color(t_color color);
 
 void	draw_scene(t_mlx *mlx)
 {
-	t_ray		cam_ray;
+	t_ray		ray;
 	t_color		color;
-	t_figure	*head;
+	t_coord		light_coord;
 	int			i;
 	int			j;
 
-	head = mlx->scene.figures.head;
 	j = 0;
 	while (j < RT_HEIGHT)
 	{
 		i = 0;
 		while (i < RT_WIDTH)
 		{
-			cam_ray = calculate_cam_ray(&mlx->scene.cam, i, j);
-			color = calculate_figure_color(&cam_ray, mlx, head);
-			if (hit_light(&mlx->scene.light, &cam_ray))
-				color = color_light(color, ray_at(&cam_ray, hit_light(&mlx->scene.light, &cam_ray)), &mlx->scene.light);
+			ray = calculate_cam_ray(&mlx->scene.cam, i, j);
+			color = calculate_figure_color(&ray, mlx, mlx->scene.figures.head);
+			if (hit_light(&mlx->scene.light, &ray))
+			{
+				light_coord = ray_at(&ray, hit_light(&mlx->scene.light, &ray));
+				color = color_light(color, light_coord, &mlx->scene.light);
+			}
 			if (has_color(color))
 				draw_pixel_to_img(&mlx->img_data, i, j, to_rgb_color(color));
 			++i;

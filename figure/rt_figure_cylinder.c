@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rt_figure_cylinder.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gitkim <gitkim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
+/*   By: hwilkim <hwilkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/02 19:21:13 by hwilkim           #+#    #+#             */
-/*   Updated: 2025/02/06 03:43:25 by gitkim           ###   ########.fr       */
+/*   Updated: 2025/02/06 03:46:05 by hwilkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@ t_figure	*parse_cylinder(char **figure_attr)
 	figure->identifier = RT_CY;
 	figure->center = parse_to_coord(figure_attr[1]);
 	figure->vector = parse_to_coord(figure_attr[2]);
+	figure->rotate.vector = figure->vector;
+	figure->rotate.axis = get_default_axis();
 	figure->diameter = rt_atof(figure_attr[3]);
 	figure->height = rt_atof(figure_attr[4]);
 	figure->color = parse_to_color(figure_attr[5]);

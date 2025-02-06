@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   rt_mlx_handler_trans.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gitkim <gitkim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
+/*   By: hwilkim <hwilkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/02 20:29:08 by hwilkim           #+#    #+#             */
-/*   Updated: 2025/02/04 18:55:48 by gitkim           ###   ########.fr       */
+/*   Updated: 2025/02/06 04:32:17 by hwilkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt_figure.h"
+#include "rt_vector.h"
 
 #include "rt_mlx.h"
 
@@ -40,30 +41,30 @@ static void	translate(void *arg, int x, int y, int z)
 
 static void	rotate(void *arg, int x, int y, int z)
 {
-	t_vec	*vec;
-	t_vec	tmp;
-	int		flg;
+	t_rotate	*rotate;
+	t_axis		axis;
+	int			positive_flag;
 
-	vec = (t_vec *)arg;
-	tmp = *vec;
-	flg = RT_POS;
+	rotate = (t_rotate *)arg;
+	positive_flag = RT_POS;
 	if (x < 0 || y < 0 || z < 0)
-		flg = RT_NEG;
+		positive_flag = RT_NEG;
 	if (x)
 	{
-		vec->y = tmp.y * sin_cos(RT_COS, flg) - tmp.z * sin_cos(RT_SIN, flg);
-		vec->z = tmp.y * sin_cos(RT_SIN, flg) + tmp.z * sin_cos(RT_COS, flg);
+		axis = rotate_axis_x(rotate, positive_flag);
+		rotate->vector = rotate_vec(rotate->vector, axis.x, positive_flag);
 	}
 	else if (y)
 	{
-		vec->x = tmp.x * sin_cos(RT_COS, flg) - tmp.z * sin_cos(RT_SIN, flg);
-		vec->z = tmp.x * sin_cos(RT_SIN, flg) + tmp.z * sin_cos(RT_COS, flg);
+		axis = rotate_axis_y(rotate, positive_flag);
+		rotate->vector = rotate_vec(rotate->vector, axis.y, positive_flag);
 	}
 	else
 	{
-		vec->x = tmp.x * sin_cos(RT_COS, flg) - tmp.y * sin_cos(RT_SIN, flg);
-		vec->y = tmp.x * sin_cos(RT_SIN, flg) + tmp.y * sin_cos(RT_COS, flg);
+		axis = rotate_axis_z(rotate, positive_flag);
+		rotate->vector = rotate_vec(rotate->vector, axis.z, positive_flag);
 	}
+	rotate->axis = axis;
 }
 
 static void	resize(void *arg, int x, int y, int z)

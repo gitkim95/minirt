@@ -6,7 +6,7 @@
 /*   By: hwilkim <hwilkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/04 16:18:50 by hwilkim           #+#    #+#             */
-/*   Updated: 2025/02/04 21:23:35 by hwilkim          ###   ########.fr       */
+/*   Updated: 2025/02/06 03:40:22 by hwilkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,18 +27,18 @@ static t_vec	calculate_pixel_zero_loc(t_camera *camera);
  * FOV : Horizontal field of view in degrees in range [0,180]: 70
  */
 
-t_camera	make_camera(t_coord center, t_vec dir, int fov)
+t_camera	make_camera(t_coord center, t_rotate rotate, int fov)
 {
 	t_camera	camera;
 	double		fov_radians;
 
 	camera.fov = fov;
 	fov_radians = camera.fov * RT_RADIAN;
-	camera.cam_dir = dir;
+	camera.rotate = rotate;
 	camera.vp_width = 2 * tan(fov_radians / 2);
 	camera.vp_height = camera.vp_width / ((double)RT_WIDTH / RT_HEIGHT);
-	camera.vp_w = v_mul(camera.cam_dir, -1);
-	camera.vp_u = v_cross((t_vec){0, 1, 0}, camera.vp_w);
+	camera.vp_w = v_mul(camera.rotate.vector, -1);
+	camera.vp_u = v_cross(camera.rotate.axis.y, camera.vp_w);
 	if (v_length(camera.vp_u) < RT_EPSILON)
 		camera.vp_u = (t_vec){1, 0, 0};
 	camera.vp_u = v_unit(camera.vp_u);

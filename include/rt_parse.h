@@ -6,7 +6,7 @@
 /*   By: hwilkim <hwilkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 17:25:08 by gitkim            #+#    #+#             */
-/*   Updated: 2025/02/02 05:44:36 by hwilkim          ###   ########.fr       */
+/*   Updated: 2025/02/06 03:38:50 by hwilkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,12 @@
 
 typedef struct s_comp_init
 {
-	t_coord	center;
-	t_vec	dir;
-	int		fov;
-	double	bright;
-	t_color	color;
+	t_coord		center;
+	t_vec		dir;
+	int			fov;
+	double		bright;
+	t_color		color;
+	t_rotate	rotate;
 }	t_comp_init;
 
 /* rt_parse_component.c */

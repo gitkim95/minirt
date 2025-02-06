@@ -6,7 +6,7 @@
 /*   By: hwilkim <hwilkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 21:09:42 by gitkim            #+#    #+#             */
-/*   Updated: 2025/02/02 05:45:31 by hwilkim          ###   ########.fr       */
+/*   Updated: 2025/02/06 03:39:35 by hwilkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,10 @@ void	parse_component(t_scene *scene, char **data)
 	if (rt_str_equals(data[0], "C"))
 	{
 		init.center = parse_to_coord(data[1]);
-		init.dir = parse_to_coord(data[2]);
+		init.rotate.vector = parse_to_coord(data[2]);
+		init.rotate.axis = get_default_axis();
 		init.fov = ft_atoi(data[3]);
-		scene->cam = make_camera(init.center, init.dir, init.fov);
+		scene->cam = make_camera(init.center, init.rotate, init.fov);
 	}
 	else if (rt_str_equals(data[0], "L"))
 	{

@@ -6,7 +6,7 @@
 /*   By: hwilkim <hwilkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/02 20:29:08 by hwilkim           #+#    #+#             */
-/*   Updated: 2025/02/02 22:34:19 by hwilkim          ###   ########.fr       */
+/*   Updated: 2025/02/06 03:51:26 by hwilkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,14 +71,16 @@ static int	select_element(int keycode, t_mlx *mlx)
 	else if (keycode == XK_f)
 	{
 		if (mlx->trans_arg.type != RT_F)
+		{
+			mlx->trans_arg.type = RT_F;
 			mlx->trans_arg.arg = mlx->scene.figures.head;
+		}
 		else
 		{
 			mlx->trans_arg.arg = ((t_figure *)mlx->trans_arg.arg)->next;
 			if (!mlx->trans_arg.arg)
 				mlx->trans_arg.arg = mlx->scene.figures.head;
 		}
-		mlx->trans_arg.type = RT_F;
 	}
 	return (0);
 }
@@ -104,16 +106,25 @@ static int	transform_element(int keycode, t_mlx *mlx)
 		transform_handler(arg, 0, 0, -1);
 	else if (keycode == XK_x)
 		transform_handler(arg, 0, 0, 1);
-	post_transform(mlx);
+	if (mlx->trans_mode != RT_RESIZE)
+		post_transform(mlx);
 	return (0);
 }
 
 static void	post_transform(t_mlx *mlx)
 {
-	t_camera	*camera;
+	t_camera	*cam;
+	t_figure	*fig;
 
-	camera = &mlx->scene.cam;
-	if (mlx->trans_arg.type != RT_C)
-		return ;
-	mlx->scene.cam = make_camera(camera->center, camera->cam_dir, camera->fov);
+	if (mlx->trans_arg.type == RT_C)
+	{
+		cam = &mlx->scene.cam;
+		mlx->scene.cam = make_camera(cam->center, cam->rotate, cam->fov);
+		mlx->trans_arg.arg = &mlx->scene.cam;
+	}
+	else if (mlx->trans_arg.type == RT_F)
+	{
+		fig = (t_figure *) mlx->trans_arg.arg;
+		fig->vector = fig->rotate.vector;
+	}
 }

@@ -6,7 +6,7 @@
 /*   By: hwilkim <hwilkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/02 17:07:57 by hwilkim           #+#    #+#             */
-/*   Updated: 2025/02/03 20:19:53 by hwilkim          ###   ########.fr       */
+/*   Updated: 2025/02/06 04:19:42 by hwilkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,6 @@
 # define RT_MLX_H
 
 # include "rt_struct.h"
-
-# define RT_SIN	0
-# define RT_COS	1
-# define RT_NEG	0
-# define RT_POS	1
 
 # define RT_WHITE		0xFFFFFF
 
@@ -33,7 +28,6 @@ t_trans		get_transform_handler(t_mlx *mlx);
 
 /* rt_mlx_handler_utils */
 void		*get_handler_arg(t_mlx *mlx);
-double		sin_cos(int sin_cos_flag, int positive_flag);
 
 /* rt_mlx_hook */
 int			rt_key_hook(int keycode, t_mlx *mlx);

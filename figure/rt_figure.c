@@ -6,7 +6,7 @@
 /*   By: hwilkim <hwilkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/02 19:28:52 by hwilkim           #+#    #+#             */
-/*   Updated: 2025/02/05 03:29:24 by hwilkim          ###   ########.fr       */
+/*   Updated: 2025/02/06 03:51:48 by hwilkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,6 @@ t_figure	*make_figure(char **figure_attr)
 		figure = parse_sphere(figure_attr);
 	else
 		figure = NULL;
-	if (figure)
-		figure->rotate = (t_rotate){&figure->vector, get_default_axis()};
 	return (figure);
 }
 

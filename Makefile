@@ -29,7 +29,8 @@ SCENE_SRC	:=	rt_scene_draw.c
 
 UTILS_SRC	:=	rt_utils_digit.c	rt_utils_mem.c	rt_utils_str.c
 
-VECTOR_SRC	:=	rt_vec_op_arithmetic.c	rt_vec_op_product.c	rt_vec_utils.c
+VECTOR_SRC	:=	rt_vec_op_arithmetic.c	rt_vec_op_product.c	rt_vec_rotate.c	\
+				rt_vec_utils.c
 
 SRC_DIRS	:=	component	error	figure	parse	ray		\
 				rt_mlx		scene	utils	vector

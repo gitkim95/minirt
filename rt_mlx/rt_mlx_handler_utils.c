@@ -6,13 +6,11 @@
 /*   By: hwilkim <hwilkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/02 21:58:40 by hwilkim           #+#    #+#             */
-/*   Updated: 2025/02/05 01:05:20 by hwilkim          ###   ########.fr       */
+/*   Updated: 2025/02/06 04:34:26 by hwilkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stddef.h>
-#include <stdbool.h>
-#include <math.h>
 #include "rt_component.h"
 
 #include "rt_mlx.h"
@@ -41,22 +39,4 @@ void	*get_handler_arg(t_mlx *mlx)
 		if (mlx->trans_arg.type == RT_F)
 			return (mlx->trans_arg.arg);
 	return (NULL);
-}
-
-double	sin_cos(int sin_cos_flag, int positive_flag)
-{
-	static bool		init;
-	static double	tri[4];
-	int				idx;
-
-	if (!init)
-	{
-		init = true;
-		tri[0] = sin(-RT_RADIAN);
-		tri[1] = sin(RT_RADIAN);
-		tri[2] = cos(-RT_RADIAN);
-		tri[3] = cos(RT_RADIAN);
-	}
-	idx = (sin_cos_flag * 2 + positive_flag);
-	return (tri[idx]);
 }

@@ -6,7 +6,7 @@
 /*   By: hwilkim <hwilkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/02 16:49:45 by hwilkim           #+#    #+#             */
-/*   Updated: 2025/02/06 03:19:18 by hwilkim          ###   ########.fr       */
+/*   Updated: 2025/02/06 03:52:01 by hwilkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ typedef struct s_axis
 
 typedef struct s_rotate
 {
-	t_vec	*vector;
+	t_vec	vector;
 	t_axis	axis;
 }	t_rotate;
 
@@ -95,7 +95,7 @@ typedef struct s_camera
 	double		vp_width;
 	double		fov;
 	t_coord		center;
-	t_vec		cam_dir;
+	t_rotate	rotate;
 	t_vec		vp_w;
 	t_vec		vp_u;
 	t_vec		vp_v;
@@ -103,7 +103,6 @@ typedef struct s_camera
 	t_vec		pixel_delta_v;
 	t_vec		vp_upper_left;
 	t_vec		pixel_zero_loc;
-	t_rotate	rotate;
 }	t_camera;
 
 typedef struct s_light

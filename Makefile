@@ -10,7 +10,7 @@ MINILIBX := $(MINILIBX_DIR)/libmlx.a
 INCLUDES := -Iinclude -I$(LIBFT_DIR) -I$(MINILIBX_DIR)
 SYSLIB_FLG := -lXext -lX11 -lm
 
-COMP_SRC	:=	rt_component.c
+COMP_SRC	:=	rt_component_light.c	rt_component.c
 
 ERROR_SRC	:=	rt_error.c
 

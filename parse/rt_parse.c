@@ -6,7 +6,7 @@
 /*   By: hwilkim <hwilkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 17:30:56 by gitkim            #+#    #+#             */
-/*   Updated: 2025/02/03 15:39:20 by hwilkim          ###   ########.fr       */
+/*   Updated: 2025/02/09 04:15:12 by hwilkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 
 #include "rt_parse.h"
 
+static char	*get_trim_line(int fd);
 static void	match_data_type(t_mlx *mlx, char **split_data);
 static bool	valid_file_extension(char *file_path);
 
@@ -37,7 +38,7 @@ void	parse_data(t_mlx *mlx, char *file_path)
 		exit_on_error(NULL, RT_ERR_OPEN);
 	while (1)
 	{
-		read_line = get_next_line(fd);
+		read_line = get_trim_line(fd);
 		if (!read_line)
 			break ;
 		split_data = ft_split(read_line, ' ');
@@ -51,6 +52,19 @@ void	parse_data(t_mlx *mlx, char *file_path)
 		rt_free_split(split_data);
 	}
 	close(fd);
+}
+
+static char	*get_trim_line(int fd)
+{
+	char	*tmp;
+	char	*line;
+
+	tmp = get_next_line(fd);
+	if (!tmp)
+		return (NULL);
+	line = ft_strtrim(tmp, " \n");
+	free(tmp);
+	return (line);
 }
 
 static void	match_data_type(t_mlx *mlx, char **split_data)

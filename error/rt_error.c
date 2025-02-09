@@ -6,7 +6,7 @@
 /*   By: hwilkim <hwilkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/02 16:53:25 by hwilkim           #+#    #+#             */
-/*   Updated: 2025/02/03 15:39:10 by hwilkim          ###   ########.fr       */
+/*   Updated: 2025/02/09 16:03:08 by hwilkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,10 +44,11 @@ char	*rt_err_str(int errno)
 	return (rt_err_str[errno]);
 }
 
-void	free_gnl(int fd)
+void	free_gnl(char **split, int fd)
 {
 	char	*temp;
 
+	rt_free_split(split);
 	while (1)
 	{
 		temp = get_next_line(fd);

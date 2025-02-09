@@ -6,7 +6,7 @@
 /*   By: hwilkim <hwilkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 17:30:56 by gitkim            #+#    #+#             */
-/*   Updated: 2025/02/09 04:15:12 by hwilkim          ###   ########.fr       */
+/*   Updated: 2025/02/09 16:03:43 by hwilkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	parse_data(t_mlx *mlx, char *file_path)
 		free(read_line);
 		if (!split_data || rt_errno(RT_ERRNO_GET))
 		{
-			free_gnl(fd);
+			free_gnl(split_data, fd);
 			exit_on_error(&mlx->scene.figures, rt_errno(RT_ERRNO_GET));
 		}
 		match_data_type(mlx, split_data);
@@ -72,7 +72,9 @@ static void	match_data_type(t_mlx *mlx, char **split_data)
 	char	*identifier;
 
 	identifier = split_data[0];
-	if (rt_isupper(*identifier))
+	if (!identifier)
+		return ;
+	else if (rt_isupper(*identifier))
 		parse_component(&(mlx->scene), split_data);
 	else
 		parse_figure(&(mlx->scene.figures), split_data);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rt_error.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gitkim <gitkim@student.42gyeongsan.kr>     +#+  +:+       +#+        */
+/*   By: hwilkim <hwilkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/02 16:49:45 by hwilkim           #+#    #+#             */
-/*   Updated: 2025/02/03 00:27:18 by gitkim           ###   ########.fr       */
+/*   Updated: 2025/02/09 16:03:41 by hwilkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@
 
 /* rt_error.c */
 void	exit_on_error(t_fig_list *list, int rt_errno);
-void	free_gnl(int fd);
+void	free_gnl(char **split, int fd);
 int		rt_errno(int errno);
 char	*rt_err_str(int errno);
 
